@@ -1,0 +1,2 @@
+Commit ID,Time Stamp,First Token SLO P90 /ms,Decode SLO P90 /ms,Average Input Length /token,Average Output Length /token,Accuracy,throughput req/s,generate_speed token/s
+MindIE 2.0.RC1.B020,20250305183802,47562.8013,1175.1695,59.9507,196.5171,23.2%,3.7069,728.4697

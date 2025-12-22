@@ -1,0 +1,16 @@
+{
+    "inputs": "aaa",
+    "stream": false,
+    "parameters": {
+        "temperature": 0.5,
+        "top_k": 10,
+        "top_p": 0.95,
+        "max_new_tritons": 20,
+        "do_sample": true,
+        "seed": "null",
+        "repetition_penalty": 1.03,
+        "details": true,
+        "typical_p": 0.5,
+        "watermark": false
+    }
+}

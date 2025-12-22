@@ -1,0 +1,13 @@
+--- CMakeLists.txt	2022-09-01 01:15:21.000000000 +0800
++++ CMakeLists.txt.bak	2024-09-04 19:07:48.632255156 +0800
+@@ -63,6 +63,10 @@ else()
+   option(ABSL_ENABLE_INSTALL "Enable install rule" ON)
+ endif()
+ 
++set(CMAKE_VERBOSE_MAKEFILE ON)
++add_compile_options(-fstack-protector-all -D_FORTIFY_SOURCE=2 -O2 -ftrapv)
++add_link_options(-s -Wl,-z,relro,-z,now)
++
+ option(ABSL_PROPAGATE_CXX_STD
+   "Use CMake C++ standard meta features (e.g. cxx_std_11) that propagate to targets that link to Abseil"
+   OFF)  # TODO: Default to ON for CMake 3.8 and greater.

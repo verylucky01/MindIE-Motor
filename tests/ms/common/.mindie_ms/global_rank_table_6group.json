@@ -1,0 +1,1184 @@
+{
+  "version": "1.0",
+  "status": "completed",
+  "server_group_list": [
+    {
+      "group_id": "0",
+      "server_count": "1",
+      "server_list": [
+        {
+          "server_id": "coordinator",
+          "server_ip": "127.0.0.1"
+        }
+      ]
+    },
+    {
+      "group_id": "1",
+      "server_count": "1",
+      "server_list": [
+        {
+          "server_id": "controller",
+          "server_ip": "127.0.0.1"
+        }
+      ]
+    },
+    {
+      "group_id": "2",
+      "server_count": "96",
+      "server_list": [
+        {
+          "server_id": "127.0.0.1",
+          "server_ip": "172.16.0.1",
+          "device": [
+            {
+              "device_id": "0",
+              "device_ip": "172.16.0.1",
+              "device_logical_id": "0",
+              "rank_id": "0"
+            }
+          ]
+        },
+        {
+          "server_id": "127.0.0.1",
+          "server_ip": "172.16.0.2",
+          "device": [
+            {
+              "device_id": "0",
+              "device_ip": "172.16.0.2",
+              "device_logical_id": "0",
+              "rank_id": "0"
+            }
+          ]
+        },
+        {
+          "server_id": "127.0.0.1",
+          "server_ip": "172.16.0.3",
+          "device": [
+            {
+              "device_id": "0",
+              "device_ip": "172.16.0.3",
+              "device_logical_id": "0",
+              "rank_id": "0"
+            }
+          ]
+        },
+        {
+          "server_id": "127.0.0.1",
+          "server_ip": "172.16.0.4",
+          "device": [
+            {
+              "device_id": "0",
+              "device_ip": "172.16.0.4",
+              "device_logical_id": "0",
+              "rank_id": "0"
+            }
+          ]
+        },
+        {
+          "server_id": "127.0.0.1",
+          "server_ip": "172.16.0.5",
+          "device": [
+            {
+              "device_id": "0",
+              "device_ip": "172.16.0.5",
+              "device_logical_id": "0",
+              "rank_id": "0"
+            }
+          ]
+        },
+        {
+          "server_id": "127.0.0.1",
+          "server_ip": "172.16.0.6",
+          "device": [
+            {
+              "device_id": "0",
+              "device_ip": "172.16.0.6",
+              "device_logical_id": "0",
+              "rank_id": "0"
+            }
+          ]
+        },
+        {
+          "server_id": "127.0.0.1",
+          "server_ip": "172.16.0.7",
+          "device": [
+            {
+              "device_id": "0",
+              "device_ip": "172.16.0.7",
+              "device_logical_id": "0",
+              "rank_id": "0"
+            }
+          ]
+        },
+        {
+          "server_id": "127.0.0.1",
+          "server_ip": "172.16.0.8",
+          "device": [
+            {
+              "device_id": "0",
+              "device_ip": "172.16.0.8",
+              "device_logical_id": "0",
+              "rank_id": "0"
+            }
+          ]
+        },
+        {
+          "server_id": "127.0.0.1",
+          "server_ip": "172.16.0.9",
+          "device": [
+            {
+              "device_id": "0",
+              "device_ip": "172.16.0.9",
+              "device_logical_id": "0",
+              "rank_id": "0"
+            }
+          ]
+        },
+        {
+          "server_id": "127.0.0.1",
+          "server_ip": "172.16.0.10",
+          "device": [
+            {
+              "device_id": "0",
+              "device_ip": "172.16.0.10",
+              "device_logical_id": "0",
+              "rank_id": "0"
+            }
+          ]
+        },
+        {
+          "server_id": "127.0.0.1",
+          "server_ip": "172.16.0.11",
+          "device": [
+            {
+              "device_id": "0",
+              "device_ip": "172.16.0.11",
+              "device_logical_id": "0",
+              "rank_id": "0"
+            }
+          ]
+        },
+        {
+          "server_id": "127.0.0.1",
+          "server_ip": "172.16.0.12",
+          "device": [
+            {
+              "device_id": "0",
+              "device_ip": "172.16.0.12",
+              "device_logical_id": "0",
+              "rank_id": "0"
+            }
+          ]
+        },
+        {
+          "server_id": "127.0.0.1",
+          "server_ip": "172.16.0.13",
+          "device": [
+            {
+              "device_id": "0",
+              "device_ip": "172.16.0.13",
+              "device_logical_id": "0",
+              "rank_id": "0"
+            }
+          ]
+        },
+        {
+          "server_id": "127.0.0.1",
+          "server_ip": "172.16.0.14",
+          "device": [
+            {
+              "device_id": "0",
+              "device_ip": "172.16.0.14",
+              "device_logical_id": "0",
+              "rank_id": "0"
+            }
+          ]
+        },
+        {
+          "server_id": "127.0.0.1",
+          "server_ip": "172.16.0.15",
+          "device": [
+            {
+              "device_id": "0",
+              "device_ip": "172.16.0.15",
+              "device_logical_id": "0",
+              "rank_id": "0"
+            }
+          ]
+        },
+        {
+          "server_id": "127.0.0.1",
+          "server_ip": "172.16.0.16",
+          "device": [
+            {
+              "device_id": "0",
+              "device_ip": "172.16.0.16",
+              "device_logical_id": "0",
+              "rank_id": "0"
+            }
+          ]
+        },
+        {
+          "server_id": "127.0.0.1",
+          "server_ip": "172.16.0.17",
+          "device": [
+            {
+              "device_id": "0",
+              "device_ip": "172.16.0.17",
+              "device_logical_id": "0",
+              "rank_id": "0"
+            }
+          ]
+        },
+        {
+          "server_id": "127.0.0.1",
+          "server_ip": "172.16.0.18",
+          "device": [
+            {
+              "device_id": "0",
+              "device_ip": "172.16.0.18",
+              "device_logical_id": "0",
+              "rank_id": "0"
+            }
+          ]
+        },
+        {
+          "server_id": "127.0.0.1",
+          "server_ip": "172.16.0.19",
+          "device": [
+            {
+              "device_id": "0",
+              "device_ip": "172.16.0.19",
+              "device_logical_id": "0",
+              "rank_id": "0"
+            }
+          ]
+        },
+        {
+          "server_id": "127.0.0.1",
+          "server_ip": "172.16.0.20",
+          "device": [
+            {
+              "device_id": "0",
+              "device_ip": "172.16.0.20",
+              "device_logical_id": "0",
+              "rank_id": "0"
+            }
+          ]
+        },
+        {
+          "server_id": "127.0.0.1",
+          "server_ip": "172.16.0.21",
+          "device": [
+            {
+              "device_id": "0",
+              "device_ip": "172.16.0.21",
+              "device_logical_id": "0",
+              "rank_id": "0"
+            }
+          ]
+        },
+        {
+          "server_id": "127.0.0.1",
+          "server_ip": "172.16.0.22",
+          "device": [
+            {
+              "device_id": "0",
+              "device_ip": "172.16.0.22",
+              "device_logical_id": "0",
+              "rank_id": "0"
+            }
+          ]
+        },
+        {
+          "server_id": "127.0.0.1",
+          "server_ip": "172.16.0.23",
+          "device": [
+            {
+              "device_id": "0",
+              "device_ip": "172.16.0.23",
+              "device_logical_id": "0",
+              "rank_id": "0"
+            }
+          ]
+        },
+        {
+          "server_id": "127.0.0.1",
+          "server_ip": "172.16.0.24",
+          "device": [
+            {
+              "device_id": "0",
+              "device_ip": "172.16.0.24",
+              "device_logical_id": "0",
+              "rank_id": "0"
+            }
+          ]
+        },
+        {
+          "server_id": "127.0.0.1",
+          "server_ip": "172.16.0.25",
+          "device": [
+            {
+              "device_id": "0",
+              "device_ip": "172.16.0.25",
+              "device_logical_id": "0",
+              "rank_id": "0"
+            }
+          ]
+        },
+        {
+          "server_id": "127.0.0.1",
+          "server_ip": "172.16.0.26",
+          "device": [
+            {
+              "device_id": "0",
+              "device_ip": "172.16.0.26",
+              "device_logical_id": "0",
+              "rank_id": "0"
+            }
+          ]
+        },
+        {
+          "server_id": "127.0.0.1",
+          "server_ip": "172.16.0.27",
+          "device": [
+            {
+              "device_id": "0",
+              "device_ip": "172.16.0.27",
+              "device_logical_id": "0",
+              "rank_id": "0"
+            }
+          ]
+        },
+        {
+          "server_id": "127.0.0.1",
+          "server_ip": "172.16.0.28",
+          "device": [
+            {
+              "device_id": "0",
+              "device_ip": "172.16.0.28",
+              "device_logical_id": "0",
+              "rank_id": "0"
+            }
+          ]
+        },
+        {
+          "server_id": "127.0.0.1",
+          "server_ip": "172.16.0.29",
+          "device": [
+            {
+              "device_id": "0",
+              "device_ip": "172.16.0.29",
+              "device_logical_id": "0",
+              "rank_id": "0"
+            }
+          ]
+        },
+        {
+          "server_id": "127.0.0.1",
+          "server_ip": "172.16.0.30",
+          "device": [
+            {
+              "device_id": "0",
+              "device_ip": "172.16.0.30",
+              "device_logical_id": "0",
+              "rank_id": "0"
+            }
+          ]
+        },
+        {
+          "server_id": "127.0.0.1",
+          "server_ip": "172.16.0.31",
+          "device": [
+            {
+              "device_id": "0",
+              "device_ip": "172.16.0.31",
+              "device_logical_id": "0",
+              "rank_id": "0"
+            }
+          ]
+        },
+        {
+          "server_id": "127.0.0.1",
+          "server_ip": "172.16.0.32",
+          "device": [
+            {
+              "device_id": "0",
+              "device_ip": "172.16.0.32",
+              "device_logical_id": "0",
+              "rank_id": "0"
+            }
+          ]
+        },
+        {
+          "server_id": "127.0.0.1",
+          "server_ip": "172.16.0.33",
+          "device": [
+            {
+              "device_id": "0",
+              "device_ip": "172.16.0.33",
+              "device_logical_id": "0",
+              "rank_id": "0"
+            }
+          ]
+        },
+        {
+          "server_id": "127.0.0.1",
+          "server_ip": "172.16.0.34",
+          "device": [
+            {
+              "device_id": "0",
+              "device_ip": "172.16.0.34",
+              "device_logical_id": "0",
+              "rank_id": "0"
+            }
+          ]
+        },
+        {
+          "server_id": "127.0.0.1",
+          "server_ip": "172.16.0.35",
+          "device": [
+            {
+              "device_id": "0",
+              "device_ip": "172.16.0.35",
+              "device_logical_id": "0",
+              "rank_id": "0"
+            }
+          ]
+        },
+        {
+          "server_id": "127.0.0.1",
+          "server_ip": "172.16.0.36",
+          "device": [
+            {
+              "device_id": "0",
+              "device_ip": "172.16.0.36",
+              "device_logical_id": "0",
+              "rank_id": "0"
+            }
+          ]
+        },
+        {
+          "server_id": "127.0.0.1",
+          "server_ip": "172.16.0.37",
+          "device": [
+            {
+              "device_id": "0",
+              "device_ip": "172.16.0.37",
+              "device_logical_id": "0",
+              "rank_id": "0"
+            }
+          ]
+        },
+        {
+          "server_id": "127.0.0.1",
+          "server_ip": "172.16.0.38",
+          "device": [
+            {
+              "device_id": "0",
+              "device_ip": "172.16.0.38",
+              "device_logical_id": "0",
+              "rank_id": "0"
+            }
+          ]
+        },
+        {
+          "server_id": "127.0.0.1",
+          "server_ip": "172.16.0.39",
+          "device": [
+            {
+              "device_id": "0",
+              "device_ip": "172.16.0.39",
+              "device_logical_id": "0",
+              "rank_id": "0"
+            }
+          ]
+        },
+        {
+          "server_id": "127.0.0.1",
+          "server_ip": "172.16.0.40",
+          "device": [
+            {
+              "device_id": "0",
+              "device_ip": "172.16.0.40",
+              "device_logical_id": "0",
+              "rank_id": "0"
+            }
+          ]
+        },
+        {
+          "server_id": "127.0.0.1",
+          "server_ip": "172.16.0.41",
+          "device": [
+            {
+              "device_id": "0",
+              "device_ip": "172.16.0.41",
+              "device_logical_id": "0",
+              "rank_id": "0"
+            }
+          ]
+        },
+        {
+          "server_id": "127.0.0.1",
+          "server_ip": "172.16.0.42",
+          "device": [
+            {
+              "device_id": "0",
+              "device_ip": "172.16.0.42",
+              "device_logical_id": "0",
+              "rank_id": "0"
+            }
+          ]
+        },
+        {
+          "server_id": "127.0.0.1",
+          "server_ip": "172.16.0.43",
+          "device": [
+            {
+              "device_id": "0",
+              "device_ip": "172.16.0.43",
+              "device_logical_id": "0",
+              "rank_id": "0"
+            }
+          ]
+        },
+        {
+          "server_id": "127.0.0.1",
+          "server_ip": "172.16.0.44",
+          "device": [
+            {
+              "device_id": "0",
+              "device_ip": "172.16.0.44",
+              "device_logical_id": "0",
+              "rank_id": "0"
+            }
+          ]
+        },
+        {
+          "server_id": "127.0.0.1",
+          "server_ip": "172.16.0.45",
+          "device": [
+            {
+              "device_id": "0",
+              "device_ip": "172.16.0.45",
+              "device_logical_id": "0",
+              "rank_id": "0"
+            }
+          ]
+        },
+        {
+          "server_id": "127.0.0.1",
+          "server_ip": "172.16.0.46",
+          "device": [
+            {
+              "device_id": "0",
+              "device_ip": "172.16.0.46",
+              "device_logical_id": "0",
+              "rank_id": "0"
+            }
+          ]
+        },
+        {
+          "server_id": "127.0.0.1",
+          "server_ip": "172.16.0.47",
+          "device": [
+            {
+              "device_id": "0",
+              "device_ip": "172.16.0.47",
+              "device_logical_id": "0",
+              "rank_id": "0"
+            }
+          ]
+        },
+        {
+          "server_id": "127.0.0.1",
+          "server_ip": "172.16.0.48",
+          "device": [
+            {
+              "device_id": "0",
+              "device_ip": "172.16.0.48",
+              "device_logical_id": "0",
+              "rank_id": "0"
+            }
+          ]
+        },
+        {
+          "server_id": "127.0.0.1",
+          "server_ip": "172.16.0.49",
+          "device": [
+            {
+              "device_id": "0",
+              "device_ip": "172.16.0.49",
+              "device_logical_id": "0",
+              "rank_id": "0"
+            }
+          ]
+        },
+        {
+          "server_id": "127.0.0.1",
+          "server_ip": "172.16.0.50",
+          "device": [
+            {
+              "device_id": "0",
+              "device_ip": "172.16.0.50",
+              "device_logical_id": "0",
+              "rank_id": "0"
+            }
+          ]
+        },
+        {
+          "server_id": "127.0.0.1",
+          "server_ip": "172.16.0.51",
+          "device": [
+            {
+              "device_id": "0",
+              "device_ip": "172.16.0.51",
+              "device_logical_id": "0",
+              "rank_id": "0"
+            }
+          ]
+        },
+        {
+          "server_id": "127.0.0.1",
+          "server_ip": "172.16.0.52",
+          "device": [
+            {
+              "device_id": "0",
+              "device_ip": "172.16.0.52",
+              "device_logical_id": "0",
+              "rank_id": "0"
+            }
+          ]
+        },
+        {
+          "server_id": "127.0.0.1",
+          "server_ip": "172.16.0.53",
+          "device": [
+            {
+              "device_id": "0",
+              "device_ip": "172.16.0.53",
+              "device_logical_id": "0",
+              "rank_id": "0"
+            }
+          ]
+        },
+        {
+          "server_id": "127.0.0.1",
+          "server_ip": "172.16.0.54",
+          "device": [
+            {
+              "device_id": "0",
+              "device_ip": "172.16.0.54",
+              "device_logical_id": "0",
+              "rank_id": "0"
+            }
+          ]
+        },
+        {
+          "server_id": "127.0.0.1",
+          "server_ip": "172.16.0.55",
+          "device": [
+            {
+              "device_id": "0",
+              "device_ip": "172.16.0.55",
+              "device_logical_id": "0",
+              "rank_id": "0"
+            }
+          ]
+        },
+        {
+          "server_id": "127.0.0.1",
+          "server_ip": "172.16.0.56",
+          "device": [
+            {
+              "device_id": "0",
+              "device_ip": "172.16.0.56",
+              "device_logical_id": "0",
+              "rank_id": "0"
+            }
+          ]
+        },
+        {
+          "server_id": "127.0.0.1",
+          "server_ip": "172.16.0.57",
+          "device": [
+            {
+              "device_id": "0",
+              "device_ip": "172.16.0.57",
+              "device_logical_id": "0",
+              "rank_id": "0"
+            }
+          ]
+        },
+        {
+          "server_id": "127.0.0.1",
+          "server_ip": "172.16.0.58",
+          "device": [
+            {
+              "device_id": "0",
+              "device_ip": "172.16.0.58",
+              "device_logical_id": "0",
+              "rank_id": "0"
+            }
+          ]
+        },
+        {
+          "server_id": "127.0.0.1",
+          "server_ip": "172.16.0.59",
+          "device": [
+            {
+              "device_id": "0",
+              "device_ip": "172.16.0.59",
+              "device_logical_id": "0",
+              "rank_id": "0"
+            }
+          ]
+        },
+        {
+          "server_id": "127.0.0.1",
+          "server_ip": "172.16.0.60",
+          "device": [
+            {
+              "device_id": "0",
+              "device_ip": "172.16.0.60",
+              "device_logical_id": "0",
+              "rank_id": "0"
+            }
+          ]
+        },
+        {
+          "server_id": "127.0.0.1",
+          "server_ip": "172.16.0.61",
+          "device": [
+            {
+              "device_id": "0",
+              "device_ip": "172.16.0.61",
+              "device_logical_id": "0",
+              "rank_id": "0"
+            }
+          ]
+        },
+        {
+          "server_id": "127.0.0.1",
+          "server_ip": "172.16.0.62",
+          "device": [
+            {
+              "device_id": "0",
+              "device_ip": "172.16.0.62",
+              "device_logical_id": "0",
+              "rank_id": "0"
+            }
+          ]
+        },
+        {
+          "server_id": "127.0.0.1",
+          "server_ip": "172.16.0.63",
+          "device": [
+            {
+              "device_id": "0",
+              "device_ip": "172.16.0.63",
+              "device_logical_id": "0",
+              "rank_id": "0"
+            }
+          ]
+        },
+        {
+          "server_id": "127.0.0.1",
+          "server_ip": "172.16.0.64",
+          "device": [
+            {
+              "device_id": "0",
+              "device_ip": "172.16.0.64",
+              "device_logical_id": "0",
+              "rank_id": "0"
+            }
+          ]
+        },
+        {
+          "server_id": "127.0.0.1",
+          "server_ip": "172.16.0.65",
+          "device": [
+            {
+              "device_id": "0",
+              "device_ip": "172.16.0.65",
+              "device_logical_id": "0",
+              "rank_id": "0"
+            }
+          ]
+        },
+        {
+          "server_id": "127.0.0.1",
+          "server_ip": "172.16.0.66",
+          "device": [
+            {
+              "device_id": "0",
+              "device_ip": "172.16.0.66",
+              "device_logical_id": "0",
+              "rank_id": "0"
+            }
+          ]
+        },
+        {
+          "server_id": "127.0.0.1",
+          "server_ip": "172.16.0.67",
+          "device": [
+            {
+              "device_id": "0",
+              "device_ip": "172.16.0.67",
+              "device_logical_id": "0",
+              "rank_id": "0"
+            }
+          ]
+        },
+        {
+          "server_id": "127.0.0.1",
+          "server_ip": "172.16.0.68",
+          "device": [
+            {
+              "device_id": "0",
+              "device_ip": "172.16.0.68",
+              "device_logical_id": "0",
+              "rank_id": "0"
+            }
+          ]
+        },
+        {
+          "server_id": "127.0.0.1",
+          "server_ip": "172.16.0.69",
+          "device": [
+            {
+              "device_id": "0",
+              "device_ip": "172.16.0.69",
+              "device_logical_id": "0",
+              "rank_id": "0"
+            }
+          ]
+        },
+        {
+          "server_id": "127.0.0.1",
+          "server_ip": "172.16.0.70",
+          "device": [
+            {
+              "device_id": "0",
+              "device_ip": "172.16.0.70",
+              "device_logical_id": "0",
+              "rank_id": "0"
+            }
+          ]
+        },
+        {
+          "server_id": "127.0.0.1",
+          "server_ip": "172.16.0.71",
+          "device": [
+            {
+              "device_id": "0",
+              "device_ip": "172.16.0.71",
+              "device_logical_id": "0",
+              "rank_id": "0"
+            }
+          ]
+        },
+        {
+          "server_id": "127.0.0.1",
+          "server_ip": "172.16.0.72",
+          "device": [
+            {
+              "device_id": "0",
+              "device_ip": "172.16.0.72",
+              "device_logical_id": "0",
+              "rank_id": "0"
+            }
+          ]
+        },
+        {
+          "server_id": "127.0.0.1",
+          "server_ip": "172.16.0.73",
+          "device": [
+            {
+              "device_id": "0",
+              "device_ip": "172.16.0.73",
+              "device_logical_id": "0",
+              "rank_id": "0"
+            }
+          ]
+        },
+        {
+          "server_id": "127.0.0.1",
+          "server_ip": "172.16.0.74",
+          "device": [
+            {
+              "device_id": "0",
+              "device_ip": "172.16.0.74",
+              "device_logical_id": "0",
+              "rank_id": "0"
+            }
+          ]
+        },
+        {
+          "server_id": "127.0.0.1",
+          "server_ip": "172.16.0.75",
+          "device": [
+            {
+              "device_id": "0",
+              "device_ip": "172.16.0.75",
+              "device_logical_id": "0",
+              "rank_id": "0"
+            }
+          ]
+        },
+        {
+          "server_id": "127.0.0.1",
+          "server_ip": "172.16.0.76",
+          "device": [
+            {
+              "device_id": "0",
+              "device_ip": "172.16.0.76",
+              "device_logical_id": "0",
+              "rank_id": "0"
+            }
+          ]
+        },
+        {
+          "server_id": "127.0.0.1",
+          "server_ip": "172.16.0.77",
+          "device": [
+            {
+              "device_id": "0",
+              "device_ip": "172.16.0.77",
+              "device_logical_id": "0",
+              "rank_id": "0"
+            }
+          ]
+        },
+        {
+          "server_id": "127.0.0.1",
+          "server_ip": "172.16.0.78",
+          "device": [
+            {
+              "device_id": "0",
+              "device_ip": "172.16.0.78",
+              "device_logical_id": "0",
+              "rank_id": "0"
+            }
+          ]
+        },
+        {
+          "server_id": "127.0.0.1",
+          "server_ip": "172.16.0.79",
+          "device": [
+            {
+              "device_id": "0",
+              "device_ip": "172.16.0.79",
+              "device_logical_id": "0",
+              "rank_id": "0"
+            }
+          ]
+        },
+        {
+          "server_id": "127.0.0.1",
+          "server_ip": "172.16.0.80",
+          "device": [
+            {
+              "device_id": "0",
+              "device_ip": "172.16.0.80",
+              "device_logical_id": "0",
+              "rank_id": "0"
+            }
+          ]
+        },
+        {
+          "server_id": "127.0.0.1",
+          "server_ip": "172.16.0.81",
+          "device": [
+            {
+              "device_id": "0",
+              "device_ip": "172.16.0.81",
+              "device_logical_id": "0",
+              "rank_id": "0"
+            }
+          ]
+        },
+        {
+          "server_id": "127.0.0.1",
+          "server_ip": "172.16.0.82",
+          "device": [
+            {
+              "device_id": "0",
+              "device_ip": "172.16.0.82",
+              "device_logical_id": "0",
+              "rank_id": "0"
+            }
+          ]
+        },
+        {
+          "server_id": "127.0.0.1",
+          "server_ip": "172.16.0.83",
+          "device": [
+            {
+              "device_id": "0",
+              "device_ip": "172.16.0.83",
+              "device_logical_id": "0",
+              "rank_id": "0"
+            }
+          ]
+        },
+        {
+          "server_id": "127.0.0.1",
+          "server_ip": "172.16.0.84",
+          "device": [
+            {
+              "device_id": "0",
+              "device_ip": "172.16.0.84",
+              "device_logical_id": "0",
+              "rank_id": "0"
+            }
+          ]
+        },
+        {
+          "server_id": "127.0.0.1",
+          "server_ip": "172.16.0.85",
+          "device": [
+            {
+              "device_id": "0",
+              "device_ip": "172.16.0.85",
+              "device_logical_id": "0",
+              "rank_id": "0"
+            }
+          ]
+        },
+        {
+          "server_id": "127.0.0.1",
+          "server_ip": "172.16.0.86",
+          "device": [
+            {
+              "device_id": "0",
+              "device_ip": "172.16.0.86",
+              "device_logical_id": "0",
+              "rank_id": "0"
+            }
+          ]
+        },
+        {
+          "server_id": "127.0.0.1",
+          "server_ip": "172.16.0.87",
+          "device": [
+            {
+              "device_id": "0",
+              "device_ip": "172.16.0.87",
+              "device_logical_id": "0",
+              "rank_id": "0"
+            }
+          ]
+        },
+        {
+          "server_id": "127.0.0.1",
+          "server_ip": "172.16.0.88",
+          "device": [
+            {
+              "device_id": "0",
+              "device_ip": "172.16.0.88",
+              "device_logical_id": "0",
+              "rank_id": "0"
+            }
+          ]
+        },
+        {
+          "server_id": "127.0.0.1",
+          "server_ip": "172.16.0.89",
+          "device": [
+            {
+              "device_id": "0",
+              "device_ip": "172.16.0.89",
+              "device_logical_id": "0",
+              "rank_id": "0"
+            }
+          ]
+        },
+        {
+          "server_id": "127.0.0.1",
+          "server_ip": "172.16.0.90",
+          "device": [
+            {
+              "device_id": "0",
+              "device_ip": "172.16.0.90",
+              "device_logical_id": "0",
+              "rank_id": "0"
+            }
+          ]
+        },
+        {
+          "server_id": "127.0.0.1",
+          "server_ip": "172.16.0.91",
+          "device": [
+            {
+              "device_id": "0",
+              "device_ip": "172.16.0.91",
+              "device_logical_id": "0",
+              "rank_id": "0"
+            }
+          ]
+        },
+        {
+          "server_id": "127.0.0.1",
+          "server_ip": "172.16.0.92",
+          "device": [
+            {
+              "device_id": "0",
+              "device_ip": "172.16.0.92",
+              "device_logical_id": "0",
+              "rank_id": "0"
+            }
+          ]
+        },
+        {
+          "server_id": "127.0.0.1",
+          "server_ip": "172.16.0.93",
+          "device": [
+            {
+              "device_id": "0",
+              "device_ip": "172.16.0.93",
+              "device_logical_id": "0",
+              "rank_id": "0"
+            }
+          ]
+        },
+        {
+          "server_id": "127.0.0.1",
+          "server_ip": "172.16.0.94",
+          "device": [
+            {
+              "device_id": "0",
+              "device_ip": "172.16.0.94",
+              "device_logical_id": "0",
+              "rank_id": "0"
+            }
+          ]
+        },
+        {
+          "server_id": "127.0.0.1",
+          "server_ip": "172.16.0.95",
+          "device": [
+            {
+              "device_id": "0",
+              "device_ip": "172.16.0.95",
+              "device_logical_id": "0",
+              "rank_id": "0"
+            }
+          ]
+        },
+        {
+          "server_id": "127.0.0.1",
+          "server_ip": "172.16.0.96",
+          "device": [
+            {
+              "device_id": "0",
+              "device_ip": "172.16.0.96",
+              "device_logical_id": "0",
+              "rank_id": "0"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

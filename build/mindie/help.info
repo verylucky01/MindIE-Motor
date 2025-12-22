@@ -1,0 +1,6 @@
+--install                           Install run package
+    --install-path=<path>           Install to specific path, path cannot contain spaces
+--upgrade                           Upgrade
+    --install-path=<path>           Upgrade the specific path, path cannot contain spaces
+--uninstall                         Uninstall
+    --install-path=<path>           Uninstall from specific path, path cannot contain spaces
