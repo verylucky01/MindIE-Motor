@@ -1,0 +1,3 @@
+watchdog
+confluent_kafka
+posix_ipc

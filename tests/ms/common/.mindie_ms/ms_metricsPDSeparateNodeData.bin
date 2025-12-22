@@ -1,0 +1,127 @@
+# HELP request_received_total Number of requests received so far.
+# TYPE request_received_total counter
+request_received_total{model_name="llama_65b"} 0
+# HELP request_success_total Count of successfully processed requests.
+# TYPE request_success_total counter
+request_success_total{model_name="llama_65b"} 0
+# HELP request_failed_total Number of responses failed so far
+# TYPE request_failed_total counter
+request_failed_total{model_name="llama_65b"} 0
+# HELP prompt_tokens_total Number of prefill tokens processed.
+# TYPE prompt_tokens_total counter
+prompt_tokens_total{model_name="llama_65b"} 630400
+# HELP generation_tokens_total Number of generation tokens processed.
+# TYPE generation_tokens_total counter
+generation_tokens_total{model_name="llama_65b"} 640000
+# HELP num_preemptions_total Cumulative number of preemption from the engine.
+# TYPE num_preemptions_total counter
+num_preemptions_total{model_name="llama_65b"} 10192
+# HELP num_requests_running Number of requests currently running on GPU.
+# TYPE num_requests_running gauge
+num_requests_running{model_name="llama_65b"} 0
+# HELP num_requests_waiting Number of requests waiting to be processed.
+# TYPE num_requests_waiting gauge
+num_requests_waiting{model_name="llama_65b"} 0
+# HELP num_requests_swapped Number of requests swapped to CPU.
+# TYPE num_requests_swapped gauge
+num_requests_swapped{model_name="llama_65b"} 0
+# HELP avg_prompt_throughput_toks_per_s Average prefill throughput in tokens/s.
+# TYPE avg_prompt_throughput_toks_per_s gauge
+avg_prompt_throughput_toks_per_s{model_name="llama_65b"} 0
+# HELP avg_generation_throughput_toks_per_s Average generation throughput in tokens/s.
+# TYPE avg_generation_throughput_toks_per_s gauge
+avg_generation_throughput_toks_per_s{model_name="llama_65b"} 0
+# HELP failed_request_perc Requests failure rate. 1 means 100 percent usage.
+# TYPE failed_request_perc gauge
+failed_request_perc{model_name="llama_65b"} 0
+# HELP npu_cache_usage_perc NPU KV-cache usage. 1 means 100 percent usage.
+# TYPE npu_cache_usage_perc gauge
+npu_cache_usage_perc{model_name="llama_65b"} 0.1
+# HELP cpu_cache_usage_perc CPU KV-cache usage. 1 means 100 percent usage.
+# TYPE cpu_cache_usage_perc gauge
+cpu_cache_usage_perc{model_name="llama_65b"} 0.2
+# HELP npu_prefix_cache_hit_rate NPU prefix cache block hit rate..
+# TYPE npu_prefix_cache_hit_rate gauge
+npu_prefix_cache_hit_rate{model_name="llama_65b"} Nan
+# HELP time_to_first_token_seconds Histogram of time to first token in seconds.
+# TYPE time_to_first_token_seconds histogram
+time_to_first_token_seconds_count{model_name="llama_65b"} 3200
+time_to_first_token_seconds_sum{model_name="llama_65b"} 40070
+time_to_first_token_seconds_bucket{model_name="llama_65b",le="0.001"} 0
+time_to_first_token_seconds_bucket{model_name="llama_65b",le="0.005"} 0
+time_to_first_token_seconds_bucket{model_name="llama_65b",le="0.01"} 0
+time_to_first_token_seconds_bucket{model_name="llama_65b",le="0.02"} 0
+time_to_first_token_seconds_bucket{model_name="llama_65b",le="0.04"} 0
+time_to_first_token_seconds_bucket{model_name="llama_65b",le="0.06"} 32
+time_to_first_token_seconds_bucket{model_name="llama_65b",le="0.08"} 32
+time_to_first_token_seconds_bucket{model_name="llama_65b",le="0.1"} 32
+time_to_first_token_seconds_bucket{model_name="llama_65b",le="0.25"} 288
+time_to_first_token_seconds_bucket{model_name="llama_65b",le="0.5"} 512
+time_to_first_token_seconds_bucket{model_name="llama_65b",le="0.75"} 512
+time_to_first_token_seconds_bucket{model_name="llama_65b",le="1"} 512
+time_to_first_token_seconds_bucket{model_name="llama_65b",le="2.5"} 512
+time_to_first_token_seconds_bucket{model_name="llama_65b",le="5"} 1024
+time_to_first_token_seconds_bucket{model_name="llama_65b",le="7.5"} 1184
+time_to_first_token_seconds_bucket{model_name="llama_65b",le="10"} 1184
+time_to_first_token_seconds_bucket{model_name="llama_65b",le="+Inf"} 3200
+# HELP time_per_output_token_seconds Histogram of time per output token in seconds.
+# TYPE time_per_output_token_seconds histogram
+time_per_output_token_seconds_count{model_name="llama_65b"} 636800
+time_per_output_token_seconds_sum{model_name="llama_65b"} 57036.08000000001
+time_per_output_token_seconds_bucket{model_name="llama_65b",le="0.01"} 0
+time_per_output_token_seconds_bucket{model_name="llama_65b",le="0.025"} 563120
+time_per_output_token_seconds_bucket{model_name="llama_65b",le="0.05"} 583216
+time_per_output_token_seconds_bucket{model_name="llama_65b",le="0.075"} 606624
+time_per_output_token_seconds_bucket{model_name="llama_65b",le="0.1"} 613232
+time_per_output_token_seconds_bucket{model_name="llama_65b",le="0.15"} 620224
+time_per_output_token_seconds_bucket{model_name="llama_65b",le="0.2"} 623744
+time_per_output_token_seconds_bucket{model_name="llama_65b",le="0.3"} 627552
+time_per_output_token_seconds_bucket{model_name="llama_65b",le="0.4"} 628608
+time_per_output_token_seconds_bucket{model_name="llama_65b",le="0.5"} 629968
+time_per_output_token_seconds_bucket{model_name="llama_65b",le="0.75"} 632096
+time_per_output_token_seconds_bucket{model_name="llama_65b",le="1"} 632832
+time_per_output_token_seconds_bucket{model_name="llama_65b",le="2.5"} 633888
+time_per_output_token_seconds_bucket{model_name="llama_65b",le="+Inf"} 636800
+# HELP e2e_request_latency_seconds Histogram of end to end request latency in seconds.
+# TYPE e2e_request_latency_seconds histogram
+e2e_request_latency_seconds_count{model_name="llama_65b"} 3200
+e2e_request_latency_seconds_sum{model_name="llama_65b"} 97419.19999999998
+e2e_request_latency_seconds_bucket{model_name="llama_65b",le="1"} 0
+e2e_request_latency_seconds_bucket{model_name="llama_65b",le="2.5"} 0
+e2e_request_latency_seconds_bucket{model_name="llama_65b",le="5"} 256
+e2e_request_latency_seconds_bucket{model_name="llama_65b",le="10"} 336
+e2e_request_latency_seconds_bucket{model_name="llama_65b",le="15"} 672
+e2e_request_latency_seconds_bucket{model_name="llama_65b",le="20"} 944
+e2e_request_latency_seconds_bucket{model_name="llama_65b",le="30"} 1424
+e2e_request_latency_seconds_bucket{model_name="llama_65b",le="40"} 2160
+e2e_request_latency_seconds_bucket{model_name="llama_65b",le="50"} 2800
+e2e_request_latency_seconds_bucket{model_name="llama_65b",le="60"} 3200
+e2e_request_latency_seconds_bucket{model_name="llama_65b",le="+Inf"} 3200
+# HELP request_prompt_tokens Number of prefill tokens processed.
+# TYPE request_prompt_tokens histogram
+request_prompt_tokens_count{model_name="llama_65b"} 3200
+request_prompt_tokens_sum{model_name="llama_65b"} 630400
+request_prompt_tokens_bucket{model_name="llama_65b",le="10"} 0
+request_prompt_tokens_bucket{model_name="llama_65b",le="50"} 0
+request_prompt_tokens_bucket{model_name="llama_65b",le="100"} 0
+request_prompt_tokens_bucket{model_name="llama_65b",le="200"} 3200
+request_prompt_tokens_bucket{model_name="llama_65b",le="500"} 3200
+request_prompt_tokens_bucket{model_name="llama_65b",le="1000"} 3200
+request_prompt_tokens_bucket{model_name="llama_65b",le="2000"} 3200
+request_prompt_tokens_bucket{model_name="llama_65b",le="5000"} 3200
+request_prompt_tokens_bucket{model_name="llama_65b",le="10000"} 3200
+request_prompt_tokens_bucket{model_name="llama_65b",le="+Inf"} 3200
+# HELP request_generation_tokens Number of generation tokens processed.
+# TYPE request_generation_tokens histogram
+request_generation_tokens_count{model_name="llama_65b"} 3200
+request_generation_tokens_sum{model_name="llama_65b"} 640000
+request_generation_tokens_bucket{model_name="llama_65b",le="10"} 0
+request_generation_tokens_bucket{model_name="llama_65b",le="50"} 0
+request_generation_tokens_bucket{model_name="llama_65b",le="100"} 0
+request_generation_tokens_bucket{model_name="llama_65b",le="200"} 3200
+request_generation_tokens_bucket{model_name="llama_65b",le="500"} 3200
+request_generation_tokens_bucket{model_name="llama_65b",le="1000"} 3200
+request_generation_tokens_bucket{model_name="llama_65b",le="2000"} 3200
+request_generation_tokens_bucket{model_name="llama_65b",le="5000"} 3200
+request_generation_tokens_bucket{model_name="llama_65b",le="10000"} 3200
+request_generation_tokens_bucket{model_name="llama_65b",le="+Inf"} 3200

@@ -1,0 +1,6 @@
+{
+        "reqId":        "aaa",
+        "isStream":     true,
+        "isLastResp":   false,
+        "output":       "i am master Doctor"
+}

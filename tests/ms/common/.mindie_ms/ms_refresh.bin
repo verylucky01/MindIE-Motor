@@ -1,0 +1,100 @@
+{
+    "ids": [
+        67113388,
+        83890604,
+        100667820,
+        117445036
+    ],
+    "instances": [
+        {
+            "dynamic_info": {
+                "avail_block_num": 620,
+                "avail_slots_num": 195,
+                "peers": [
+                    100667820
+                ]
+            },
+            "id": 67113388,
+            "ip": "172.17.0.4",
+            "model_name": "llama3-8b",
+            "port": "1082",
+            "static_info": {
+                "block_size": 128,
+                "group_id": 0,
+                "label": 3,
+                "max_output_len": 512,
+                "max_seq_len": 2560,
+                "role": 68,
+                "total_block_num": 640,
+                "total_slots_num": 200,
+                "virtual_id": 67113388
+            }
+        },
+        {
+            "dynamic_info": {
+                "avail_block_num": 624,
+                "avail_slots_num": 196,
+                "peers": [
+                    100667820
+                ]
+            },
+            "id": 83890604,
+            "ip": "172.17.0.5",
+            "model_name": "llama3-8b",
+            "port": "1082",
+            "static_info": {
+                "block_size": 128,
+                "group_id": 0,
+                "label": 3,
+                "max_output_len": 512,
+                "max_seq_len": 2560,
+                "role": 68,
+                "total_block_num": 640,
+                "total_slots_num": 200,
+                "virtual_id": 83890604
+            }
+        },
+        {
+            "dynamic_info": {
+                "avail_block_num": 0,
+                "avail_slots_num": 0
+            },
+            "id": 100667820,
+            "ip": "172.17.0.6",
+            "model_name": "llama3-8b",
+            "port": "1082",
+            "static_info": {
+                "block_size": 128,
+                "group_id": 0,
+                "label": 2,
+                "max_output_len": 512,
+                "max_seq_len": 2560,
+                "role": 80,
+                "total_block_num": 640,
+                "total_slots_num": 200,
+                "virtual_id": 100667820
+            }
+        },
+        {
+            "dynamic_info": {
+                "avail_block_num": 228,
+                "avail_slots_num": 200
+            },
+            "id": 117445036,
+            "ip": "172.17.0.7",
+            "model_name": "llama3-8b",
+            "port": "1082",
+            "static_info": {
+                "block_size": 128,
+                "group_id": 0,
+                "label": 2,
+                "max_output_len": 512,
+                "max_seq_len": 2560,
+                "role": 80,
+                "total_block_num": 640,
+                "total_slots_num": 200,
+                "virtual_id": 117445036
+            }
+        }
+    ]
+}

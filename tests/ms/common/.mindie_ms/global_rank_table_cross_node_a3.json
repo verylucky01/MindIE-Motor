@@ -1,0 +1,113 @@
+{
+    "version": "1.0",
+    "status": "completed",
+    "server_group_list": [
+      {
+        "group_id": "0",
+        "server_count": "1",
+        "server_list": [
+          {
+            "server_id": "coordinator",
+            "server_ip": "127.0.0.98"
+          }
+        ]
+      },
+      {
+        "group_id": "1",
+        "server_count": "1",
+        "server_list": [
+          {
+            "server_id": "controller",
+            "server_ip": "127.0.0.97"
+          }
+        ]
+      },
+      {
+        "group_id": "2",
+        "server_count": "2",
+        "deploy_server": "0",
+        "server_list": [
+          {
+            "server_id": "127.0.0.1",
+            "server_ip": "127.0.0.2",
+            "device": [
+              {
+                "device_id": "0",
+                "device_ip": "10.0.0.2",
+                "device_logical_id": "0",
+                "rank_id": "0",
+                "super_device_id": "1234567"
+              }
+            ]
+          },
+          {
+            "server_id": "127.0.0.3",
+            "server_ip": "10.0.0.4",
+            "device": [
+              {
+                "device_id": "0",
+                "device_ip": "127.0.0.3",
+                "device_logical_id": "0",
+                "rank_id": "0",
+                "super_device_id": "1234569"
+              }
+            ]
+          }
+        ],
+        "super_pod_list": [
+          {
+            "super_pod_id": "0",
+            "server_list": [
+              {
+                "server_id": "127.0.0.1"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "group_id": "3",
+        "server_count": "2",
+        "deploy_server": "1",
+        "server_list": [
+          {
+            "server_id": "127.0.0.5",
+            "server_ip": "127.0.0.6",
+            "device": [
+              {
+                "device_id": "0",
+                "device_ip": "10.0.0.2",
+                "device_logical_id": "0",
+                "rank_id": "0",
+                "super_device_id": "1234562"
+              }
+            ]
+          },
+          {
+            "server_id": "127.0.0.7",
+            "server_ip": "127.0.0.8",
+            "device": [
+              {
+                "device_id": "0",
+                "device_ip": "10.0.0.3",
+                "device_logical_id": "0",
+                "rank_id": "0",
+                "super_device_id": "1234563"
+              }
+            ]
+          }
+        ],
+        "super_pod_list": [
+          {
+            "super_pod_id": "0",
+            "server_list": [
+              {
+                "server_id": "127.0.0.5"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+  

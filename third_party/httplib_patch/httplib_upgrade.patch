@@ -1,0 +1,14 @@
+--- httplib.h	2025-04-18 06:20:25.908000000 +0800
++++ httplib_fix.h	2025-04-18 06:20:18.524000000 +0800
+@@ -7223,9 +7223,8 @@
+     }
+   }
+ 
+-  // Setup `is_connection_closed` method
+-  req.is_connection_closed = [&]() {
+-    return !detail::is_socket_alive(strm.socket());
++  req.is_connection_closed = [strm_socket = strm.socket()]() {
++    return !detail::is_socket_alive(strm_socket);
+   };
+ 
+   // Routing

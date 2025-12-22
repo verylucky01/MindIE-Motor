@@ -1,0 +1,20 @@
+{
+        "inputs": "aaa",
+        "parameters": {
+            "decoder_input_details": true,
+            "details": true,
+            "do_sample": true,
+            "max_new_tritons": 20,
+            "max_new_tokens": 200,
+            "repetition_penalty": 1.03,
+            "return_full_text": false,
+            "seed": 0,
+            "temperature": 0.5,
+            "top_k": 10,
+            "top_p": 0.95,
+            "truncate": 0,
+            "typical_p": 0.5,
+            "watermark": false
+        },
+        "stream": false
+}

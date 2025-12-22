@@ -1,0 +1,18 @@
+{
+    "id": "abc",
+    "text_input": "test",
+    "parameters": {
+        "details": false,
+        "do_sample": false,
+        "max_new_tokens": 250,
+        "repetition_penalty": 1.1,
+        "seed": 123,
+        "temperature": 1,
+        "top_k": 10,
+        "top_p": 0.99,
+        "batch_size": 100,
+        "typical_p": 0.5,
+        "watermark": false,
+        "perf_stat": false
+    }
+}

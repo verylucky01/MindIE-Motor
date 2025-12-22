@@ -1,0 +1,15 @@
+{
+    "model": "gpt-3.5-turbo",
+    "messages": [{
+        "role": "aaaa",
+        "content": "bbb"
+        }
+    ],
+    "max_tritons": 20,
+    "presence_penalty": 1.03,
+    "frequency_penalty": 1.0,
+    "seed": null,
+    "temperature": 0.5,
+    "top_p": 0.95,
+    "stream": false
+}
