@@ -1,0 +1,42 @@
+{
+    "test_environment": [
+        {
+            "ip": "127.0.0.10",
+            "user": "root",
+            "container_name": "mindie_b092",
+            "mies_install_path": "/usr/local/Ascend/mindie/latest/mindie-service",
+            "RankTableFile": "rank_table_file.json"
+        },
+        {
+            "ip": "127.0.0.20",
+            "user": "root",
+            "container_name": "mindie_b092",
+            "mies_install_path": "/usr/local/Ascend/mindie/latest/mindie-service",
+            "RankTableFile": "rank_table_file.json"
+        }
+    ],
+    "test_cases": [
+        {
+            "case_id": 0,
+            "TestMode": 0,
+            "Http": "http://127.0.0.1:1025",
+            "ManagementHttp": "http://127.0.0.2:1026",
+            "DatasetPath": "GSM8K/",
+            "DatasetType": "gsm8k",
+            "ModelName": "deepseek_r1",
+            "ModelPath":[
+                "deepseek_r1",
+                "deepseek_r1"
+            ],
+            "Concurrency": 1000,
+            "RequestRate": 10,
+            "TestAccuracy": "True",
+            "Tokenizer": "True",
+            "MaxOutputLen": 256,
+            "config_path": [
+                "/usr/local/Ascend/mindie/latest/mindie-service/conf/config.json",
+                "/usr/local/Ascend/mindie/latest/mindie-service/conf/config.json"
+            ]
+        }
+    ]
+}

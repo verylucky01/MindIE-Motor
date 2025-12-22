@@ -1,0 +1,36 @@
+{
+    "version": "1.0",
+    "status": "completed",
+    "elastic_scaling_list": [
+        {
+            "group_list": [
+                {
+                    "group_name": "group0",
+                    "group_num": "2",
+                    "server_num_per_group": "1"
+                },
+                {
+                    "group_name": "group1",
+                    "group_num": "1",
+                    "server_num_per_group": "2"
+                }
+            ],
+            "server_count": "4"
+        },
+        {
+            "group_list": [
+                {
+                    "group_name": "group0",
+                    "group_num": "1",
+                    "server_num_per_group": "1"
+                },
+                {
+                    "group_name": "group1",
+                    "group_num": "1",
+                    "server_num_per_group": "2"
+                }
+            ],
+            "server_count": "3"
+        }
+    ]
+}

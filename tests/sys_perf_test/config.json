@@ -1,0 +1,43 @@
+{
+    "compile_environment": {
+        "compile_contianer_name": "compiler_py311",
+        "mindie_llm_run_path": "Ascend-mindie-llm_1.0.T76_py311_linux-aarch64.run"
+    },
+    "test_environment": {
+        "container_name": "mindie_b092",
+        "mies_install_path": "/usr/local/Ascend/mindie/latest/mindie-service"
+    },
+    "test_cases": [
+        {
+            "case_id": 0,
+            "TestMode": 0,
+            "Http": "http://127.0.0.1:1025",
+            "ManagementHttp": "http://127.0.0.2:1026",
+            "DatasetPath": "dataset_256_400",
+            "DatasetType": "gsm8k",
+            "ModelName": "qwen2.5-14b",
+            "ModelPath": "Qwen2.5-14B-Instruct",
+            "Concurrency": 1000,
+            "RequestRate": 10,
+            "TestAccuracy": "True",
+            "Tokenizer": "True",
+            "MaxOutputLen": 256,
+            "config_path": "/usr/local/Ascend/mindie/latest/mindie-service/conf/config.json"
+        },
+        {
+            "case_id": 1,
+            "TestMode": 0,
+            "Http": "http://127.0.0.1:1025",
+            "ManagementHttp": "http://127.0.0.2:1026",
+            "DatasetPath": "dataset_512_1400",
+            "DatasetType": "gsm8k",
+            "ModelName": "qwen2.5-14b",
+            "ModelPath": "Qwen2.5-14B-Instruct",
+            "Concurrency": 1000,
+            "RequestRate": 2.65,
+            "Tokenizer": "True",
+            "MaxOutputLen": 512,
+            "config_path": "/usr/local/Ascend/mindie/latest/mindie-service/conf/config.json"
+        }
+    ]
+}

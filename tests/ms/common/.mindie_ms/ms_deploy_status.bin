@@ -1,0 +1,11 @@
+{
+    "server_list": [
+        {
+            "namespace": "mindie",
+            "replicas": 0,
+            "server_name": "mindie-server",
+            "server_type": "mindie_cross_node",
+            "use_service": true
+        }
+    ]
+}

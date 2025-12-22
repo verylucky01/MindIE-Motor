@@ -1,0 +1,13 @@
+--- CMakeLists.txt	2024-09-25 13:55:06.207920594 +0800
++++ CMakeLists.txt.bak	2024-09-25 13:54:59.657921793 +0800
+@@ -46,7 +46,9 @@
+ option(gRPC_BUILD_TESTS "Build tests" OFF)
+ option(gRPC_BUILD_CODEGEN "Build codegen" ON)
+ option(gRPC_BACKWARDS_COMPATIBILITY_MODE "Build libraries that are binary compatible across a larger number of OS and libc versions" OFF)
+-
++set(CMAKE_VERBOSE_MAKEFILE ON)
++add_link_options(-s -Wl,-z,relro,-z,now)
++add_compile_options(-fstack-protector-all)
+ set(gRPC_INSTALL_default ON)
+ if(NOT CMAKE_SOURCE_DIR STREQUAL CMAKE_CURRENT_SOURCE_DIR)
+   # Disable gRPC_INSTALL by default if building as a submodule
