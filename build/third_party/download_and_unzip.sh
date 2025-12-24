@@ -125,7 +125,7 @@ unzip_spdlog() {
     fi
     echo "unzip spdlog..."
     unzip -qo "$THIRD_PARTY_ZIP_DIR"/spdlog.zip
-    mv spdlog-v1.x spdlog
+    mv spdlog-1.15.3 spdlog
 }
 
 unzip_hseceasy() {

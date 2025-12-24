@@ -101,7 +101,7 @@ mv libboundscheck-v1.1.16 libboundscheck
 
 echo "unzip spdlog..."
 unzip -qo "$THIRD_PARTY_ZIP_DIR"/spdlog.zip
-mv spdlog-v1.x spdlog
+mv spdlog-1.15.3 spdlog
 
 echo "unzip hseceasy..."
 mkdir -p hseceasy
