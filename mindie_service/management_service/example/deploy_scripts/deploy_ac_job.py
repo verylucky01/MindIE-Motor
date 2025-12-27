@@ -136,8 +136,6 @@ TLS_CONFIG = "tls_config"
 TLS_KEY = "tls_key"
 TLS_PASSWD = "tls_passwd"
 TLS_CRL = "tls_crl"
-KMC_KSF_STANDBY = "kmc_ksf_standby"
-KMC_KSF_MASTER = "kmc_ksf_master"
 MANAGEMENT_TLS_ITEMS = "management_tls_items"
 MANAGEMENT_TLS_ENABLE = "management_tls_enable"
 CLUSTER_TLS_ENABLE = "cluster_tls_enable"
@@ -1117,7 +1115,6 @@ def assign_cert_files(ms_tls_config, deploy_config_tls_config, cert_type, is_con
     :param ms_tls_config: ms config dict
     :param deploy_config_tls_config:  deploy_config
     :param cert_type: "infer"/"management"
-    :param is_controller: controller format, kmc_ksf_master, kmc_ksf_standby. coordinator, kmcKsfMaster, kmcKsfStandby
     :return: none
     """
     enable = deploy_config_tls_config[TLS_ENABLE]
@@ -1130,12 +1127,6 @@ def assign_cert_files(ms_tls_config, deploy_config_tls_config, cert_type, is_con
         ms_tls_config[TLS_KEY] = deploy_config_tls_config[type_key][TLS_KEY]
         ms_tls_config[TLS_PASSWD] = deploy_config_tls_config[type_key][TLS_PASSWD]
         ms_tls_config[TLS_CRL] = deploy_config_tls_config[type_key][TLS_CRL]
-        if is_controller:
-            ms_tls_config[KMC_KSF_MASTER] = deploy_config_tls_config[KMC_KSF_MASTER]
-            ms_tls_config[KMC_KSF_STANDBY] = deploy_config_tls_config[KMC_KSF_STANDBY]
-        else:
-            ms_tls_config["kmcKsfMaster"] = deploy_config_tls_config[KMC_KSF_MASTER]
-            ms_tls_config["kmcKsfStandby"] = deploy_config_tls_config[KMC_KSF_STANDBY]
 
 
 def update_controller_tls_info(modify_result_dict, deploy_config):
@@ -1272,8 +1263,6 @@ def update_server_tls_info(modify_result_dict, deploy_config):
     modify_result_dict[SERVER_CONFIG]["tlsPkPwd"] = deploy_config[TLS_CONFIG][key][TLS_PASSWD]
     modify_result_dict[SERVER_CONFIG]["tlsCrlPath"] = get_path_with_separator(deploy_config[TLS_CONFIG][key][TLS_CRL])
     modify_result_dict[SERVER_CONFIG]["tlsCrlFiles"] = get_crl_files(deploy_config[TLS_CONFIG][key][TLS_CRL])
-    modify_result_dict[SERVER_CONFIG]["kmcKsfMaster"] = deploy_config[TLS_CONFIG]["kmc_ksf_master"]
-    modify_result_dict[SERVER_CONFIG]["kmcKsfStandby"] = deploy_config[TLS_CONFIG]["kmc_ksf_standby"]
     modify_result_dict[SERVER_CONFIG]["httpsEnabled"] = deploy_config[TLS_CONFIG][TLS_ENABLE] \
         if deploy_config[TLS_CONFIG][TLS_ENABLE] is not None else deploy_config[TLS_CONFIG][INFER_TLS_ENABLE]
     # assign management TLS
@@ -1326,8 +1315,6 @@ def update_server_tls_info(modify_result_dict, deploy_config):
     modify_result_dict[BACKEND_CONFIG]["interNodeTlsCrlPath"] = get_path_with_separator(
         deploy_config[TLS_CONFIG][key][TLS_CRL])
     modify_result_dict[BACKEND_CONFIG]["interNodeTlsCrlFiles"] = get_crl_files(deploy_config[TLS_CONFIG][key][TLS_CRL])
-    modify_result_dict[BACKEND_CONFIG]["interNodeKmcKsfMaster"] = deploy_config[TLS_CONFIG]["kmc_ksf_master"]
-    modify_result_dict[BACKEND_CONFIG]["interNodeKmcKsfStandby"] = deploy_config[TLS_CONFIG]["kmc_ksf_standby"]
     modify_result_dict[BACKEND_CONFIG]["interNodeTLSEnabled"] = deploy_config[TLS_CONFIG][TLS_ENABLE] \
         if deploy_config[TLS_CONFIG][TLS_ENABLE] is not None else deploy_config[TLS_CONFIG][MANAGEMENT_TLS_ENABLE]
 

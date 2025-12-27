@@ -86,8 +86,6 @@
       "tls_cert": "./security/request_coordinator/security/certs/cert.pem",
       "tls_key": "./security/request_coordinator/security/keys/cert.key.pem",
       "tls_passwd": "./security/request_coordinator/security/pass/key_pwd.txt",
-      "kmc_ksf_master": "./security/request_coordinator/tools/pmt/master/ksfa",
-      "kmc_ksf_standby": "./security/request_coordinator/tools/pmt/standby/ksfb",
       "tls_crl": ""
     },
     "request_server_tls_enable": true,
@@ -96,8 +94,6 @@
       "tls_cert": "./security/request_server/security/certs/cert.pem",
       "tls_key": "./security/request_server/security/keys/cert.key.pem",
       "tls_passwd": "./security/request_server/security/pass/key_pwd.txt",
-      "kmc_ksf_master": "./security/request_server/tools/pmt/master/ksfa",
-      "kmc_ksf_standby": "./security/request_server/tools/pmt/standby/ksfb",
       "tls_crl": ""
     },
     "http_server_tls_enable": true,
@@ -106,8 +102,6 @@
       "tls_cert": "./security/http_server/security/certs/cert.pem",
       "tls_key": "./security/http_server/security/keys/cert.key.pem",
       "tls_passwd": "./security/http_server/security/pass/key_pwd.txt",
-      "kmc_ksf_master": "./security/http_server/tools/pmt/master/ksfa",
-      "kmc_ksf_standby": "./security/http_server/tools/pmt/standby/ksfb",
       "tls_crl": ""
     },
     "cluster_tls_enable": true,
@@ -116,8 +110,6 @@
       "tls_cert": "./security/cluster/security/certs/cert.pem",
       "tls_key": "./security/cluster/security/keys/cert.key.pem",
       "tls_passwd": "./security/cluster/security/pass/key_pwd.txt",
-      "kmc_ksf_master": "./security/cluster/tools/pmt/master/ksfa",
-      "kmc_ksf_standby": "./security/cluster/tools/pmt/standby/ksfb",
       "tls_crl": ""
     },
     "etcd_server_tls_enable": true,
@@ -126,8 +118,6 @@
       "tls_cert": "./security/etcd_server/security/certs/cert.pem",
       "tls_key": "./security/etcd_server/security/keys/cert.key.pem",
       "tls_passwd": "./security/etcd_server/security/pass/key_pwd.txt",
-      "kmc_ksf_master": "./security/etcd_server/tools/pmt/master/ksfa",
-      "kmc_ksf_standby": "./security/etcd_server/tools/pmt/standby/ksfb",
       "tls_crl": ""
     },
     "ccae_tls_enable": true,
@@ -136,8 +126,6 @@
       "tls_cert": "./security/ccae/security/certs/cert.pem",
       "tls_key": "./security/ccae/security/keys/cert.key.pem",
       "tls_passwd": "./security/ccae/security/pass/key_pwd.txt",
-      "kmc_ksf_master": "./security/ccae/tools/pmt/master/ksfa",
-      "kmc_ksf_standby": "./security/ccae/tools/pmt/standby/ksfb",
       "tls_crl": ""
     },
     "alarm_tls_enable": true,
@@ -146,8 +134,6 @@
       "tls_cert": "./security/alarm_server/security/certs/cert.pem",
       "tls_key": "./security/alarm_server/security/keys/cert.key.pem",
       "tls_passwd": "./security/alarm_server/security/pass/key_pwd.txt",
-      "kmc_ksf_master": "./security/alarm_server/tools/pmt/master/ksfa",
-      "kmc_ksf_standby": "./security/alarm_server/tools/pmt/standby/ksfb",
       "tls_crl": ""
     },
     "external_coordinator_tls_enable": true,
@@ -156,8 +142,6 @@
       "tls_cert": "./security/external_coordinator/security/certs/cert.pem",
       "tls_key": "./security/external_coordinator/security/keys/cert.key.pem",
       "tls_passwd": "./security/external_coordinator/security/pass/key_pwd.txt",
-      "kmc_ksf_master": "./security/external_coordinator/tools/pmt/master/ksfa",
-      "kmc_ksf_standby": "./security/external_coordinator/tools/pmt/standby/ksfb",
       "tls_crl": ""
     }
   },

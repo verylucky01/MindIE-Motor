@@ -20,7 +20,6 @@
 #include <thread>
 #include "gtest/gtest.h"
 #include "Logger.h"
-#include "hse_cryptor.h"
 #include "Helper.h"
 #include "stub.h"
 
@@ -513,8 +512,6 @@ TEST_F(LoggerTest, LogEnvStrAbsolutePathInitSuccess)
     const char* originalHomeEnv = std::getenv("HOME");
     std::string homeEnv = "/root";
     setenv(ENV_HOME, homeEnv.c_str(), 1);
-    Stub stub;
-    stub.set(ADDR(ock::hse::HseCryptor, SetExternalLogger), ReturnZeroStub);
     {
         std::string logPath = "~/testMsLogPath   ; rt: ./";
         setenv(ENV_PATH, logPath.c_str(), 1);
@@ -544,7 +541,6 @@ TEST_F(LoggerTest, LogEnvStrAbsolutePathInitSuccess)
         EXPECT_EQ(logger.mLogPath[LogType::RUN].find("/root/mindie/log/debug/mindie-ms"), 0);
         EXPECT_EQ(logger.mLogPath[LogType::OPERATION].find("/root/mindie/log/security/mindie-ms"), 0);
     }
-    stub.reset(ADDR(ock::hse::HseCryptor, SetExternalLogger));
     if (originalHomeEnv == nullptr) {
         unsetenv(ENV_HOME);
     } else {
@@ -572,8 +568,6 @@ TEST_F(LoggerTest, LogEnvStrRelativePathInitSuccess)
     std::string homeEnv = "/root";
     unsetenv(ENV_HOME);
     setenv(ENV_HOME, homeEnv.c_str(), 1);
-    Stub stub;
-    stub.set(ADDR(ock::hse::HseCryptor, SetExternalLogger), ReturnZeroStub);
     {
         std::string logPath = "testMsLogPath";
         unsetenv(ENV_PATH);
@@ -604,7 +598,6 @@ TEST_F(LoggerTest, LogEnvStrRelativePathInitSuccess)
         EXPECT_EQ(logger.mLogPath[LogType::RUN].find("/root/mindie/log/debug/mindie-ms"), 0);
         EXPECT_EQ(logger.mLogPath[LogType::OPERATION].find("/root/mindie/log/security/mindie-ms"), 0);
     }
-    stub.reset(ADDR(ock::hse::HseCryptor, SetExternalLogger));
     if (originalHomeEnv == nullptr) {
         unsetenv(ENV_HOME);
     } else {
@@ -633,11 +626,8 @@ TEST_F(LoggerTest, LogEnvStrPathInitFailed)
         unsetenv(ENV_PATH);
         unsetenv(ENV_HOME);
         setenv(ENV_PATH, logPath.c_str(), 1);
-        Stub stub;
-        stub.set(ADDR(ock::hse::HseCryptor, SetExternalLogger), ReturnZeroStub);
         auto result = logger.Init(defaultLogConfig, {}, "");
         EXPECT_EQ(result, -1);
-        stub.reset(ADDR(ock::hse::HseCryptor, SetExternalLogger));
         unsetenv(ENV_PATH);
     }
     {
@@ -647,11 +637,8 @@ TEST_F(LoggerTest, LogEnvStrPathInitFailed)
         unsetenv(ENV_HOME);
         setenv(ENV_PATH, logPath.c_str(), 1);
         setenv(ENV_HOME, homeEnv.c_str(), 1);
-        Stub stub;
-        stub.set(ADDR(ock::hse::HseCryptor, SetExternalLogger), ReturnZeroStub);
         auto result = logger.Init(defaultLogConfig, {}, "");
         EXPECT_EQ(result, -1);
-        stub.reset(ADDR(ock::hse::HseCryptor, SetExternalLogger));
         unsetenv(ENV_PATH);
     }
     if (originalHomeEnv == nullptr) {
@@ -678,10 +665,7 @@ TEST_F(LoggerTest, LogNoEnvStrPathInitFailed)
     {
         unsetenv(ENV_PATH);
         unsetenv(ENV_HOME);
-        Stub stub;
-        stub.set(ADDR(ock::hse::HseCryptor, SetExternalLogger), ReturnZeroStub);
         auto result = logger.Init(defaultLogConfig, {}, "");
-        stub.reset(ADDR(ock::hse::HseCryptor, SetExternalLogger));
         EXPECT_EQ(result, -1);
     }
     if (originalHomeEnv == nullptr) {
@@ -710,8 +694,6 @@ TEST_F(LoggerTest, LogEnvConfigFileCompatibility)
     std::string homeEnv = "/root";
     unsetenv(ENV_HOME);
     setenv(ENV_HOME, homeEnv.c_str(), 1);
-    Stub stub;
-    stub.set(ADDR(ock::hse::HseCryptor, SetExternalLogger), ReturnZeroStub);
     {
         std::string logPath = "/root/testMsLogPathEnv";
         setenv(ENV_PATH, logPath.c_str(), 1);
@@ -739,7 +721,6 @@ TEST_F(LoggerTest, LogEnvConfigFileCompatibility)
         EXPECT_EQ(logger.mLogPath[LogType::RUN].find("/root/testMsLogPathFile"), 0);
         EXPECT_EQ(logger.mLogPath[LogType::OPERATION].find("/root/testMsLogPathFile"), 0);
     }
-    stub.reset(ADDR(ock::hse::HseCryptor, SetExternalLogger));
     if (originalHomeEnv == nullptr) {
         unsetenv(ENV_HOME);
     } else {
@@ -1032,8 +1013,6 @@ TEST_F(LoggerTest, LogRotateWrite)
     std::string runLogName = "test_rotate_run_" + GetLocalTimeNow();  // 时间戳防重名
     std::string operationLogName = "test_rotate_operation_" + GetLocalTimeNow();
 
-    Stub stub;
-    stub.set(ADDR(ock::hse::HseCryptor, SetExternalLogger), ReturnZeroStub);
     defaultLogConfig.option.toFile = true;
     defaultLogConfig.option.toStdout = true;
     defaultLogConfig.maxLogStrSize = 512; // 512: max string size of a log message
@@ -1041,7 +1020,6 @@ TEST_F(LoggerTest, LogRotateWrite)
     defaultLogConfig.runLogPath = dirPath + "/" + runLogName + ".log";
     defaultLogConfig.operationLogPath = dirPath + "/" + operationLogName + ".log";
     auto result = logger.Init(defaultLogConfig, {}, "");
-    stub.reset(ADDR(ock::hse::HseCryptor, SetExternalLogger));
     EXPECT_EQ(result, 0);
 
     logger.mMaxLogFileNum = mMaxLogFileNum;  // 最大文件数
@@ -1075,8 +1053,6 @@ TEST_F(LoggerTest, LogRotateWrite)
 */
 TEST_F(LoggerTest, LogInitLogFileStub)
 {
-    Stub hseStub;
-    hseStub.set(ADDR(ock::hse::HseCryptor, SetExternalLogger), ReturnZeroStub);
     std::string dirPath = GetParentPath(GetExecutablePath());
     defaultLogConfig.option = {true, true};
     defaultLogConfig.logLevel = "DEBUG";
@@ -1120,7 +1096,6 @@ TEST_F(LoggerTest, LogInitLogFileStub)
         EXPECT_EQ(result, -1);
         stub.reset(chmod);
     }
-    hseStub.reset(ADDR(ock::hse::HseCryptor, SetExternalLogger));
 }
 
 /*
@@ -1140,9 +1115,7 @@ TEST_F(LoggerTest, LogInitLogFileStub)
 */
 TEST_F(LoggerTest, LogLogStub)
 {
-    Stub hseStub;
     Stub stub;
-    hseStub.set(ADDR(ock::hse::HseCryptor, SetExternalLogger), ReturnZeroStub);
     uint32_t maxLogStrSize = 512;   // 单条日志最大长度512
     std::string dirPath = GetParentPath(GetExecutablePath());
     defaultLogConfig.option.toFile = true;
@@ -1199,8 +1172,6 @@ TEST_F(LoggerTest, LogLogStub)
     auto ret5 = logger.Log(LogType::RUN, LogLevel::MINDIE_LOG_ERROR, "a message");
     EXPECT_EQ(ret5, -1);
     stub.reset(chmod);
-
-    hseStub.reset(ADDR(ock::hse::HseCryptor, SetExternalLogger));
 }
 
 static std::time_t GetTimeStampAfterDay()

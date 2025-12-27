@@ -5,8 +5,6 @@
           "tls_cert": "./security/http_client/certs/cert.pem",
           "tls_key": "./security/http_client/keys/cert.key.pem",
           "tls_passwd": "./security/http_client/pass/key_pwd.txt",
-          "kmc_ksf_master": "./tools/pmt/master/ksfa",
-          "kmc_ksf_standby": "./tools/pmt/standby/ksfb",
           "tls_crl": ""
      },
      "log_info": {

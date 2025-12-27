@@ -270,17 +270,11 @@ std::string SetMSServerJsonDefault(const std::string& jsonPath)
         CreateFile(tls_key, "tls_key");
         auto tls_crl = JoinPathComponents({exeDir, "cert_dir", items + "_tls_crl.crl"});
         CreateFile(tls_crl, "tls_crl");
-        auto kmcKsfMaster = JoinPathComponents({exeDir, "cert_dir", items + "_kmcKsfMaster"});
-        CreateFile(kmcKsfMaster, "kmcKsfMaster");
-        auto kmcKsfStandby = JoinPathComponents({exeDir, "cert_dir", items + "_kmcKsfStandby"});
-        CreateFile(kmcKsfStandby, "kmcKsfStandby");
         manager.SetList({items, "ca_cert"}, ca_cert);
         manager.SetList({items, "tls_cert"}, tls_cert);
         manager.SetList({items, "tls_key"}, tls_key);
         manager.SetList({items, "tls_passwd"}, "aaaa");
         manager.SetList({items, "tls_crl"}, tls_crl);
-        manager.SetList({items, "kmcKsfMaster"}, kmcKsfMaster);
-        manager.SetList({items, "kmcKsfStandby"}, kmcKsfStandby);
     };
 
     mode_t oldMask = umask(0277);

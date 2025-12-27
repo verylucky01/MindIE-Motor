@@ -27,12 +27,10 @@ include_directories(
     ${BUILD_MIES_3RDPARTY_INSTALL_DIR}/libboundscheck/include
     ${BUILD_MIES_3RDPARTY_INSTALL_DIR}/nlohmann-json/include
     ${BUILD_MIES_3RDPARTY_INSTALL_DIR}/openssl/include
-    ${BUILD_MIES_3RDPARTY_INSTALL_DIR}/hseceasy/include
 )
 
 link_directories(
     ${BUILD_MIES_3RDPARTY_INSTALL_DIR}/libboundscheck/lib
-    ${BUILD_MIES_3RDPARTY_INSTALL_DIR}/hseceasy/lib
     ${BUILD_MIES_3RDPARTY_INSTALL_DIR}/openssl/lib
 )
 
@@ -52,7 +50,7 @@ file(GLOB util_http_client_ctl_files
 )
 
 add_executable(http_client_ctl ${util_http_client_ctl_files})
-target_link_libraries(http_client_ctl crypto ssl boundscheck pthread hse_cryption -ldl)
+target_link_libraries(http_client_ctl crypto ssl boundscheck pthread -ldl)
 
 install(TARGETS http_client_ctl DESTINATION bin)
 install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/config/http_client_ctl.json DESTINATION config)

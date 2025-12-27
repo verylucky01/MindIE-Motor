@@ -32,7 +32,6 @@
 #include "Helper.h"
 #include "ConfigParams.h"
 #include "Logger.h"
-#include "hse_cryptor.h"
 
 using namespace std;
 using namespace testing;
@@ -40,7 +39,6 @@ using ::testing::_;
 using ::testing::Return;
 using namespace MINDIE::MS;
 using json = nlohmann::json;
-using namespace ock::hse;
 
 class ConfigParamsTest : public ::testing::Test {
 protected:
@@ -427,9 +425,7 @@ TEST_F(ConfigParamsTest, DecryptPassword_DecryptFailed)
     tlsConfig.tlsPasswd = GetAbsolutePath(parentPath, "tests/ms/common/certificate/msctl/security/pass/key_pwd.txt");
 
     Stub stub;
-    stub.set(HseCryptor::Decrypt, ReturnOneStub);
     EXPECT_FALSE(DecryptPassword(domainId, password, tlsConfig));
-    stub.reset(HseCryptor::Decrypt);
 }
 
 /*

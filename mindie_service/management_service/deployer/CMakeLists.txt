@@ -24,7 +24,7 @@ file(GLOB ms_server_source_files
 set(MS_SERVER_SOURCE ${ms_server_source_files} ${CMAKE_CURRENT_SOURCE_DIR}/server/main.cpp)
 
 add_executable(ms_server ${MS_SERVER_SOURCE})
-target_link_libraries(ms_server crypto ssl boundscheck pthread hse_cryption -ldl)
+target_link_libraries(ms_server crypto ssl boundscheck pthread -ldl)
 
 file(GLOB msctl_source_files
     ${CMAKE_CURRENT_SOURCE_DIR}/msctl/main.cpp
@@ -36,7 +36,7 @@ file(GLOB msctl_source_files
 
 set(MS_CTL_SOURCE ${msctl_source_files})
 add_executable(msctl ${MS_CTL_SOURCE})
-target_link_libraries(msctl crypto ssl boundscheck pthread hse_cryption -ldl)
+target_link_libraries(msctl crypto ssl boundscheck pthread -ldl)
 
 install(TARGETS msctl DESTINATION bin)
 install(TARGETS ms_server DESTINATION bin)

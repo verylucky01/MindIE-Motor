@@ -103,7 +103,7 @@ set(_REFLECTION gRPC::grpc++_reflection)
 set(_GRPC_GRPCPP gRPC::grpc++)
 
 add_executable(ms_controller ${MS_CONTROLLER_SOURCE})
-target_link_libraries(ms_controller crypto ssl boundscheck pthread hse_cryption -ldl ${_REFLECTION} ${_GRPC_GRPCPP} ${_PROTOBUF_LIBPROTOBUF})
+target_link_libraries(ms_controller crypto ssl boundscheck pthread -ldl ${_REFLECTION} ${_GRPC_GRPCPP} ${_PROTOBUF_LIBPROTOBUF})
 
 install(TARGETS ms_controller DESTINATION bin)
 

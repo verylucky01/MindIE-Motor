@@ -27,10 +27,8 @@
 #include <securec.h>
 #include <pwd.h>
 #include "Util.h"
-#include "hse_cryptor.h"
 namespace MINDIE {
 namespace MS {
-using namespace ock::hse;
 constexpr const char* ENV_LEVEL = "MINDIE_LOG_LEVEL";
 constexpr const char* ENV_FILE = "MINDIE_LOG_TO_FILE";
 constexpr const char* ENV_STDOUT = "MINDIE_LOG_TO_STDOUT";
@@ -636,28 +634,6 @@ int32_t Logger::InitLogFile(LogType type, const std::string &logPath)
     return 0;
 }
 
-static std::vector<LogLevel> g_HseLogToMSLogLevel { LogLevel::MINDIE_LOG_DEBUG,
-                                                                      LogLevel::MINDIE_LOG_DEBUG,
-                                                                      LogLevel::MINDIE_LOG_INFO,
-                                                                      LogLevel::MINDIE_LOG_WARN,
-                                                                      LogLevel::MINDIE_LOG_ERROR };
-
-static LogLevel SeceasyLogToUlogLevel(uint32_t level)
-{
-    if (level >= g_HseLogToMSLogLevel.size()) {
-        return LogLevel::MINDIE_LOG_ERROR;
-    }
-
-    return g_HseLogToMSLogLevel[level];
-}
-
-static void HseSeceasyLog(int level, const char *msg)
-{
-    auto ulogLevel = SeceasyLogToUlogLevel(level);
-    LOG(LogType::RUN, ulogLevel, msg);
-}
-
-
 int32_t Logger::Init(DefaultLogConfig defaultLogConfig, const nlohmann::json &logFileConfig, std::string configFilePath)
 {
     std::string logLevel = defaultLogConfig.logLevel;
@@ -676,11 +652,6 @@ int32_t Logger::Init(DefaultLogConfig defaultLogConfig, const nlohmann::json &lo
         GetLogPath(runLogPath, LogType::RUN, option.subModule, logFileConfig, configFilePath)) != 0 ||
         InitLogFile(LogType::OPERATION,
         GetLogPath(operationLogPath, LogType::OPERATION, option.subModule, logFileConfig, configFilePath)) != 0) {
-        return -1;
-    }
-    if (HseCryptor::SetExternalLogger(HseSeceasyLog) != 0) {
-        LOG_E("[%s] [Logger] Failed to register hse log",
-            GetErrorCode(ErrorType::CALL_ERROR, CommonFeature::LOGGER).c_str());
         return -1;
     }
     mIsLogFileReady = true;

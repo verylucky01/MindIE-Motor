@@ -46,6 +46,6 @@ list(REMOVE_ITEM DEPLOYER_SRCS_FILES "${MINDIE_MS_SRC_ROOT}/common/ConfigParams.
 
 add_executable(mindie_ms_deployer_ut ${DEPLOYER_SRCS_FILES}  ${TEST_MAIN_SRC})
 target_link_libraries(mindie_ms_deployer_ut  gtest)
-target_link_libraries(mindie_ms_deployer_ut crypto ssl boundscheck hse_cryption)
+target_link_libraries(mindie_ms_deployer_ut crypto ssl boundscheck)
 
 target_link_libraries(mindie_ms_deployer_ut dl pthread)

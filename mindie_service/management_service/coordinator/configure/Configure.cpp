@@ -484,9 +484,7 @@ static bool IsTlsValid(const nlohmann::json &mainObj, const std::string &tlsEnab
             !IsJsonStringValid(mainObj[tlsItemName], "tls_cert") ||
             !IsJsonStringValid(mainObj[tlsItemName], "tls_key") ||
             !IsJsonStringValid(mainObj[tlsItemName], "tls_passwd") ||
-            !IsJsonStringValid(mainObj[tlsItemName], "tls_crl", 0) ||
-            !IsJsonStringValid(mainObj[tlsItemName], "kmcKsfMaster") ||
-            !IsJsonStringValid(mainObj[tlsItemName], "kmcKsfStandby")) {
+            !IsJsonStringValid(mainObj[tlsItemName], "tls_crl", 0)) {
             return false;
         }
     }
@@ -512,8 +510,6 @@ static void ReadTlsItems(const nlohmann::json &config, std::string itemsStr, Tls
     items.tlsKey = config[itemsStr]["tls_key"];
     items.tlsCrl = config[itemsStr]["tls_crl"];
     items.tlsPasswd = config[itemsStr]["tls_passwd"];
-    items.kmcKsfMaster = config[itemsStr]["kmcKsfMaster"];
-    items.kmcKsfStandby = config[itemsStr]["kmcKsfStandby"];
 }
 
 int32_t Configure::ReadTlsConfig(const nlohmann::json &config)

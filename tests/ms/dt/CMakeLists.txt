@@ -53,7 +53,6 @@ include_directories(
     ${BUILD_MIES_3RDPARTY_INSTALL_DIR}/libboundscheck/include
     ${BUILD_MIES_3RDPARTY_INSTALL_DIR}/nlohmann-json/include
     ${BUILD_MIES_3RDPARTY_INSTALL_DIR}/openssl/include
-    ${BUILD_MIES_3RDPARTY_INSTALL_DIR}/hseceasy/include
     ${BUILD_MIES_3RDPARTY_INSTALL_DIR}/grpc/include
 
     ${HTTP_CLIENT_CTL_DIR}/log
@@ -78,7 +77,6 @@ endif()
 link_directories(
     ${BUILD_MIES_3RDPARTY_INSTALL_DIR}/googletest/lib
     ${BUILD_MIES_3RDPARTY_INSTALL_DIR}/libboundscheck/lib
-    ${BUILD_MIES_3RDPARTY_INSTALL_DIR}/hseceasy/lib
     ${BUILD_MIES_3RDPARTY_INSTALL_DIR}/openssl/lib
     ${BUILD_MIES_3RDPARTY_INSTALL_DIR}/grpc/lib
     ${BUILD_MINDIE_SERVICE_INSTALL_DIR}/lib

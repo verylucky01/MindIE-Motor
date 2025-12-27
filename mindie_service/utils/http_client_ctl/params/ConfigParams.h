@@ -44,8 +44,6 @@ struct TlsItems {
     std::string tlsCert;
     std::string tlsKey;
     std::string tlsPasswd;
-    std::string kmcKsfMaster;
-    std::string kmcKsfStandby;
     std::string tlsCrl;
 };
 

@@ -32,9 +32,7 @@ static bool IsTlsItemsValid(const nlohmann::json &mainObj, const std::string &tl
             !IsJsonStringValid(mainObj[tlsItemName], "tls_cert") ||
             !IsJsonStringValid(mainObj[tlsItemName], "tls_key") ||
             !IsJsonStringValid(mainObj[tlsItemName], "tls_passwd", 0) ||
-            !IsJsonStringValid(mainObj[tlsItemName], "tls_crl", 0) ||
-            !IsJsonStringValid(mainObj[tlsItemName], "kmcKsfMaster") ||
-            !IsJsonStringValid(mainObj[tlsItemName], "kmcKsfStandby")) {
+            !IsJsonStringValid(mainObj[tlsItemName], "tls_crl", 0)) {
             return false;
         }
     }
@@ -54,9 +52,7 @@ static bool IsJsonValid(const nlohmann::json &mainObj)
         !IsJsonStringValid(mainObj[tlsItemName], "tls_cert") ||
         !IsJsonStringValid(mainObj[tlsItemName], "tls_key") ||
         !IsJsonStringValid(mainObj[tlsItemName], "tls_passwd", 0) ||
-        !IsJsonStringValid(mainObj[tlsItemName], "tls_crl", 0) ||
-        !IsJsonStringValid(mainObj[tlsItemName], "kmcKsfMaster") ||
-        !IsJsonStringValid(mainObj[tlsItemName], "kmcKsfStandby")) {
+        !IsJsonStringValid(mainObj[tlsItemName], "tls_crl", 0)) {
         return false;
     }
     if (!IsTlsItemsValid(mainObj, "client_k8s_tls_enable", "client_k8s_tls_items")) {
@@ -86,8 +82,6 @@ static int32_t ObtainJsonValue(nlohmann::json mainObj, HttpClientParams &clientP
         httpServerParams.serverTlsItems.tlsKey = mainObj["server_tls_items"]["tls_key"];
         httpServerParams.serverTlsItems.tlsPasswd = mainObj["server_tls_items"]["tls_passwd"];
         httpServerParams.serverTlsItems.tlsCrl = mainObj["server_tls_items"]["tls_crl"];
-        httpServerParams.serverTlsItems.kmcKsfMaster = mainObj["server_tls_items"]["kmcKsfMaster"];
-        httpServerParams.serverTlsItems.kmcKsfStandby = mainObj["server_tls_items"]["kmcKsfStandby"];
     }
     clientParams.k8sIP = mainObj["k8s_apiserver_ip"];
     clientParams.k8sPort = mainObj["k8s_apiserver_port"];
@@ -103,8 +97,6 @@ static int32_t ObtainJsonValue(nlohmann::json mainObj, HttpClientParams &clientP
         clientParams.k8sClientTlsItems.tlsKey = mainObj["client_k8s_tls_items"]["tls_key"];
         clientParams.k8sClientTlsItems.tlsCrl = mainObj["client_k8s_tls_items"]["tls_crl"];
         clientParams.k8sClientTlsItems.tlsPasswd = mainObj["client_k8s_tls_items"]["tls_passwd"];
-        clientParams.k8sClientTlsItems.kmcKsfMaster = mainObj["client_k8s_tls_items"]["kmcKsfMaster"];
-        clientParams.k8sClientTlsItems.kmcKsfStandby = mainObj["client_k8s_tls_items"]["kmcKsfStandby"];
     }
     clientParams.mindieClientTlsItems.tlsEnable = mainObj["client_mindie_server_tls_enable"];
     if (mainObj["client_mindie_server_tls_enable"]) {
@@ -113,8 +105,6 @@ static int32_t ObtainJsonValue(nlohmann::json mainObj, HttpClientParams &clientP
         clientParams.mindieClientTlsItems.tlsKey = mainObj["client_mindie_tls_items"]["tls_key"];
         clientParams.mindieClientTlsItems.tlsCrl = mainObj["client_mindie_tls_items"]["tls_crl"];
         clientParams.mindieClientTlsItems.tlsPasswd = mainObj["client_mindie_tls_items"]["tls_passwd"];
-        clientParams.mindieClientTlsItems.kmcKsfMaster = mainObj["client_mindie_tls_items"]["kmcKsfMaster"];
-        clientParams.mindieClientTlsItems.kmcKsfStandby = mainObj["client_mindie_tls_items"]["kmcKsfStandby"];
     }
     return 0;
 }

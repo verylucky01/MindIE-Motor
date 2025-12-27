@@ -44,8 +44,6 @@ static void AssignParams(nlohmann::json mainObj, ProbeCtlParams &params)
     params.clientTlsItems.tlsCert = mainObj["cert"]["tls_cert"];
     params.clientTlsItems.tlsKey = mainObj["cert"]["tls_key"];
     params.clientTlsItems.tlsPasswd = mainObj["cert"]["tls_passwd"];
-    params.clientTlsItems.kmcKsfMaster = mainObj["cert"]["kmc_ksf_master"];
-    params.clientTlsItems.kmcKsfStandby = mainObj["cert"]["kmc_ksf_standby"];
     if (mainObj["cert"].count("tls_crl") > 0) {
         params.clientTlsItems.tlsCrl = mainObj["cert"]["tls_crl"];
     }
@@ -61,8 +59,6 @@ static int32_t CheckConfigJsonValid(const nlohmann::json &mainObj)
         !IsJsonStringValid(mainObj["cert"], "tls_cert") ||
         !IsJsonStringValid(mainObj["cert"], "tls_key") ||
         !IsJsonStringValid(mainObj["cert"], "tls_passwd") ||
-        !IsJsonStringValid(mainObj["cert"], "kmc_ksf_master") ||
-        !IsJsonStringValid(mainObj["cert"], "kmc_ksf_standby") ||
         !IsJsonStringValid(mainObj["cert"], "tls_crl", 0)) {
         return -1;
     }

@@ -24,8 +24,6 @@ TLS_KEY = "tls_key"
 TLS_CRL = "tls_crl"
 TLS_PASSWD = "tls_passwd"
 TLS_ENABLE = "tls_enable"
-KMC_KSF_MASTER = "kmc_ksf_master"
-KMC_KSF_STANDBY = "kmc_ksf_standby"
 CA_CERT = "ca_cert"
 CLUSTER_TLS_ITEMS = "cluster_tls_items"
 MANAGEMENT_TLS_ITEMS = "management_tls_items"
@@ -78,9 +76,6 @@ def validate_deploy_config(config_dict):
     is_valid_bool("infer_tls_enable", deploy_config[TLS_CONFIG]["infer_tls_enable"])
     is_valid_bool("management_tls_enable", deploy_config[TLS_CONFIG]["management_tls_enable"])
 
-    is_valid_path("tls_config_kmc_ksf_master", deploy_config[TLS_CONFIG][KMC_KSF_MASTER])
-    is_valid_path("tls_config_kmc_ksf_standby", deploy_config[TLS_CONFIG][KMC_KSF_STANDBY])
-
     is_valid_path("infer_ca_cert", deploy_config[TLS_CONFIG][INFER_TLS_ITEMS][CA_CERT])
     is_valid_path("infer_tls_cert", deploy_config[TLS_CONFIG][INFER_TLS_ITEMS][TLS_CERT])
     is_valid_path("infer_tls_key", deploy_config[TLS_CONFIG][INFER_TLS_ITEMS][TLS_KEY])
@@ -103,8 +98,6 @@ def validate_deploy_config(config_dict):
     is_valid_path("etcd_server_tls_cert", deploy_config[TLS_CONFIG][ETCD_SERVER_TLS_ITEMS][TLS_CERT])
     is_valid_path("etcd_server_tls_key", deploy_config[TLS_CONFIG][ETCD_SERVER_TLS_ITEMS][TLS_KEY])
     is_valid_path("etcd_server_tls_passwd", deploy_config[TLS_CONFIG][ETCD_SERVER_TLS_ITEMS][TLS_PASSWD])
-    is_valid_path("etcd_server_kmc_ksf_master", deploy_config[TLS_CONFIG][ETCD_SERVER_TLS_ITEMS][KMC_KSF_MASTER])
-    is_valid_path("etcd_server_kmc_ksf_standby", deploy_config[TLS_CONFIG][ETCD_SERVER_TLS_ITEMS][KMC_KSF_STANDBY])
     is_valid_str("etcd_server_tls_crl", deploy_config[TLS_CONFIG][ETCD_SERVER_TLS_ITEMS][TLS_CRL], 0, 128)
 
 

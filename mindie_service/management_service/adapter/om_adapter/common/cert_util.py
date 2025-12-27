@@ -72,23 +72,7 @@ class AdapterCertUtil:
             SSL_MUST_KEYS.append(TLS_CRL)
         _check_invalid_ssl_path(config)
         _check_invalid_ssl_filesize(config)
-        libhse_cryption_so_path = os.path.join(os.getenv("MIES_INSTALL_PATH"), "lib", "libhse_cryption.so")
-        if not PathCheck.check_path_full(libhse_cryption_so_path):
-            raise RuntimeError("Failed to check libhse_cryption.so.")
-        if not PathCheck.check_path_full(config["tls_passwd"]):
-            raise RuntimeError("Failed to check ccae tls_passwd")
 
         with safe_open(config["tls_passwd"]) as f:
-            cipher_text = f.read().strip()
-
-        lib = ctypes.CDLL(libhse_cryption_so_path)
-        lib.Decrypt.argtypes = [c_char_p, c_char_p, c_char_p, c_char_p]
-        lib.Decrypt.restype = None
-
-        plain_text = ctypes.create_string_buffer(33)
-        lib.Decrypt(cipher_text.encode(), plain_text, config["kmc_ksf_master"].encode(),
-                    config["kmc_ksf_standby"].encode())
-        password = plain_text.value.decode()
-        ctypes.memset(plain_text, 0, len(plain_text))
-        del plain_text
-        return password
+            return f.read().strip()
+        return None

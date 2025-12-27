@@ -19,7 +19,6 @@
 #include <arpa/inet.h> // for inet_pton
 #include "securec.h"
 #include "Logger.h"
-#include "hse_cryptor.h"
 #include "ConfigParams.h"
 
 namespace MINDIE {
@@ -36,8 +35,6 @@ static constexpr const char* ALLOWED_URLS[] = {
     "/stopService"
 };
 static constexpr size_t ALLOWED_URLS_COUNT = sizeof(ALLOWED_URLS) / sizeof(ALLOWED_URLS[0]);
-
-using namespace ock::hse;
 
 int32_t DumpStringToFile(const std::string &filePath, const std::string &data)
 {
@@ -589,34 +586,6 @@ int VerifyCallback(X509_STORE_CTX *x509ctx, void *arg)
     return 1;
 }
 
-static int32_t CheckKMCFiles(std::string &kmcKsfMaster, std::string &kmcKsfStandby, bool checkFiles)
-{
-    bool isFileExist = false;
-    uint32_t mode = checkFiles ? 0600 : 0777;   // KMC文件的权限要求是0600, 不校验是0777
-    if (!PathCheck(kmcKsfMaster, isFileExist, mode, checkFiles)) {  // KMC文件的权限要求是0600
-        LOG_E("[%s] [ConfigParams] Failed to check the path of KMC master file.",
-            GetErrorCode(ErrorType::NOT_FOUND, CommonFeature::HTTPCLIENT).c_str());
-        return -1;
-    } else if (!isFileExist) {
-        LOG_E("[%s] [ConfigParams] KMC master file file is not exist.",
-            GetErrorCode(ErrorType::NOT_FOUND, CommonFeature::HTTPCLIENT).c_str());
-        return -1;
-    }
-
-    isFileExist = false;
-    if (!PathCheck(kmcKsfStandby, isFileExist, mode, checkFiles)) { // KMC文件的权限要求是0600
-        LOG_E("[%s] [ConfigParams] Failed to check the path of KMC standby file '%s'.",
-            GetErrorCode(ErrorType::NOT_FOUND, CommonFeature::HTTPCLIENT).c_str(), kmcKsfStandby.c_str());
-        return -1;
-    } else if (!isFileExist) {
-        LOG_E("[%s] [ConfigParams] KMC standby file '%s' does not exist.",
-            GetErrorCode(ErrorType::NOT_FOUND, CommonFeature::HTTPCLIENT).c_str(), kmcKsfStandby.c_str());
-        return -1;
-    }
-
-    return 0;
-}
-
 void EraseDecryptedData(std::pair<char *, int32_t> &result)
 {
     if (result.first != nullptr) {
@@ -627,43 +596,6 @@ void EraseDecryptedData(std::pair<char *, int32_t> &result)
         result.first = nullptr;
     }
     result.second = 0;
-}
-
-bool InitKMC(const TlsItems &tlsConfig)
-{
-    std::string kmcKsfMaster = tlsConfig.kmcKsfMaster;
-    std::string kmcKsfStandby = tlsConfig.kmcKsfStandby;
-    if (CheckKMCFiles(kmcKsfMaster, kmcKsfStandby, tlsConfig.checkFiles) != 0) {
-        return false;
-    }
-
-    KmcCryptConfigBuilder builder;
-    auto key = ftok(kmcKsfMaster.c_str(), 0);
-    if (key < 0) {
-        LOG_E("[%s] [ConfigParams] Get KMC key failed.",
-            GetErrorCode(ErrorType::INVALID_INPUT, CommonFeature::HTTPCLIENT).c_str());
-        return false;
-    }
-
-    auto config = builder.MasterKsfFile(kmcKsfMaster).StandByKsfFile(kmcKsfStandby)
-                        .SemKey(MIN_VALID_KEY + key % (MAX_VALID_KEY - MIN_VALID_KEY))
-                        .LogLevel(CryptLogLevel::HSE_CRYPT_LOG_INFO).Build();
-    auto ret = HseCryptor::Initialize(config);
-    if (ret != 0) {
-        LOG_E("[%s] [ConfigParams] Cryptor init failed. Result is %d.",
-            GetErrorCode(ErrorType::INVALID_INPUT, CommonFeature::HTTPCLIENT).c_str(), ret);
-        return false;
-    }
-
-    ret = HseCryptor::RefreshMkMask();
-    if (ret != 0) {
-        HseCryptor::UnInitialize();
-        LOG_E("[%s] [ConfigParams] Refresh master key mask failed: %d for file",
-            GetErrorCode(ErrorType::INVALID_INPUT, CommonFeature::HTTPCLIENT).c_str(),
-            ret);
-        return false;
-    }
-    return true;
 }
 
 bool DecryptPassword(int domainId, std::pair<char *, int32_t> &password, const TlsItems &tlsConfig)
@@ -690,29 +622,19 @@ bool DecryptPassword(int domainId, std::pair<char *, int32_t> &password, const T
     std::string encryptedText = fileContent.str();
     int dataLength = static_cast<int>(encryptedText.length());
 
-    if (!InitKMC(tlsConfig)) {
-        return false;
-    }
-
     auto buffer = new (std::nothrow) char[dataLength]();
     if (buffer == nullptr) {
-        HseCryptor::UnInitialize();
         LOG_E("[%s] [ConfigParams] Allocate memory for buffer failed.",
             GetErrorCode(ErrorType::RESOURCE_EXHAUSTED, CommonFeature::HTTPCLIENT).c_str());
         return false;
     }
-    auto ret = HseCryptor::Decrypt(domainId, encryptedText, buffer, dataLength);
-    if (ret != 0) {
-        HseCryptor::UnInitialize();
-        LOG_E("[%s] [ConfigParams] Decrypt TLS  key password failed. Result %d for file %s.",
-            GetErrorCode(ErrorType::CALL_ERROR, CommonFeature::HTTPCLIENT).c_str(),
-            ret, pwdPath.c_str());
-        std::pair<char *, int32_t> tmpResult = std::make_pair(buffer, dataLength);
-        EraseDecryptedData(tmpResult);
+    auto copyRes = memcpy_s(buffer, dataLength, encryptedText.c_str(), dataLength);
+    if (copyRes != 0) {
+        LOG_E("[%s] [ConfigParams] password memcpy_s failed.",
+            GetErrorCode(ErrorType::RESOURCE_EXHAUSTED, CommonFeature::HTTPCLIENT).c_str());
         return false;
     }
-    HseCryptor::UnInitialize();
-    LOG_I("Decrypt password in file %s success.", pwdPath.c_str());
+    LOG_I("Read password in file %s success.", pwdPath.c_str());
     password = std::make_pair(buffer, dataLength);
     return true;
 }

@@ -34,55 +34,31 @@ class StressTestSingleNode : public testing::Test {
         ChangeCertsFileMode(GetAbsolutePath(certDir, "user_to_coordinator/cert.pem"), S_IRUSR);
         ChangeCertsFileMode(GetAbsolutePath(certDir, "user_to_coordinator/cert.key.pem"), S_IRUSR);
         ChangeCertsFileMode(GetAbsolutePath(certDir, "user_to_coordinator/cert_passwd.txt"), S_IRUSR);
-        ChangeCertsFileMode(GetAbsolutePath(certDir, "user_to_coordinator/tools/pmt/master/ksfa"),
-            S_IRUSR | S_IWUSR);
-        ChangeCertsFileMode(GetAbsolutePath(certDir, "user_to_coordinator/tools/pmt/standby/ksfb"),
-            S_IRUSR | S_IWUSR);
 
         ChangeCertsFileMode(GetAbsolutePath(certDir, "coordinator_to_user/ca.pem"), S_IRUSR);
         ChangeCertsFileMode(GetAbsolutePath(certDir, "coordinator_to_user/cert.pem"), S_IRUSR);
         ChangeCertsFileMode(GetAbsolutePath(certDir, "coordinator_to_user/cert.key.pem"), S_IRUSR);
         ChangeCertsFileMode(GetAbsolutePath(certDir, "coordinator_to_user/cert_passwd.txt"), S_IRUSR);
-        ChangeCertsFileMode(GetAbsolutePath(certDir, "coordinator_to_user/tools/pmt/master/ksfa"),
-            S_IRUSR | S_IWUSR);
-        ChangeCertsFileMode(GetAbsolutePath(certDir, "coordinator_to_user/tools/pmt/standby/ksfb"),
-            S_IRUSR | S_IWUSR);
 
         ChangeCertsFileMode(GetAbsolutePath(certDir, "coordinator_to_mindie_server/ca.pem"), S_IRUSR);
         ChangeCertsFileMode(GetAbsolutePath(certDir, "coordinator_to_mindie_server/cert.pem"), S_IRUSR);
         ChangeCertsFileMode(GetAbsolutePath(certDir, "coordinator_to_mindie_server/cert.key.pem"), S_IRUSR);
         ChangeCertsFileMode(GetAbsolutePath(certDir, "coordinator_to_mindie_server/cert_passwd.txt"), S_IRUSR);
-        ChangeCertsFileMode(GetAbsolutePath(certDir, "coordinator_to_mindie_server/tools/pmt/master/ksfa"),
-            S_IRUSR | S_IWUSR);
-        ChangeCertsFileMode(GetAbsolutePath(certDir, "coordinator_to_mindie_server/tools/pmt/standby/ksfb"),
-            S_IRUSR | S_IWUSR);
 
         ChangeCertsFileMode(GetAbsolutePath(certDir, "mindie_server_to_coordinator/ca.pem"), S_IRUSR);
         ChangeCertsFileMode(GetAbsolutePath(certDir, "mindie_server_to_coordinator/cert.pem"), S_IRUSR);
         ChangeCertsFileMode(GetAbsolutePath(certDir, "mindie_server_to_coordinator/cert.key.pem"), S_IRUSR);
         ChangeCertsFileMode(GetAbsolutePath(certDir, "mindie_server_to_coordinator/cert_passwd.txt"), S_IRUSR);
-        ChangeCertsFileMode(GetAbsolutePath(certDir, "mindie_server_to_coordinator/tools/pmt/master/ksfa"),
-            S_IRUSR | S_IWUSR);
-        ChangeCertsFileMode(GetAbsolutePath(certDir, "mindie_server_to_coordinator/tools/pmt/standby/ksfb"),
-            S_IRUSR | S_IWUSR);
 
         ChangeCertsFileMode(GetAbsolutePath(certDir, "controller_to_coordinator/ca.pem"), S_IRUSR);
         ChangeCertsFileMode(GetAbsolutePath(certDir, "controller_to_coordinator/cert.pem"), S_IRUSR);
         ChangeCertsFileMode(GetAbsolutePath(certDir, "controller_to_coordinator/cert.key.pem"), S_IRUSR);
         ChangeCertsFileMode(GetAbsolutePath(certDir, "controller_to_coordinator/cert_passwd.txt"), S_IRUSR);
-        ChangeCertsFileMode(GetAbsolutePath(certDir, "controller_to_coordinator/tools/pmt/master/ksfa"),
-            S_IRUSR | S_IWUSR);
-        ChangeCertsFileMode(GetAbsolutePath(certDir, "controller_to_coordinator/tools/pmt/standby/ksfb"),
-            S_IRUSR | S_IWUSR);
 
         ChangeCertsFileMode(GetAbsolutePath(certDir, "coordinator_to_controller/ca.pem"), S_IRUSR);
         ChangeCertsFileMode(GetAbsolutePath(certDir, "coordinator_to_controller/cert.pem"), S_IRUSR);
         ChangeCertsFileMode(GetAbsolutePath(certDir, "coordinator_to_controller/cert.key.pem"), S_IRUSR);
         ChangeCertsFileMode(GetAbsolutePath(certDir, "coordinator_to_controller/cert_passwd.txt"), S_IRUSR);
-        ChangeCertsFileMode(GetAbsolutePath(certDir, "coordinator_to_controller/tools/pmt/master/ksfa"),
-            S_IRUSR | S_IWUSR);
-        ChangeCertsFileMode(GetAbsolutePath(certDir, "coordinator_to_controller/tools/pmt/standby/ksfb"),
-            S_IRUSR | S_IWUSR);
     }
 };
 

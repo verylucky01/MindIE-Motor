@@ -116,12 +116,9 @@ function chmod_authority() {
     # mindie-server bin目录文件权限
     chmod -R 550 ${install_dir}/bin
     chmod_file ${install_dir}/bin
-    chmod 500 ${install_dir}/bin/seceasy_encrypt
-    chmod 500 ${install_dir}/bin/gen_cert
     # mindie-server lib目录文件权限
     chmod 550 ${install_dir}/lib
     chmod 550 ${install_dir}/lib/grpc
-    chmod 440 ${install_dir}/lib/libsec_easy_utils.a
     chmod_recursion ${install_dir}/lib "440" "file" "*.so*"
     # mindie-server include目录权限
     chmod 500 ${install_dir}/include

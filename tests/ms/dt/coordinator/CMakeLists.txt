@@ -85,7 +85,7 @@ set(_PROTOBUF_LIBPROTOBUF protobuf::libprotobuf)
 set(_REFLECTION gRPC::grpc++_reflection)
 set(_GRPC_GRPCPP gRPC::grpc++)
 add_library(test_coordinator SHARED ${COORDINATOR_SOURCE_DIR} ${COMMON_SOURCE_DIR})
-target_link_libraries(test_coordinator crypto ssl boundscheck pthread hse_cryption -ldl ${_REFLECTION} ${_GRPC_GRPCPP} ${_PROTOBUF_LIBPROTOBUF})
+target_link_libraries(test_coordinator crypto ssl boundscheck pthread -ldl ${_REFLECTION} ${_GRPC_GRPCPP} ${_PROTOBUF_LIBPROTOBUF})
 
 set(COORDINATOR_TEST_DIR ${MINDIE_MS_TEST_ROOT}/dt/coordinator)
 file(GLOB_RECURSE COORDINATOR_TEST_SOURCE "${COORDINATOR_TEST_DIR}/*.cpp" "${COORDINATOR_TEST_DIR}/*.c" "${COORDINATOR_TEST_DIR}/*.cxx")

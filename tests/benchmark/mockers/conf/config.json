@@ -29,8 +29,6 @@
         "managementTlsPk": "security/keys/management_server.key.pem",
         "managementTlsPkPwd": "security/pass/management_mindie_server_key_pwd.txt",
         "managementTlsCrl": "security/certs/management_server_crl.pem",
-        "kmcKsfMaster": "tools/pmt/master/ksfa",
-        "kmcKsfStandby": "tools/pmt/standby/ksfb"
     },
     "BackendConfig": {
         "backendName": "mindieservice_llm_engine",
@@ -42,8 +40,6 @@
         "interNodeTlsCert": "security/certs/server.pem",
         "interNodeTlsPk": "security/keys/server.key.pem",
         "interNodeTlsPkPwd": "security/pass/mindie_server_key_pwd.txt",
-        "interNodeKmcKsfMaster": "tools/pmt/master/ksfa",
-        "interNodeKmcKsfStandby": "tools/pmt/standby/ksfb",
         "ModelDeployConfig": {
             "modelInstanceNumber": 1,
             "maxSeqLen": 2560,

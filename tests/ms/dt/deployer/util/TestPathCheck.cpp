@@ -279,10 +279,6 @@ TEST_F(TestPathCheck, HttpClient)
     CreateFile(tlsConfigBak.tlsKey, "tls_key");
     tlsConfigBak.tlsPasswd = JoinPathComponents({ exeDir, "cert_dir", "tls_crl.crl" });
     CreateFile(tlsConfigBak.tlsPasswd, "tls_crl");
-    tlsConfigBak.kmcKsfMaster = JoinPathComponents({ exeDir, "cert_dir", "kmcKsfMaster" });
-    CreateFile(tlsConfigBak.kmcKsfMaster, "kmcKsfMaster");
-    tlsConfigBak.kmcKsfStandby = JoinPathComponents({ exeDir, "cert_dir", "kmcKsfStandby" });
-    CreateFile(tlsConfigBak.kmcKsfStandby, "kmcKsfStandby");
 
     MINDIE::MS::Request req = {};
     int32_t code;
@@ -290,11 +286,6 @@ TEST_F(TestPathCheck, HttpClient)
 
     Stub stub;
 
-    // 可能存在熵不足导致随机数生成卡死，故桩掉底层依赖
-    stub.set(HseCryptor::Initialize, ReturnZeroStub);
-    stub.set(HseCryptor::Decrypt, ReturnZeroStub);
-    stub.set(HseCryptor::UnInitialize, ReturnZeroStub);
-    stub.set(HseCryptor::RefreshMkMask, ReturnZeroStub);
     {
         HttpClient httpClient;
         stub.set(SSL_CTX_set_ciphersuites, ReturnZeroStub);
@@ -389,8 +380,6 @@ TEST_F(TestPathCheck, HttpClient)
         // kmcKsfMaster文件不存在
 
         TlsItems tlsConfig = tlsConfigBak;
-        tlsConfig.kmcKsfMaster =
-            GetAbsolutePath(certDir, "msserver/tools/pmt/master/ksfa_not_exist");
         HttpClient httpClient;
         httpClient.Init("127.0.0.1", "32001", tlsConfig, true);
         auto ret = httpClient.SendRequest(req, 10, 10, responseBody, code);
@@ -401,8 +390,6 @@ TEST_F(TestPathCheck, HttpClient)
         // kmcKsfStandby文件目录不存在
 
         TlsItems tlsConfig = tlsConfigBak;
-        tlsConfig.kmcKsfStandby =
-            GetAbsolutePath(certDir, "msserver/tools/pmt/standby/ksfb_not_exist");
         HttpClient httpClient;
         httpClient.Init("127.0.0.1", "32001", tlsConfig, true);
         auto ret = httpClient.SendRequest(req, 10, 10, responseBody, code);
@@ -420,11 +407,6 @@ TEST_F(TestPathCheck, HttpClient)
         EXPECT_EQ(ret, -1);
         stub.reset(ftok);
     }
-
-    stub.reset(HseCryptor::Initialize);
-    stub.reset(HseCryptor::Decrypt);
-    stub.reset(HseCryptor::UnInitialize);
-    stub.reset(HseCryptor::RefreshMkMask);
 }
 
 // 文件夹创建成功

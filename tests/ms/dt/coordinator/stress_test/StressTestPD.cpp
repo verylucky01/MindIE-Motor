@@ -36,73 +36,41 @@ class StressTestPD : public testing::Test {
         ChangeCertsFileMode(GetAbsolutePath(certDir, "user_to_coordinator/cert.pem"), S_IRUSR);
         ChangeCertsFileMode(GetAbsolutePath(certDir, "user_to_coordinator/cert.key.pem"), S_IRUSR);
         ChangeCertsFileMode(GetAbsolutePath(certDir, "user_to_coordinator/cert_passwd.txt"), S_IRUSR);
-        ChangeCertsFileMode(GetAbsolutePath(certDir, "user_to_coordinator/tools/pmt/master/ksfa"),
-            S_IRUSR | S_IWUSR);
-        ChangeCertsFileMode(GetAbsolutePath(certDir, "user_to_coordinator/tools/pmt/standby/ksfb"),
-            S_IRUSR | S_IWUSR);
 
         ChangeCertsFileMode(GetAbsolutePath(certDir, "coordinator_to_user/ca.pem"), S_IRUSR);
         ChangeCertsFileMode(GetAbsolutePath(certDir, "coordinator_to_user/cert.pem"), S_IRUSR);
         ChangeCertsFileMode(GetAbsolutePath(certDir, "coordinator_to_user/cert.key.pem"), S_IRUSR);
         ChangeCertsFileMode(GetAbsolutePath(certDir, "coordinator_to_user/cert_passwd.txt"), S_IRUSR);
-        ChangeCertsFileMode(GetAbsolutePath(certDir, "coordinator_to_user/tools/pmt/master/ksfa"),
-            S_IRUSR | S_IWUSR);
-        ChangeCertsFileMode(GetAbsolutePath(certDir, "coordinator_to_user/tools/pmt/standby/ksfb"),
-            S_IRUSR | S_IWUSR);
 
         ChangeCertsFileMode(GetAbsolutePath(certDir, "coordinator_to_mindie_server/ca.pem"), S_IRUSR);
         ChangeCertsFileMode(GetAbsolutePath(certDir, "coordinator_to_mindie_server/cert.pem"), S_IRUSR);
         ChangeCertsFileMode(GetAbsolutePath(certDir, "coordinator_to_mindie_server/cert.key.pem"), S_IRUSR);
         ChangeCertsFileMode(GetAbsolutePath(certDir, "coordinator_to_mindie_server/cert_passwd.txt"), S_IRUSR);
-        ChangeCertsFileMode(GetAbsolutePath(certDir, "coordinator_to_mindie_server/tools/pmt/master/ksfa"),
-            S_IRUSR | S_IWUSR);
-        ChangeCertsFileMode(GetAbsolutePath(certDir, "coordinator_to_mindie_server/tools/pmt/standby/ksfb"),
-            S_IRUSR | S_IWUSR);
 
         ChangeCertsFileMode(GetAbsolutePath(certDir, "mindie_server_to_coordinator/ca.pem"), S_IRUSR);
         ChangeCertsFileMode(GetAbsolutePath(certDir, "mindie_server_to_coordinator/cert.pem"), S_IRUSR);
         ChangeCertsFileMode(GetAbsolutePath(certDir, "mindie_server_to_coordinator/cert.key.pem"), S_IRUSR);
         ChangeCertsFileMode(GetAbsolutePath(certDir, "mindie_server_to_coordinator/cert_passwd.txt"), S_IRUSR);
-        ChangeCertsFileMode(GetAbsolutePath(certDir, "mindie_server_to_coordinator/tools/pmt/master/ksfa"),
-            S_IRUSR | S_IWUSR);
-        ChangeCertsFileMode(GetAbsolutePath(certDir, "mindie_server_to_coordinator/tools/pmt/standby/ksfb"),
-            S_IRUSR | S_IWUSR);
 
         ChangeCertsFileMode(GetAbsolutePath(certDir, "controller_to_coordinator/ca.pem"), S_IRUSR);
         ChangeCertsFileMode(GetAbsolutePath(certDir, "controller_to_coordinator/cert.pem"), S_IRUSR);
         ChangeCertsFileMode(GetAbsolutePath(certDir, "controller_to_coordinator/cert.key.pem"), S_IRUSR);
         ChangeCertsFileMode(GetAbsolutePath(certDir, "controller_to_coordinator/cert_passwd.txt"), S_IRUSR);
-        ChangeCertsFileMode(GetAbsolutePath(certDir, "controller_to_coordinator/tools/pmt/master/ksfa"),
-            S_IRUSR | S_IWUSR);
-        ChangeCertsFileMode(GetAbsolutePath(certDir, "controller_to_coordinator/tools/pmt/standby/ksfb"),
-            S_IRUSR | S_IWUSR);
 
         ChangeCertsFileMode(GetAbsolutePath(certDir, "coordinator_to_controller/ca.pem"), S_IRUSR);
         ChangeCertsFileMode(GetAbsolutePath(certDir, "coordinator_to_controller/cert.pem"), S_IRUSR);
         ChangeCertsFileMode(GetAbsolutePath(certDir, "coordinator_to_controller/cert.key.pem"), S_IRUSR);
         ChangeCertsFileMode(GetAbsolutePath(certDir, "coordinator_to_controller/cert_passwd.txt"), S_IRUSR);
-        ChangeCertsFileMode(GetAbsolutePath(certDir, "coordinator_to_controller/tools/pmt/master/ksfa"),
-            S_IRUSR | S_IWUSR);
-        ChangeCertsFileMode(GetAbsolutePath(certDir, "coordinator_to_controller/tools/pmt/standby/ksfb"),
-            S_IRUSR | S_IWUSR);
 
         ChangeCertsFileMode(GetAbsolutePath(certDir, "coordinator_to_mindie_server_manage/ca.pem"), S_IRUSR);
         ChangeCertsFileMode(GetAbsolutePath(certDir, "coordinator_to_mindie_server_manage/cert.pem"), S_IRUSR);
         ChangeCertsFileMode(GetAbsolutePath(certDir, "coordinator_to_mindie_server_manage/cert.key.pem"), S_IRUSR);
         ChangeCertsFileMode(GetAbsolutePath(certDir, "coordinator_to_mindie_server_manage/cert_passwd.txt"), S_IRUSR);
-        ChangeCertsFileMode(GetAbsolutePath(certDir, "coordinator_to_mindie_server_manage/tools/pmt/master/ksfa"),
-            S_IRUSR | S_IWUSR);
-        ChangeCertsFileMode(GetAbsolutePath(certDir, "coordinator_to_mindie_server_manage/tools/pmt/standby/ksfb"),
-            S_IRUSR | S_IWUSR);
 
         ChangeCertsFileMode(GetAbsolutePath(certDir, "mindie_server_manage_to_coordinator/ca.pem"), S_IRUSR);
         ChangeCertsFileMode(GetAbsolutePath(certDir, "mindie_server_manage_to_coordinator/cert.pem"), S_IRUSR);
         ChangeCertsFileMode(GetAbsolutePath(certDir, "mindie_server_manage_to_coordinator/cert.key.pem"), S_IRUSR);
         ChangeCertsFileMode(GetAbsolutePath(certDir, "mindie_server_manage_to_coordinator/cert_passwd.txt"), S_IRUSR);
-        ChangeCertsFileMode(GetAbsolutePath(certDir, "mindie_server_manage_to_coordinator/tools/pmt/master/ksfa"),
-            S_IRUSR | S_IWUSR);
-        ChangeCertsFileMode(GetAbsolutePath(certDir, "mindie_server_manage_to_coordinator/tools/pmt/standby/ksfb"),
-            S_IRUSR | S_IWUSR);
     }
 };
 
@@ -228,8 +196,6 @@ static void OpenAIStaticTLS(const std::string &predictIP, const std::string &pre
     tlsItems.tlsCert = GetAbsolutePath(certDir, "user_to_coordinator/cert.pem");
     tlsItems.tlsKey = GetAbsolutePath(certDir, "user_to_coordinator/cert.key.pem");
     tlsItems.tlsPasswd = GetAbsolutePath(certDir, "user_to_coordinator/cert_passwd.txt");
-    tlsItems.kmcKsfMaster = GetAbsolutePath(certDir, "user_to_coordinator/tools/pmt/master/ksfa");
-    tlsItems.kmcKsfStandby = GetAbsolutePath(certDir, "user_to_coordinator/tools/pmt/standby/ksfb");
     // OpenAI流式
     std::string inferString = CreateOpenAIRequest({"My name is Olivier and I", "OK"}, true);
     std::string outputString = "My name is Olivier and IOK";
@@ -258,8 +224,6 @@ static void MetricsSSLRequest(const std::string &manageIP, const std::string &ma
     tlsItems.tlsCert = GetAbsolutePath(certDir, "coordinator_to_controller/cert.pem");
     tlsItems.tlsKey = GetAbsolutePath(certDir, "coordinator_to_controller/cert.key.pem");
     tlsItems.tlsPasswd = GetAbsolutePath(certDir, "coordinator_to_controller/cert_passwd.txt");
-    tlsItems.kmcKsfMaster = GetAbsolutePath(certDir, "coordinator_to_controller/tools/pmt/master/ksfa");
-    tlsItems.kmcKsfStandby = GetAbsolutePath(certDir, "coordinator_to_controller/tools/pmt/standby/ksfb");
     // 发送指标查询请求，默认超时时间60，最大重复请求次数3
     auto ret = GetMetricsRequest(manageIP, managePort, tlsItems, "/metrics", response, true);
     EXPECT_EQ(ret, 200);  // 返回值 200

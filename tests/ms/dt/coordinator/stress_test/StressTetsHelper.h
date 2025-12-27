@@ -264,10 +264,6 @@ void StressTetsPDTLSHelper(uint32_t numMindIEServer, ReqTestFun reqTestFun, Metr
             GetAbsolutePath(certDir, "coordinator_to_user/cert.key.pem"));
         manager.SetList({"tls_config", "request_server_tls_items", "tls_passwd"},
             GetAbsolutePath(certDir, "coordinator_to_user/cert_passwd.txt"));
-        manager.SetList({"tls_config", "request_server_tls_items", "kmcKsfMaster"},
-            GetAbsolutePath(certDir, "coordinator_to_user/tools/pmt/master/ksfa"));
-        manager.SetList({"tls_config", "request_server_tls_items", "kmcKsfStandby"},
-            GetAbsolutePath(certDir, "coordinator_to_user/tools/pmt/standby/ksfb"));
         manager.SetList({"tls_config", "request_server_tls_items", "tls_crl"}, "");
 
         manager.SetList({"tls_config", "mindie_client_tls_enable"}, true);
@@ -279,10 +275,6 @@ void StressTetsPDTLSHelper(uint32_t numMindIEServer, ReqTestFun reqTestFun, Metr
             GetAbsolutePath(certDir, "coordinator_to_mindie_server/cert.key.pem"));
         manager.SetList({"tls_config", "mindie_client_tls_items", "tls_passwd"},
             GetAbsolutePath(certDir, "coordinator_to_mindie_server/cert_passwd.txt"));
-        manager.SetList({"tls_config", "mindie_client_tls_items", "kmcKsfMaster"},
-            GetAbsolutePath(certDir, "coordinator_to_mindie_server/tools/pmt/master/ksfa"));
-        manager.SetList({"tls_config", "mindie_client_tls_items", "kmcKsfStandby"},
-            GetAbsolutePath(certDir, "coordinator_to_mindie_server/tools/pmt/standby/ksfb"));
         manager.SetList({"tls_config", "mindie_client_tls_items", "tls_crl"}, "");
 
         manager.SetList({"tls_config", "controller_server_tls_enable"}, true);
@@ -294,10 +286,6 @@ void StressTetsPDTLSHelper(uint32_t numMindIEServer, ReqTestFun reqTestFun, Metr
             GetAbsolutePath(certDir, "coordinator_to_controller/cert.key.pem"));
         manager.SetList({"tls_config", "controller_server_tls_items", "tls_passwd"},
             GetAbsolutePath(certDir, "coordinator_to_controller/cert_passwd.txt"));
-        manager.SetList({"tls_config", "controller_server_tls_items", "kmcKsfMaster"},
-            GetAbsolutePath(certDir, "coordinator_to_controller/tools/pmt/master/ksfa"));
-        manager.SetList({"tls_config", "controller_server_tls_items", "kmcKsfStandby"},
-            GetAbsolutePath(certDir, "coordinator_to_controller/tools/pmt/standby/ksfb"));
         manager.SetList({"tls_config", "controller_server_tls_items", "tls_crl"}, "");
 
         manager.SetList({"tls_config", "mindie_mangment_tls_enable"}, true);
@@ -309,10 +297,6 @@ void StressTetsPDTLSHelper(uint32_t numMindIEServer, ReqTestFun reqTestFun, Metr
             GetAbsolutePath(certDir, "coordinator_to_mindie_server_manage/cert.key.pem"));
         manager.SetList({"tls_config", "mindie_mangment_tls_items", "tls_passwd"},
             GetAbsolutePath(certDir, "coordinator_to_mindie_server_manage/cert_passwd.txt"));
-        manager.SetList({"tls_config", "mindie_mangment_tls_items", "kmcKsfMaster"},
-            GetAbsolutePath(certDir, "coordinator_to_mindie_server_manage/tools/pmt/master/ksfa"));
-        manager.SetList({"tls_config", "mindie_mangment_tls_items", "kmcKsfStandby"},
-            GetAbsolutePath(certDir, "coordinator_to_mindie_server_manage/tools/pmt/standby/ksfb"));
         manager.Save();
     }
 
@@ -341,10 +325,6 @@ void StressTetsPDTLSHelper(uint32_t numMindIEServer, ReqTestFun reqTestFun, Metr
             GetAbsolutePath(certDir, "controller_to_coordinator/cert.key.pem"));
         manager.SetList({"tls_config", "request_coordinator_tls_items", "tls_passwd"},
             GetAbsolutePath(certDir, "controller_to_coordinator/cert_passwd.txt"));
-        manager.SetList({"tls_config", "request_coordinator_tls_items", "kmc_ksf_master"},
-            GetAbsolutePath(certDir, "controller_to_coordinator/tools/pmt/master/ksfa"));
-        manager.SetList({"tls_config", "request_coordinator_tls_items", "kmc_ksf_standby"},
-            GetAbsolutePath(certDir, "controller_to_coordinator/tools/pmt/standby/ksfb"));
         manager.SetList({"tls_config", "request_coordinator_tls_items", "tls_crl"}, "");
         manager.Save();
     }
@@ -395,8 +375,6 @@ void StressTetsPDTLSHelper(uint32_t numMindIEServer, ReqTestFun reqTestFun, Metr
     tlsItems.tlsCert = GetAbsolutePath(certDir, "controller_to_coordinator/cert.pem");
     tlsItems.tlsKey = GetAbsolutePath(certDir, "controller_to_coordinator/cert.key.pem");
     tlsItems.tlsPasswd = GetAbsolutePath(certDir, "controller_to_coordinator/cert_passwd.txt");
-    tlsItems.kmcKsfMaster = GetAbsolutePath(certDir, "controller_to_coordinator/tools/pmt/master/ksfa");
-    tlsItems.kmcKsfStandby = GetAbsolutePath(certDir, "controller_to_coordinator/tools/pmt/standby/ksfb");
     WaitCoordinatorReadySSL(manageIP, strManagePort, tlsItems);
 
     std::cout << "1111111111111111111111111111" << std::endl;

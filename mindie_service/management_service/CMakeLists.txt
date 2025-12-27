@@ -56,14 +56,12 @@ include_directories(
     ${BUILD_MIES_3RDPARTY_INSTALL_DIR}/libboundscheck/include
     ${BUILD_MIES_3RDPARTY_INSTALL_DIR}/nlohmann-json/include
     ${BUILD_MIES_3RDPARTY_INSTALL_DIR}/openssl/include
-    ${BUILD_MIES_3RDPARTY_INSTALL_DIR}/hseceasy/include
     ${BUILD_MIES_3RDPARTY_INSTALL_DIR}/grpc/include
     $ENV{ASCEND_HOME_PATH}/include
 )
 
 link_directories(
     ${BUILD_MIES_3RDPARTY_INSTALL_DIR}/libboundscheck/lib
-    ${BUILD_MIES_3RDPARTY_INSTALL_DIR}/hseceasy/lib
     ${BUILD_MIES_3RDPARTY_INSTALL_DIR}/openssl/lib
     ${BUILD_MIES_3RDPARTY_INSTALL_DIR}/grpc/lib
 )
