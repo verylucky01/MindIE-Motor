@@ -12,6 +12,7 @@
 #include <ctime>
 #include <memory>
 #include <string>
+#include <cstring>
 #include <fstream>
 #include <algorithm>
 #include <sys/stat.h>
@@ -616,23 +617,23 @@ bool DecryptPassword(int domainId, std::pair<char *, int32_t> &password, const T
         LOG_E("[%s] [ConfigParams] Failed to open the file.", logCode.c_str());
         return false;
     }
-
-    std::ostringstream fileContent;
-    fileContent << in.rdbuf();
-    std::string encryptedText = fileContent.str();
-    int dataLength = static_cast<int>(encryptedText.length());
-
+    in.seekg(0, std::ios::end);
+    std::streamsize fileSize = in.tellg();
+    in.seekg(0, std::ios::beg);
+    int32_t dataLength = static_cast<int32_t>(fileSize) + 1;
     auto buffer = new (std::nothrow) char[dataLength]();
     if (buffer == nullptr) {
         LOG_E("[%s] [ConfigParams] Allocate memory for buffer failed.",
             GetErrorCode(ErrorType::RESOURCE_EXHAUSTED, CommonFeature::HTTPCLIENT).c_str());
         return false;
     }
-    auto copyRes = memcpy_s(buffer, dataLength, encryptedText.c_str(), dataLength);
-    if (copyRes != 0) {
-        LOG_E("[%s] [ConfigParams] password memcpy_s failed.",
-            GetErrorCode(ErrorType::RESOURCE_EXHAUSTED, CommonFeature::HTTPCLIENT).c_str());
-        return false;
+
+    in.read(buffer, dataLength);
+    if (buffer[strlen(buffer) - 1] == '\n') {
+        buffer[strlen(buffer) - 1] = '\0';
+        dataLength--;
+    } else {
+        buffer[dataLength - 1] = '\0';
     }
     LOG_I("Read password in file %s success.", pwdPath.c_str());
     password = std::make_pair(buffer, dataLength);

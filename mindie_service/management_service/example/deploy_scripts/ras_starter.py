@@ -169,7 +169,7 @@ def check_service_status(http_pool_manager, params: CheckParams) -> bool:
                 "model": params.model_name,
                 "prompt": params.input_content,
                 "temperature": 0,
-                "max_new_tokens": 10,
+                "max_tokens": 10,
                 "stream": False,
             }).encode())
         if response.status >= 400:
