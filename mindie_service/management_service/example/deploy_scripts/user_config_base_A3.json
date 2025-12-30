@@ -46,8 +46,6 @@
     },
     "tls_config": {
       "tls_enable": true,
-      "kmc_ksf_master": "./security/master/tools/pmt/master/ksfa",
-      "kmc_ksf_standby": "./security/standby/tools/pmt/standby/ksfb",
       "infer_tls_enable": true,
       "infer_tls_items": {
         "ca_cert": "./security/infer/security/certs/ca.pem",
@@ -94,8 +92,6 @@
         "tls_cert": "./security/etcd_server/security/certs/cert.pem",
         "tls_key": "./security/etcd_server/security/keys/cert.key.pem",
         "tls_passwd": "./security/etcd_server/security/pass/key_pwd.txt",
-        "kmc_ksf_master": "./security/etcd_server/tools/pmt/master/ksfa",
-        "kmc_ksf_standby": "./security/etcd_server/tools/pmt/standby/ksfb",
         "tls_crl": ""
       }
     }

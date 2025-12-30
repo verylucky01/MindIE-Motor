@@ -559,12 +559,6 @@ INSTANTIATE_TEST_SUITE_P(
         ParamType{"mod", {"tls_config", "controller_server_tls_items", "tls_passwd"}, 123}, // 类型错误
         ParamType{"del", {"tls_config", "controller_server_tls_items", "tls_passwd"}, 123}, // 删除tls_passwd
 
-        ParamType{"mod", {"tls_config", "controller_server_tls_items", "kmcKsfMaster"}, 123}, // 类型错误
-        ParamType{"del", {"tls_config", "controller_server_tls_items", "kmcKsfMaster"}, 123}, // 删除kmcKsfMaster
-
-        ParamType{"mod", {"tls_config", "controller_server_tls_items", "kmcKsfStandby"}, 123}, // 类型错误
-        ParamType{"del", {"tls_config", "controller_server_tls_items", "kmcKsfStandby"}, 123}, // 删除kmcKsfMaster
-
         ParamType{"mod", {"tls_config", "controller_server_tls_items", "tls_crl"}, 123}, // 类型错误
         ParamType{"del", {"tls_config", "controller_server_tls_items", "tls_crl"}, 123}, // 删除kmcKsfMaster
 
@@ -586,12 +580,6 @@ INSTANTIATE_TEST_SUITE_P(
         ParamType{"mod", {"tls_config", "request_server_tls_items", "tls_passwd"}, 123}, // 类型错误
         ParamType{"del", {"tls_config", "request_server_tls_items", "tls_passwd"}, 123}, // 删除tls_passwd
 
-        ParamType{"mod", {"tls_config", "request_server_tls_items", "kmcKsfMaster"}, 123}, // 类型错误
-        ParamType{"del", {"tls_config", "request_server_tls_items", "kmcKsfMaster"}, 123}, // 删除kmcKsfMaster
-
-        ParamType{"mod", {"tls_config", "request_server_tls_items", "kmcKsfStandby"}, 123}, // 类型错误
-        ParamType{"del", {"tls_config", "request_server_tls_items", "kmcKsfStandby"}, 123}, // 删除kmcKsfMaster
-
         ParamType{"mod", {"tls_config", "request_server_tls_items", "tls_crl"}, 123}, // 类型错误
         ParamType{"del", {"tls_config", "request_server_tls_items", "tls_crl"}, 123}, // 删除kmcKsfMaster
 
@@ -612,12 +600,6 @@ INSTANTIATE_TEST_SUITE_P(
 
         ParamType{"mod", {"tls_config", "mindie_client_tls_items", "tls_passwd"}, 123}, // 类型错误
         ParamType{"del", {"tls_config", "mindie_client_tls_items", "tls_passwd"}, 123}, // 删除tls_passwd
-
-        ParamType{"mod", {"tls_config", "mindie_client_tls_items", "kmcKsfMaster"}, 123}, // 类型错误
-        ParamType{"del", {"tls_config", "mindie_client_tls_items", "kmcKsfMaster"}, 123}, // 删除kmcKsfMaster
-
-        ParamType{"mod", {"tls_config", "mindie_client_tls_items", "kmcKsfStandby"}, 123}, // 类型错误
-        ParamType{"del", {"tls_config", "mindie_client_tls_items", "kmcKsfStandby"}, 123}, // 删除kmcKsfMaster
 
         ParamType{"mod", {"tls_config", "mindie_client_tls_items", "tls_crl"}, 123}, // 类型错误
         ParamType{"del", {"tls_config", "mindie_client_tls_items", "tls_crl"}, 123}, // 删除kmcKsfMaster

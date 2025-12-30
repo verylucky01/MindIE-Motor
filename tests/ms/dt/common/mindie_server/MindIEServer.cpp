@@ -762,8 +762,6 @@ void CreateSSLServer(const std::string &ip1, const std::string &port1,
     serverTlsItems.tlsCert = GetAbsolutePath(certDir, "mindie_server_to_coordinator/cert.pem");
     serverTlsItems.tlsKey = GetAbsolutePath(certDir, "mindie_server_to_coordinator/cert.key.pem");
     serverTlsItems.tlsPasswd = GetAbsolutePath(certDir, "mindie_server_to_coordinator/cert_passwd.txt");
-    serverTlsItems.kmcKsfMaster = GetAbsolutePath(certDir, "mindie_server_to_coordinator/tools/pmt/master/ksfa");
-    serverTlsItems.kmcKsfStandby = GetAbsolutePath(certDir, "mindie_server_to_coordinator/tools/pmt/standby/ksfb");
     HttpServer httpServer1;
     httpServer1.Init(threadNum);
     // 设置回调函数
@@ -821,8 +819,6 @@ void CreateSSLServer(const std::string &ip1, const std::string &port1,
     parm1.tlsItems.tlsCert = serverTlsItems.tlsCert;
     parm1.tlsItems.tlsKey = serverTlsItems.tlsKey;
     parm1.tlsItems.tlsPasswd = serverTlsItems.tlsPasswd;
-    parm1.tlsItems.kmcKsfMaster = serverTlsItems.kmcKsfMaster;
-    parm1.tlsItems.kmcKsfStandby = serverTlsItems.kmcKsfStandby;
     parm1.tlsItems.tlsCrl = "";
 
     ServerHandler handler2;
@@ -850,8 +846,6 @@ void CreateSSLServer(const std::string &ip1, const std::string &port1,
     tlsItems.tlsCert = GetAbsolutePath(certDir, "mindie_server_manage_to_coordinator/cert.pem");
     tlsItems.tlsKey = GetAbsolutePath(certDir, "mindie_server_manage_to_coordinator/cert.key.pem");
     tlsItems.tlsPasswd = GetAbsolutePath(certDir, "mindie_server_manage_to_coordinator/cert_passwd.txt");
-    tlsItems.kmcKsfMaster = GetAbsolutePath(certDir, "mindie_server_manage_to_coordinator/tools/pmt/master/ksfa");
-    tlsItems.kmcKsfStandby = GetAbsolutePath(certDir, "mindie_server_manage_to_coordinator/tools/pmt/standby/ksfb");
     ServerHandler handler3;
     handler3.RegisterFun(boost::beast::http::verb::get,
         "/metrics",
@@ -866,8 +860,6 @@ void CreateSSLServer(const std::string &ip1, const std::string &port1,
     parm3.tlsItems.tlsCert = tlsItems.tlsCert;
     parm3.tlsItems.tlsKey = tlsItems.tlsKey;
     parm3.tlsItems.tlsPasswd = tlsItems.tlsPasswd;
-    parm3.tlsItems.kmcKsfMaster = tlsItems.kmcKsfMaster;
-    parm3.tlsItems.kmcKsfStandby = tlsItems.kmcKsfStandby;
     parm3.tlsItems.tlsCrl = "";
 
     httpServer1.Run({parm1, parm2, parm3});
@@ -904,9 +896,6 @@ void CreateMetricsSSLServer(const std::string &ip1, const std::string &port1,
     serverTlsItems.tlsCert = GetAbsolutePath(certDir, "mindie_server_manage_to_coordinator/cert.pem");
     serverTlsItems.tlsKey = GetAbsolutePath(certDir, "mindie_server_manage_to_coordinator/cert.key.pem");
     serverTlsItems.tlsPasswd = GetAbsolutePath(certDir, "mindie_server_manage_to_coordinator/cert_passwd.txt");
-    serverTlsItems.kmcKsfMaster = GetAbsolutePath(certDir, "mindie_server_manage_to_coordinator/tools/pmt/master/ksfa");
-    serverTlsItems.kmcKsfStandby = GetAbsolutePath(
-        certDir, "mindie_server_manage_to_coordinator/tools/pmt/standby/ksfb");
     ServerHandler handler2;
     handler2.RegisterFun(boost::beast::http::verb::get,
         "/metrics",
@@ -921,8 +910,6 @@ void CreateMetricsSSLServer(const std::string &ip1, const std::string &port1,
     parm2.tlsItems.tlsCert = serverTlsItems.tlsCert;
     parm2.tlsItems.tlsKey = serverTlsItems.tlsKey;
     parm2.tlsItems.tlsPasswd = serverTlsItems.tlsPasswd;
-    parm2.tlsItems.kmcKsfMaster = serverTlsItems.kmcKsfMaster;
-    parm2.tlsItems.kmcKsfStandby = serverTlsItems.kmcKsfStandby;
     parm2.tlsItems.tlsCrl = "";
     httpServer1.Run({parm1, parm2});
 }

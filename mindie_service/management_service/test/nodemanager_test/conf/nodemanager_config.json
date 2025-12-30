@@ -10,8 +10,6 @@
       "tls_cert": "./security/node_manager/cert/server_cert/server.pem",
       "tls_key": "./security/node_manager/cert/server_cert/server.key.pem",
       "tls_passwd": "./security/node_manager/cert/server_cert/server_pwd.txt",
-      "kmcKsfMaster": "./security/node_manager/cert/server_cert/tools/pmt/master/ksfa",
-      "kmcKsfStandby": "./security/node_manager/cert/server_cert/tools/pmt/standby/ksfb",
       "tls_crl": ""
     },
     "client_tls_enable": false,
@@ -20,8 +18,6 @@
       "tls_cert": "./security/node_manager/cert/server_cert/server.pem",
       "tls_key": "./security/node_manager/cert/server_cert/server.key.pem",
       "tls_passwd": "./security/node_manager/cert/server_cert/server_pwd.txt",
-      "kmcKsfMaster": "./security/node_manager/cert/server_cert/tools/pmt/master/ksfa",
-      "kmcKsfStandby": "./security/node_manager/cert/server_cert/tools/pmt/standby/ksfb",
       "tls_crl": ""
     }
   }

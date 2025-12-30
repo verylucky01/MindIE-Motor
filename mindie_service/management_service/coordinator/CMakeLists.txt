@@ -128,7 +128,7 @@ set(_REFLECTION gRPC::grpc++_reflection)
 set(_GRPC_GRPCPP gRPC::grpc++)
 
 add_executable(ms_coordinator ${MS_COORDINATOR_SOURCE})
-target_link_libraries(ms_coordinator crypto ssl boundscheck rt pthread hse_cryption -ldl ${_REFLECTION} ${_GRPC_GRPCPP} ${_PROTOBUF_LIBPROTOBUF})
+target_link_libraries(ms_coordinator crypto ssl boundscheck rt pthread -ldl ${_REFLECTION} ${_GRPC_GRPCPP} ${_PROTOBUF_LIBPROTOBUF})
 
 install(TARGETS ms_coordinator DESTINATION bin)
 install(FILES ${ROOT_PATH}/config/ms_coordinator.json DESTINATION config)

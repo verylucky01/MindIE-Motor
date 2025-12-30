@@ -64,10 +64,6 @@ protected:
             GetAbsolutePath(certDir, "coordinator_to_user/cert.key.pem"));
         manager.SetList({"tls_config", "request_server_tls_items", "tls_passwd"},
             GetAbsolutePath(certDir, "coordinator_to_user/cert_passwd.txt"));
-        manager.SetList({"tls_config", "request_server_tls_items", "kmcKsfMaster"},
-            GetAbsolutePath(certDir, "coordinator_to_user/tools/pmt/master/ksfa"));
-        manager.SetList({"tls_config", "request_server_tls_items", "kmcKsfStandby"},
-            GetAbsolutePath(certDir, "coordinator_to_user/tools/pmt/standby/ksfb"));
 
         manager.SetList({"tls_config", "mindie_client_tls_enable"}, true);
         manager.SetList({"tls_config", "mindie_client_tls_items", "ca_cert"},
@@ -78,10 +74,6 @@ protected:
             GetAbsolutePath(certDir, "coordinator_to_mindie_server/cert.key.pem"));
         manager.SetList({"tls_config", "mindie_client_tls_items", "tls_passwd"},
             GetAbsolutePath(certDir, "coordinator_to_mindie_server/cert_passwd.txt"));
-        manager.SetList({"tls_config", "mindie_client_tls_items", "kmcKsfMaster"},
-            GetAbsolutePath(certDir, "coordinator_to_mindie_server/tools/pmt/master/ksfa"));
-        manager.SetList({"tls_config", "mindie_client_tls_items", "kmcKsfStandby"},
-            GetAbsolutePath(certDir, "coordinator_to_mindie_server/tools/pmt/standby/ksfb"));
 
         manager.Save();
 
@@ -90,33 +82,21 @@ protected:
         ChangeCertsFileMode(GetAbsolutePath(certDir, "user_to_coordinator/cert.pem"), S_IRUSR);
         ChangeCertsFileMode(GetAbsolutePath(certDir, "user_to_coordinator/cert.key.pem"), S_IRUSR);
         ChangeCertsFileMode(GetAbsolutePath(certDir, "user_to_coordinator/cert_passwd.txt"), S_IRUSR);
-        ChangeCertsFileMode(GetAbsolutePath(certDir, "user_to_coordinator/tools/pmt/master/ksfa"), S_IRUSR | S_IWUSR);
-        ChangeCertsFileMode(GetAbsolutePath(certDir, "user_to_coordinator/tools/pmt/standby/ksfb"), S_IRUSR | S_IWUSR);
 
         ChangeCertsFileMode(GetAbsolutePath(certDir, "coordinator_to_user/ca.pem"), S_IRUSR);
         ChangeCertsFileMode(GetAbsolutePath(certDir, "coordinator_to_user/cert.pem"), S_IRUSR);
         ChangeCertsFileMode(GetAbsolutePath(certDir, "coordinator_to_user/cert.key.pem"), S_IRUSR);
         ChangeCertsFileMode(GetAbsolutePath(certDir, "coordinator_to_user/cert_passwd.txt"), S_IRUSR);
-        ChangeCertsFileMode(GetAbsolutePath(certDir, "coordinator_to_user/tools/pmt/master/ksfa"), S_IRUSR | S_IWUSR);
-        ChangeCertsFileMode(GetAbsolutePath(certDir, "coordinator_to_user/tools/pmt/standby/ksfb"), S_IRUSR | S_IWUSR);
 
         ChangeCertsFileMode(GetAbsolutePath(certDir, "coordinator_to_mindie_server/ca.pem"), S_IRUSR);
         ChangeCertsFileMode(GetAbsolutePath(certDir, "coordinator_to_mindie_server/cert.pem"), S_IRUSR);
         ChangeCertsFileMode(GetAbsolutePath(certDir, "coordinator_to_mindie_server/cert.key.pem"), S_IRUSR);
         ChangeCertsFileMode(GetAbsolutePath(certDir, "coordinator_to_mindie_server/cert_passwd.txt"), S_IRUSR);
-        ChangeCertsFileMode(GetAbsolutePath(certDir, "coordinator_to_mindie_server/tools/pmt/master/ksfa"),
-            S_IRUSR | S_IWUSR);
-        ChangeCertsFileMode(GetAbsolutePath(certDir, "coordinator_to_mindie_server/tools/pmt/standby/ksfb"),
-            S_IRUSR | S_IWUSR);
 
         ChangeCertsFileMode(GetAbsolutePath(certDir, "mindie_server_to_coordinator/ca.pem"), S_IRUSR);
         ChangeCertsFileMode(GetAbsolutePath(certDir, "mindie_server_to_coordinator/cert.pem"), S_IRUSR);
         ChangeCertsFileMode(GetAbsolutePath(certDir, "mindie_server_to_coordinator/cert.key.pem"), S_IRUSR);
         ChangeCertsFileMode(GetAbsolutePath(certDir, "mindie_server_to_coordinator/cert_passwd.txt"), S_IRUSR);
-        ChangeCertsFileMode(GetAbsolutePath(certDir, "mindie_server_to_coordinator/tools/pmt/master/ksfa"),
-            S_IRUSR | S_IWUSR);
-        ChangeCertsFileMode(GetAbsolutePath(certDir, "mindie_server_to_coordinator/tools/pmt/standby/ksfb"),
-            S_IRUSR | S_IWUSR);
     }
     uint8_t numMindIEServer = 4;
     ThreadSafeVector<std::string> predictPortList;
@@ -197,8 +177,6 @@ TEST_F(TestSSLRequest, TestSSLRequestTC01)
     tlsItems.tlsCert = GetAbsolutePath(certDir, "user_to_coordinator/cert.pem");
     tlsItems.tlsKey = GetAbsolutePath(certDir, "user_to_coordinator/cert.key.pem");
     tlsItems.tlsPasswd = GetAbsolutePath(certDir, "user_to_coordinator/cert_passwd.txt");
-    tlsItems.kmcKsfMaster = GetAbsolutePath(certDir, "user_to_coordinator/tools/pmt/master/ksfa");
-    tlsItems.kmcKsfStandby = GetAbsolutePath(certDir, "user_to_coordinator/tools/pmt/standby/ksfb");
 
     std::string response;
     auto pdInstance = SetPDRole(predictIPList, predictPortList, managePortList,

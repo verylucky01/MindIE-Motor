@@ -139,11 +139,11 @@ static bool IsTlsConfigJsonStringValid(const nlohmann::json &config, const std::
     if (!tlsEnable) {
         return true;
     }
+    int tlsCrlNameMaxLen = 4096;
     if (!IsJsonObjValid(config, certName) || !IsJsonStringValid(config[certName], "ca_cert") ||
         !IsJsonStringValid(config[certName], "tls_cert") || !IsJsonStringValid(config[certName], "tls_key") ||
-        !IsJsonStringValid(config[certName], "tls_passwd") || !IsJsonStringValid(config[certName], "kmc_ksf_master") ||
-        !IsJsonStringValid(config[certName], "kmc_ksf_standby") ||
-        !IsJsonStringValid(config[certName], "tls_crl", 0, 4096)) { // tls_crl有效长度为0~4096
+        !IsJsonStringValid(config[certName], "tls_passwd") ||
+        !IsJsonStringValid(config[certName], "tls_crl", 0, tlsCrlNameMaxLen)) { // tls_crl有效长度为0~4096
         return false;
     }
     return true;
@@ -673,8 +673,6 @@ TlsItems ControllerConfig::GetInitTlsItems(const nlohmann::json &rawConfig, cons
     tlsItems.tlsCert = rawConfig[certName].at("tls_cert").get<std::string>();
     tlsItems.tlsKey = rawConfig[certName].at("tls_key").get<std::string>();
     tlsItems.tlsPasswd = rawConfig[certName].at("tls_passwd").get<std::string>();
-    tlsItems.kmcKsfMaster = rawConfig[certName].at("kmc_ksf_master").get<std::string>();
-    tlsItems.kmcKsfStandby = rawConfig[certName].at("kmc_ksf_standby").get<std::string>();
     tlsItems.tlsCrl = rawConfig[certName].at("tls_crl").get<std::string>();
     tlsItems.checkFiles = mCheckMountedFiles;
     return tlsItems;

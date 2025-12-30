@@ -468,21 +468,11 @@ std::string SetMSServerJsonDefault(const std::string &jsonPath)
         CreateFile(tls_crl, "tls_crl");
         ChangeCertsFileMode(tls_crl, S_IRUSR);
 
-        auto kmcKsfMaster = JoinPathComponents({ exeDir, "cert_dir", items + "_kmcKsfMaster" });
-        CreateFile(kmcKsfMaster, "kmcKsfMaster");
-        ChangeCertsFileMode(kmcKsfMaster, S_IRUSR);
-
-        auto kmcKsfStandby = JoinPathComponents({ exeDir, "cert_dir", items + "_kmcKsfStandby" });
-        CreateFile(kmcKsfStandby, "kmcKsfStandby");
-        ChangeCertsFileMode(kmcKsfStandby, S_IRUSR);
-
         manager.SetList({ items, "ca_cert" }, ca_cert);
         manager.SetList({ items, "tls_cert" }, tls_cert);
         manager.SetList({ items, "tls_key" }, tls_key);
         manager.SetList({ items, "tls_passwd" }, "aaaa");
         manager.SetList({ items, "tls_crl" }, tls_crl);
-        manager.SetList({ items, "kmcKsfMaster" }, kmcKsfMaster);
-        manager.SetList({ items, "kmcKsfStandby" }, kmcKsfStandby);
     };
 
     mode_t oldMask = umask(0277);
@@ -613,21 +603,11 @@ std::string SetMSControllerJsonDefault(const std::string &jsonPath)
         CreateFile(tls_crl, "tls_crl");
         ChangeCertsFileMode(tls_crl, S_IRUSR);
 
-        auto kmcKsfMaster = JoinPathComponents({ exeDir, "cert_dir", items + "_kmcKsfMaster" });
-        CreateFile(kmcKsfMaster, "kmcKsfMaster");
-        ChangeCertsFileMode(kmcKsfMaster, S_IRUSR);
-
-        auto kmcKsfStandby = JoinPathComponents({ exeDir, "cert_dir", items + "_kmcKsfStandby" });
-        CreateFile(kmcKsfStandby, "kmcKsfStandby");
-        ChangeCertsFileMode(kmcKsfStandby, S_IRUSR);
-
         manager.SetList({ "tls_config", items, "ca_cert" }, ca_cert);
         manager.SetList({ "tls_config", items, "tls_cert" }, tls_cert);
         manager.SetList({ "tls_config", items, "tls_key" }, tls_key);
         manager.SetList({ "tls_config", items, "tls_passwd" }, "aaaa");
         manager.SetList({ "tls_config", items, "tls_crl" }, tls_crl);
-        manager.SetList({ "tls_config", items, "kmcKsfMaster" }, kmcKsfMaster);
-        manager.SetList({ "tls_config", items, "kmcKsfStandby" }, kmcKsfStandby);
     };
 
     mode_t oldMask = umask(0277);

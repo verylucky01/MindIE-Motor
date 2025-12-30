@@ -16,8 +16,6 @@ include_directories(
     # ${EMOCK_DIR}/include
     # ${CPPFREEMOCK_DIR}/include
     ${CPP_STUB_DIR}/src
-    #changes
-    ${MINDIE_MS_SRC_ROOT}/build/open_source/kmc/include
 )
 
 add_subdirectory(${GOOGLT_TEST_DIR} gtest)
@@ -26,8 +24,6 @@ add_subdirectory(${GOOGLT_TEST_DIR} gtest)
 link_directories(
     ${MINDIE_MS_SRC_ROOT}/build/open_source/securec/lib
     ${MINDIE_MS_SRC_ROOT}/build/open_source/openssl
-    #changes
-    ${MINDIE_MS_SRC_ROOT}/build/open_source/kmc/lib
 )
 
 if("${BUILDING_STAGE}" STREQUAL "gcov")

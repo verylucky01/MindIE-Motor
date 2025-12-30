@@ -66,7 +66,7 @@ file(GLOB COMMON_SOURCE_DIR
 list(REMOVE_ITEM COORDINATOR_SOURCE_DIR "${MINDIE_MS_SRC_ROOT}/coordinator/main.cpp")
 
 add_library(test_coordinator SHARED ${COORDINATOR_SOURCE_DIR} ${COMMON_SOURCE_DIR})
-target_link_libraries(test_coordinator crypto ssl boundscheck pthread hse_cryption -ldl)
+target_link_libraries(test_coordinator crypto ssl boundscheck pthread -ldl)
 
 aux_source_directory(${CMAKE_CURRENT_SOURCE_DIR} COORDINATOR_SRCS_FILES)
 
