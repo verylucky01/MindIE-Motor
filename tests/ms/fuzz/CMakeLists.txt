@@ -24,8 +24,9 @@ endif()
 
 file(GLOB TEST_MAIN_SRC
     ${MINDIE_MS_TEST_ROOT}/dt/common/helper/*.cpp
-    ${MINDIE_MS_TEST_ROOT}/dt/common/mindie_server/*.cpp
-    ${MINDIE_MS_TEST_ROOT}/dt/common/request_helper/*.cpp
+    # mindie_server / request_helper 已由 dt/common 迁移到 st/common
+    ${MINDIE_MS_TEST_ROOT}/st/common/mindie_server/*.cpp
+    ${MINDIE_MS_TEST_ROOT}/st/common/request_helper/*.cpp
     ${MINDIE_MS_TEST_ROOT}/fuzz/common/*.cpp
 )
 

@@ -87,89 +87,181 @@ _build_dt()
     make -j8
 }
 
+# 构建 ST（System Test）用例：包含所有拉起 HttpServer 服务 + 构造请求的用例
+_build_st()
+{
+    local test_mode=${1?}
+
+    cd ${MINDIE_MS_TEST_PATH}/st
+    rm -rf build && mkdir build
+    cd build
+
+    cmake -DCMAKE_BUILD_TYPE=Debug -DBUILDING_STAGE=${test_mode} -DCMAKE_CXX_FLAGS="-DUT_FLAG=ON" ..
+    make -j8
+}
+
+# coordinator 纯 UT（不拉起 HttpServer）并发执行。
+# 通过 MINDIE_MS_TEST_CONFIG_BASEDIR 使用 UT 专属配置目录，
+# 避免与同时运行的 ST 进程互相覆盖配置文件。
+# 并发度由 MS_UT_PARALLEL_JOBS 控制，默认 4。
+_run_coordinator_ut_in_parallel()
+{
+    local max_jobs=${MS_UT_PARALLEL_JOBS:-4}
+    local filters=(
+        "TestClusterMonitor.*"
+        "TestCoordinatorConfig*"
+        "TestCoordinatorScheduler.*"
+        "TestDigsScheduler.*"
+        "TestDIGSSchedulerImpl.*"
+        "TestDigsMetaResource.*"
+        "TestGlobalScheduler.*"
+        "TestSchedulerFramework.*"
+        "TestDigsResourceInfo.*"
+        "TestDigsRequest.*"
+        "TestDigsRequestManager.*"
+        "TestDigsRequestProfiler.*"
+        "TestStaticAllocPolicy.*"
+        "TestCoordinatorMain.*"
+        "TestMetrics.*"
+        "TestConfigure.*"
+        "TestFlexProcess.*"
+        "TestParseMetric.*"
+        "TestFillInstancesInfoSplitedByFlex.*"
+        "TestMemoryUtil.*"
+    )
+    echo "Run coordinator pure UT in parallel, jobs=${max_jobs}, config=${MINDIE_MS_TEST_CONFIG_BASEDIR}"
+    printf '%s\n' "${filters[@]}" \
+        | xargs -I{} -P "${max_jobs}" bash -c \
+          'export MINDIE_MS_TEST_CONFIG_BASEDIR="$1"; ./mindie_ms_coordinator_ut --gtest_filter="$2"' \
+          _ "${MINDIE_MS_TEST_CONFIG_BASEDIR}" "{}"
+}
+
+_prepare_test_config_dir()
+{
+    local src_dir=${1?}
+    local target_dir=${2?}
+
+    rm -rf "${target_dir}"
+    cp -r "${src_dir}" "${target_dir}"
+}
+
+# ST 冒烟用例（拉起 HttpServer + 构造请求）
+_run_smoke_st_cases()
+{
+    cd ${MINDIE_MS_TEST_PATH}/st
+    ./mindie_ms_st --gtest_filter=TestHttp.*
+    ./mindie_ms_st --gtest_filter=TestControllerListener.*
+
+    ./mindie_ms_st --gtest_filter=TestPDInferReq.*
+    # ./mindie_ms_st --gtest_filter=TestInferReq.*
+    ./mindie_ms_st --gtest_filter=TestDResError.*
+    ./mindie_ms_st --gtest_filter=TestMaxReq.*
+    ./mindie_ms_st --gtest_filter=TestOpenAI.*
+    ./mindie_ms_st --gtest_filter=TestRequestListener.*
+    ./mindie_ms_st --gtest_filter=TestPResError.*
+    ./mindie_ms_st --gtest_filter=TestPResInvalid.*
+    ./mindie_ms_st --gtest_filter=TestRetry.*
+    ./mindie_ms_st --gtest_filter=TestSelfDevelop.*
+    ./mindie_ms_st --gtest_filter=*.TestDefaultPrefixCacheTC01
+    ./mindie_ms_st --gtest_filter=*.TestDefaultPrefixCacheTC02
+    ./mindie_ms_st --gtest_filter=*.TestDefaultPrefixCacheTC03
+    ./mindie_ms_st --gtest_filter=*.TestDefaultRoundRobinTC01
+    ./mindie_ms_st --gtest_filter=*.TestDefaultRoundRobinTC02
+    ./mindie_ms_st --gtest_filter=TestTGI.*
+    ./mindie_ms_st --gtest_filter=TestTokenizerAndProbe.*
+    ./mindie_ms_st --gtest_filter=TestTriton.*
+    ./mindie_ms_st --gtest_filter=TestVLLM.*
+    ./mindie_ms_st --gtest_filter=TestSingleInferReqPrompt.*
+    ./mindie_ms_st --gtest_filter=TestMaxConnection.*
+
+    ./mindie_ms_st --gtest_filter=TestSingleDFX.TestSingleErrorTC01
+    ./mindie_ms_st --gtest_filter=TestSingleDFX.TestSingleTimeoutTC01
+    ./mindie_ms_st --gtest_filter=TestSingleDFX.SingleInstancesAdd
+    ./mindie_ms_st --gtest_filter=TestSingleDFX.SingleInstancesUpdate
+    ./mindie_ms_st --gtest_filter=TestSingleDFX.SingleInstancesRemove
+
+    ./mindie_ms_st --gtest_filter=*.TestReqKeepAliveTimeoutTC01
+    ./mindie_ms_st --gtest_filter=*.TestReqKeepAliveTimeoutTC02
+    ./mindie_ms_st --gtest_filter=*.TestReqKeepAliveTimeoutTC03
+
+    ./mindie_ms_st --gtest_filter=*.TestSingleNodeMetricsTC01
+    ./mindie_ms_st --gtest_filter=*.TestMultiSingleNodeMetricsTC01
+    ./mindie_ms_st --gtest_filter=*.TestSingleNodeMetricsSortTimeReUseTC01
+    ./mindie_ms_st --gtest_filter=*.TestPDSeparateMetricsTC01
+    ./mindie_ms_st --gtest_filter=TestSchedulerInfo.*
+}
+
 # 蓝区门禁需要执行的冒烟用例，在该处补充
 _run_smoke_dt_test()
 {
     cd ${MINDIE_MS_TEST_PATH}/dt
-    ./mindie_ms_controller_ut
+
+    local _common_dir="${MINDIE_MS_TEST_PATH}/common/.mindie_ms"
+    local _controller_config_dir="${MINDIE_MS_TEST_PATH}/common/.mindie_ms_controller_ut"
+    local _ut_config_dir="${MINDIE_MS_TEST_PATH}/common/.mindie_ms_ut"
+    local _st_config_dir="${MINDIE_MS_TEST_PATH}/common/.mindie_ms_st"
+    _prepare_test_config_dir "${_common_dir}" "${_controller_config_dir}"
+    _prepare_test_config_dir "${_common_dir}" "${_ut_config_dir}"
+    _prepare_test_config_dir "${_common_dir}" "${_st_config_dir}"
+
+    (
+        cd ${MINDIE_MS_TEST_PATH}/dt
+        export MINDIE_MS_TEST_CONFIG_BASEDIR="${_controller_config_dir}"
+        ./mindie_ms_controller_ut
+    ) &
+    local _CONTROLLER_PID=$!
+
+    (
+        cd ${MINDIE_MS_TEST_PATH}/dt
+        export MINDIE_MS_TEST_CONFIG_BASEDIR="${_ut_config_dir}"
+        _run_coordinator_ut_in_parallel
+    ) &
+    local _UT_PID=$!
+
+    (
+        export MINDIE_MS_TEST_CONFIG_BASEDIR="${_st_config_dir}"
+        _run_smoke_st_cases
+    ) &
+    local _ST_PID=$!
+
+    set +e
     ./mindie_ms_ipc_ut
+    local _IPC_EXIT=$?
     ./mindie_ms_securityutils_ut
+    local _SECURITY_EXIT=$?
     ./mindie_service_utils_ut
+    local _SERVICE_EXIT=$?
+    wait ${_CONTROLLER_PID}
+    local _CONTROLLER_EXIT=$?
+    wait ${_UT_PID}
+    local _UT_EXIT=$?
+    wait ${_ST_PID}
+    local _ST_EXIT=$?
+    set -e
 
-    ./mindie_ms_coordinator_ut --gtest_filter=TestClusterMonitor.*
-    ./mindie_ms_coordinator_ut --gtest_filter=TestCoordinatorConfig*
-    ./mindie_ms_coordinator_ut --gtest_filter=TestHttp.*
-    ./mindie_ms_coordinator_ut --gtest_filter=TestCoordinatorScheduler.*
-    ./mindie_ms_coordinator_ut --gtest_filter=TestDigsScheduler.*
-    ./mindie_ms_coordinator_ut --gtest_filter=TestDIGSSchedulerImpl.*
-    ./mindie_ms_coordinator_ut --gtest_filter=TestControllerListener.*
-    ./mindie_ms_coordinator_ut --gtest_filter=TestDigsMetaResource.*
-    ./mindie_ms_coordinator_ut --gtest_filter=TestGlobalScheduler.*
-    ./mindie_ms_coordinator_ut --gtest_filter=TestSchedulerFramework.*
-    ./mindie_ms_coordinator_ut --gtest_filter=TestDigsResourceInfo.*
-    ./mindie_ms_coordinator_ut --gtest_filter=TestDigsRequest.*
-    ./mindie_ms_coordinator_ut --gtest_filter=TestDigsRequestManager.*
-    ./mindie_ms_coordinator_ut --gtest_filter=TestDigsRequestProfiler.*
-    ./mindie_ms_coordinator_ut --gtest_filter=TestStaticAllocPolicy.*
+    rm -rf "${_controller_config_dir}"
+    rm -rf "${_ut_config_dir}"
+    rm -rf "${_st_config_dir}"
 
-    ./mindie_ms_coordinator_ut --gtest_filter=TestCoordinatorMain.*
-    ./mindie_ms_coordinator_ut --gtest_filter=TestPDInferReq.*
-    # ./mindie_ms_coordinator_ut --gtest_filter=TestInferReq.*
-    ./mindie_ms_coordinator_ut --gtest_filter=TestDResError.*
-    ./mindie_ms_coordinator_ut --gtest_filter=TestMaxReq.*
-    ./mindie_ms_coordinator_ut --gtest_filter=TestOpenAI.*
-    ./mindie_ms_coordinator_ut --gtest_filter=TestRequestListener.*
-    ./mindie_ms_coordinator_ut --gtest_filter=TestPResError.*
-    ./mindie_ms_coordinator_ut --gtest_filter=TestPResInvalid.*
-    ./mindie_ms_coordinator_ut --gtest_filter=TestRetry.*
-    ./mindie_ms_coordinator_ut --gtest_filter=TestSelfDevelop.*
-    ./mindie_ms_coordinator_ut --gtest_filter=*.TestDefaultPrefixCacheTC01
-    ./mindie_ms_coordinator_ut --gtest_filter=*.TestDefaultPrefixCacheTC02
-    ./mindie_ms_coordinator_ut --gtest_filter=*.TestDefaultPrefixCacheTC03
-    ./mindie_ms_coordinator_ut --gtest_filter=*.TestDefaultRoundRobinTC01
-    ./mindie_ms_coordinator_ut --gtest_filter=*.TestDefaultRoundRobinTC02
-    ./mindie_ms_coordinator_ut --gtest_filter=TestTGI.*
-    ./mindie_ms_coordinator_ut --gtest_filter=TestTokenizerAndProbe.*
-    ./mindie_ms_coordinator_ut --gtest_filter=TestTriton.*
-    ./mindie_ms_coordinator_ut --gtest_filter=TestVLLM.*
-    ./mindie_ms_coordinator_ut --gtest_filter=TestSingleInferReqPrompt.*
-    ./mindie_ms_coordinator_ut --gtest_filter=TestMaxConnection.*
-
-    ./mindie_ms_coordinator_ut --gtest_filter=TestSingleDFX.TestSingleErrorTC01
-    ./mindie_ms_coordinator_ut --gtest_filter=TestSingleDFX.TestSingleTimeoutTC01
-    ./mindie_ms_coordinator_ut --gtest_filter=TestSingleDFX.SingleInstancesAdd
-    ./mindie_ms_coordinator_ut --gtest_filter=TestSingleDFX.SingleInstancesUpdate
-    ./mindie_ms_coordinator_ut --gtest_filter=TestSingleDFX.SingleInstancesRemove
-
-
-
-    ./mindie_ms_coordinator_ut --gtest_filter=*.TestReqKeepAliveTimeoutTC01
-    ./mindie_ms_coordinator_ut --gtest_filter=*.TestReqKeepAliveTimeoutTC02
-    ./mindie_ms_coordinator_ut --gtest_filter=*.TestReqKeepAliveTimeoutTC03
-
-    ./mindie_ms_coordinator_ut --gtest_filter=*.TestSingleNodeMetricsTC01
-    ./mindie_ms_coordinator_ut --gtest_filter=*.TestMultiSingleNodeMetricsTC01
-    ./mindie_ms_coordinator_ut --gtest_filter=*.TestSingleNodeMetricsSortTimeReUseTC01
-    ./mindie_ms_coordinator_ut --gtest_filter=*.TestPDSeparateMetricsTC01
-    ./mindie_ms_coordinator_ut --gtest_filter=TestMetrics.*
-    ./mindie_ms_coordinator_ut --gtest_filter=TestSchedulerInfo.*
-    ./mindie_ms_coordinator_ut --gtest_filter=TestConfigure.*
-    ./mindie_ms_coordinator_ut --gtest_filter=TestFlexProcess.*
-    ./mindie_ms_coordinator_ut --gtest_filter=TestParseMetric.*
-    ./mindie_ms_coordinator_ut --gtest_filter=TestFillInstancesInfoSplitedByFlex.*
-    ./mindie_ms_coordinator_ut --gtest_filter=TestMemoryUtil.*
+    if [ ${_CONTROLLER_EXIT} -ne 0 ] || [ ${_IPC_EXIT} -ne 0 ] \
+        || [ ${_SECURITY_EXIT} -ne 0 ] || [ ${_SERVICE_EXIT} -ne 0 ] \
+        || [ ${_UT_EXIT} -ne 0 ] || [ ${_ST_EXIT} -ne 0 ]; then
+        echo "ERROR: controller UT exit=${_CONTROLLER_EXIT}, ipc UT exit=${_IPC_EXIT}, security UT exit=${_SECURITY_EXIT}, service UT exit=${_SERVICE_EXIT}, coordinator UT exit=${_UT_EXIT}, ST exit=${_ST_EXIT}"
+        exit 1
+    fi
+    cd ${MINDIE_MS_TEST_PATH}/dt
 }
 
 
 # 除冒烟外的测试用例，在该处补充
 _run_other_dt_test()
 {
-    cd ${MINDIE_MS_TEST_PATH}/dt
+    cd ${MINDIE_MS_TEST_PATH}/st
 
-    ./mindie_ms_coordinator_ut --gtest_filter=*.TestRetryFailedTC01
-    ./mindie_ms_coordinator_ut --gtest_filter=TestTimeout.TestFirstTokenTimeoutTC01
-    ./mindie_ms_coordinator_ut --gtest_filter=TestTimeout.TestInferTimeoutTC01
-    ./mindie_ms_coordinator_ut --gtest_filter=TestRetryFailed.TestRetryFailedTC02
+    ./mindie_ms_st --gtest_filter=*.TestRetryFailedTC01
+    ./mindie_ms_st --gtest_filter=TestTimeout.TestFirstTokenTimeoutTC01
+    ./mindie_ms_st --gtest_filter=TestTimeout.TestInferTimeoutTC01
+    ./mindie_ms_st --gtest_filter=TestRetryFailed.TestRetryFailedTC02
 }
 
 # 仅ms黄区执行的用例
@@ -187,12 +279,13 @@ _run_dt_y_test()
     sudo ifconfig eth0:7 172.16.0.7 netmask 255.255.254.0 up
     sudo ifconfig eth0:8 172.16.0.8 netmask 255.255.254.0 up
 
-    ./mindie_ms_coordinator_ut --gtest_filter=TestSSLRequest.*
-    ./mindie_ms_coordinator_ut --gtest_filter=StressTestPD.TestPDOpenAIStressTC01
-    ./mindie_ms_coordinator_ut --gtest_filter=StressTestPD.TestPDOpenAIStressTC02
-    ./mindie_ms_coordinator_ut --gtest_filter=StressTestSingleNode.TestSingleNodeOpenAIStressTC01
-    ./mindie_ms_coordinator_ut --gtest_filter=StressTestSingleNode.TestSingleNodeOpenAIStressTC02
-    ./mindie_ms_coordinator_ut --gtest_filter=TestMetricsPDSeparate.TestPDSeparateMetricsTC02
+    cd ${MINDIE_MS_TEST_PATH}/st
+    ./mindie_ms_st --gtest_filter=TestSSLRequest.*
+    ./mindie_ms_st --gtest_filter=StressTestPD.TestPDOpenAIStressTC01
+    ./mindie_ms_st --gtest_filter=StressTestPD.TestPDOpenAIStressTC02
+    ./mindie_ms_st --gtest_filter=StressTestSingleNode.TestSingleNodeOpenAIStressTC01
+    ./mindie_ms_st --gtest_filter=StressTestSingleNode.TestSingleNodeOpenAIStressTC02
+    ./mindie_ms_st --gtest_filter=TestMetricsPDSeparate.TestPDSeparateMetricsTC02
 
 
 }

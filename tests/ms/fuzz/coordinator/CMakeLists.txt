@@ -42,8 +42,9 @@ include_directories(
     ${MINDIE_MS_SRC_ROOT}/build/open_source/openssl/include
     ${MINDIE_MS_SRC_ROOT}/build/open_source
     ${MINDIE_MS_TEST_ROOT}/dt/common/helper
-    ${MINDIE_MS_TEST_ROOT}/dt/common/mindie_server
-    ${MINDIE_MS_TEST_ROOT}/dt/common/request_helper
+    # mindie_server / request_helper 已由 dt/common 迁移到 st/common
+    ${MINDIE_MS_TEST_ROOT}/st/common/mindie_server
+    ${MINDIE_MS_TEST_ROOT}/st/common/request_helper
     ${MINDIE_MS_TEST_ROOT}/dt/common/thread_safe_vector
 )
 

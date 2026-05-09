@@ -1,4 +1,5 @@
-project(MindIE-MS-DT)
+project(MindIE-MS-ST)
+
 include_directories(
     # 源码
     ${MINDIE_MS_SRC_ROOT}/
@@ -41,19 +42,25 @@ include_directories(
     ${MINDIE_MS_SRC_ROOT}/coordinator/request_listener
     ${MINDIE_MS_SRC_ROOT}/coordinator/controller_listener
     ${MINDIE_MS_SRC_ROOT}/coordinator
-    # MindIE server mock 与 request helper 已迁移到 tests/ms/st/common 下
-    # dt coordinator UT 不再依赖它们，仅保留 concurrent_test 等通用框架
+
+    # ST 自带的 mock MindIE server 与请求辅助工具（从 dt/common 迁入）
+    ${MINDIE_MS_TEST_ROOT}/st/common/mindie_server
+    ${MINDIE_MS_TEST_ROOT}/st/common/request_helper
+    # ST 仍需复用 dt 下的并发测试框架与 request/resource/digs_scheduler 头
     ${MINDIE_MS_TEST_ROOT}/dt/common/concurrent_test
     ${MINDIE_MS_TEST_ROOT}/dt/coordinator/request
     ${MINDIE_MS_TEST_ROOT}/dt/coordinator/resource
     ${MINDIE_MS_TEST_ROOT}/dt/coordinator/digs_scheduler
     ${MINDIE_MS_TEST_ROOT}/dt/coordinator/cluster_monitor_test
     ${MINDIE_MS_TEST_ROOT}/dt/coordinator
+    ${MINDIE_MS_TEST_ROOT}/st/coordinator
 )
 
-# TEST_COORDINATOR_FRAMEWORK 原来包含 MindIEServer / RequestHelper，
-# 这两个文件已随同拉起 HttpServer 类用例迁移到 tests/ms/st/common，不再编入 dt。
-set(TEST_COORDINATOR_FRAMEWORK "")
+# ST 框架源文件：mock server + 请求构造工具
+file(GLOB TEST_ST_FRAMEWORK
+    ${MINDIE_MS_TEST_ROOT}/st/common/mindie_server/*.cpp
+    ${MINDIE_MS_TEST_ROOT}/st/common/request_helper/*.cpp
+)
 
 set(COORDINATOR_SOURCE_DIR ${MINDIE_MS_SRC_ROOT}/coordinator)
 set(HTTP_CLIENT_CTL_DIR ${MINDIE_SERVICE_ROOT}/mindie_motor/src/http_client_ctl)
@@ -83,12 +90,21 @@ find_package(gRPC CONFIG REQUIRED)
 set(_PROTOBUF_LIBPROTOBUF protobuf::libprotobuf)
 set(_REFLECTION gRPC::grpc++_reflection)
 set(_GRPC_GRPCPP gRPC::grpc++)
-add_library(test_coordinator SHARED ${COORDINATOR_SOURCE_DIR} ${COMMON_SOURCE_DIR})
-target_link_libraries(test_coordinator crypto ssl boundscheck pthread -ldl ${_REFLECTION} ${_GRPC_GRPCPP} ${_PROTOBUF_LIBPROTOBUF})
 
-set(COORDINATOR_TEST_DIR ${MINDIE_MS_TEST_ROOT}/dt/coordinator)
-file(GLOB_RECURSE COORDINATOR_TEST_SOURCE "${COORDINATOR_TEST_DIR}/*.cpp" "${COORDINATOR_TEST_DIR}/*.c" "${COORDINATOR_TEST_DIR}/*.cxx")
+# 复用 dt 构建出的 test_coordinator target；若未构建 dt 则独立构建一份
+if(NOT TARGET test_coordinator)
+    add_library(test_coordinator SHARED ${COORDINATOR_SOURCE_DIR} ${COMMON_SOURCE_DIR})
+    target_link_libraries(test_coordinator crypto ssl boundscheck pthread -ldl ${_REFLECTION} ${_GRPC_GRPCPP} ${_PROTOBUF_LIBPROTOBUF})
+endif()
 
-add_executable(mindie_ms_coordinator_ut ${COORDINATOR_TEST_SOURCE} ${TEST_COORDINATOR_FRAMEWORK} ${COMMON_SOURCE_DIR})
-target_link_libraries(mindie_ms_coordinator_ut gtest gmock test_coordinator test_framework)
-target_link_libraries(mindie_ms_coordinator_ut dl pthread boundscheck ssl crypto rt)
+# ST 用例集合：request_test + stress_test + http_test 下的全部 cpp
+set(ST_COORDINATOR_TEST_DIR ${MINDIE_MS_TEST_ROOT}/st/coordinator)
+file(GLOB_RECURSE ST_COORDINATOR_TEST_SOURCE
+    "${ST_COORDINATOR_TEST_DIR}/*.cpp"
+    "${ST_COORDINATOR_TEST_DIR}/*.c"
+    "${ST_COORDINATOR_TEST_DIR}/*.cxx"
+)
+
+add_executable(mindie_ms_st ${ST_COORDINATOR_TEST_SOURCE} ${TEST_ST_FRAMEWORK} ${COMMON_SOURCE_DIR})
+target_link_libraries(mindie_ms_st gtest gmock test_coordinator test_framework)
+target_link_libraries(mindie_ms_st dl pthread boundscheck ssl crypto rt)

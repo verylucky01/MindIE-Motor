@@ -437,22 +437,20 @@ TEST_F(EtcdDistributedLockTest, AcquireLockOnce_TxnSucceeded) {
 }
 
 TEST_F(EtcdDistributedLockTest, InitializeEtcdClient_Succeeded) {
-    // 1. 创建锁对象（通过夹具的工厂方法）
     auto lock = CreateLock();
-
-    // 2. 执行并验证
     lock->SetLock(false);
+    lock->SetConnectMaxRetry(1);
+    lock->SetConnectRetryInterval(100);
     lock->InitializeEtcdClient();
     EXPECT_NE(lock, nullptr);
     lock->Stop();
 }
 
 TEST_F(EtcdDistributedLockTest, InitializeEtcdClient_TLS_Succeeded) {
-    // 1. 创建锁对象（通过夹具的工厂方法）
     auto lock = CreateLock();
-
-    // 2. 执行并验证
     lock->SetLock(false);
+    lock->SetConnectMaxRetry(1);
+    lock->SetConnectRetryInterval(100);
     lock->InitializeEtcdClient();
     EXPECT_NE(lock, nullptr);
     lock->Stop();
@@ -528,6 +526,7 @@ TEST_F(EtcdDistributedLockTest, EnsureConnection_RetryLoopWhenStubsNull) {
     lock->SetKvStub(nullptr);
     lock->SetLeaseStub(nullptr);
     lock->SetConnectMaxRetry(2);
+    lock->SetConnectRetryInterval(100);
     EXPECT_FALSE(lock->EnsureConnection());
     lock->Stop();
 }
@@ -569,6 +568,7 @@ TEST_F(EtcdDistributedLockTest,
     lock->SetKvStub(nullptr);
     lock->SetLeaseStub(nullptr);
     lock->SetConnectMaxRetry(1);
+    lock->SetConnectRetryInterval(100);
 
     EXPECT_TRUE(lock->EnsureConnection());
     grpcStub.reset(ADDR(MINDIE::MS, CreateGrpcChannel));

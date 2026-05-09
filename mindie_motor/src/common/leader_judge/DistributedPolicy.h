@@ -95,6 +95,9 @@ class EtcdDistributedLock : public DistributedLockPolicy {
         lease_stub_ = stub;
     }
     void SetConnectMaxRetry(int maxRetry) { connectMaxRetry_ = maxRetry; }
+    void SetConnectRetryInterval(int intervalMs) {
+        connectRetryIntervalMs_ = intervalMs;
+    }
     bool AcquireLockOnce();
     void InitializeEtcdClient();
     bool EnsureConnection();
@@ -145,6 +148,7 @@ class EtcdDistributedLock : public DistributedLockPolicy {
     int leaseTtl;
     EtcdTimeInfo etcdTimeInfo;
     int connectMaxRetry_ = ETCD_CONNECT_MAX_RETRY;
+    int connectRetryIntervalMs_ = ETCD_CONNECT_RETRY_INTERVAL * 1000;
     int64_t leaseId = 0;
     int64_t lastObservedRevision = 0;
 

@@ -45,6 +45,8 @@ main()
     _build_proto
 
     _build_dt ${TEST_MODE}
+    # 构建 ST（包含所有拉起 HttpServer + 构造请求的用例）
+    _build_st ${TEST_MODE}
 
     rm -rf ${MINDIE_MS_SRC_PATH}/output
     cp -r ${BUILD_MINDIE_SERVICE_INSTALL_DIR} ${MINDIE_MS_SRC_PATH}
