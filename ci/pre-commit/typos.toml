@@ -47,6 +47,8 @@ tme = "tme"
 dout = "dout"
 Pn = "Pn"
 arange = "arange"
+rouge = "rouge"
+passin = "passin"
 
 [type.py]
 extend-glob = []
