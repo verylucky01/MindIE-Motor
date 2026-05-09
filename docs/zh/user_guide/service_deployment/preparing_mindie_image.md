@@ -48,7 +48,7 @@
 >[!NOTE]说明
 >制作镜像时非root用户ID应该和执行环境上安装的驱动用户ID保持一致，或安装驱动时使用--install-for-all参数为所有用户安装。
 
-1. 将从[软件包获取](#zbrjb)下载或制作的软件放到某一目录下，例如：/home/package。
+1. 将从[软件包获取](#zbrjb)下载的软件放到某一目录下，例如：/home/package。
 2. 使用以下命令拉取Ubuntu 22.04镜像。
 
     ```bash
@@ -293,11 +293,11 @@
         ```shell
         #!/bin/bash
 
-        CANN_TOOKIT="Ascend-cann-toolkit_*_linux-*.run"
+        CANN_TOOLKIT="Ascend-cann-toolkit_*_linux-*.run"
         CANN_OPS="Ascend-cann-*-ops_*_linux-*.run"
         CANN_NNAL="Ascend-cann-nnal_*_linux-*.run"
         chmod +x *.run
-        yes | ./${CANN_TOOKIT} --install --quiet
+        yes | ./${CANN_TOOLKIT} --install --quiet
         toolkit_status=$?
         if [ ${toolkit_status} -eq 0 ]; then
             echo "install toolkit successfully"
@@ -621,7 +621,7 @@
 
     7. 编写server.js文件。
 
-        ```json
+        ```javascript
         const http = require('http');
         const fs = require('fs');
         const path = require('path');
@@ -708,7 +708,7 @@
     当镜像构建完成时，会出现类似如下打印信息：
 
     ```linux
-    [+] Building 798.2s (9/9) FINISHE                                                                                                               Ddocker:default
+    [+] Building 798.2s (9/9) FINISHED                                                                                                               Ddocker:default
      => [internal] load .dockerignore                                                                                                                          0.0s
      => => transferring context: 2B                                                                                                                            0.0s
      => [internal] load build definition from Dockerfile                                                                                                       0.0s

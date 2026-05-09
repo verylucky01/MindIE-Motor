@@ -11,7 +11,7 @@ MindIE Motor是面向LLM PD分离推理的请求调度框架，通过开放、�
 
 MindIE Motor及其周边组件交互架构图如下所示。
 
-**图 1** MindIE Motor架构图<a id="fig186975591945"></a>  
+**图 1** MindIE Motor架构图<a id="fig186975591945"></a>
 ![](../figures/mindie_motor_architectural_diagram.png)
 
 MindIE Motor提供PD分离推理服务化调度和RAS能力，关键组件和模块解释如下。
@@ -21,13 +21,13 @@ MindIE Motor提供PD分离推理服务化调度和RAS能力，关键组件和模
     - Metrics：PD分离服务整体的Metrics统计指标，是整个服务的Prefill/Decode实例的统计指标汇总。
     - Controller Monitor：接收Controller同步的实例状态信息，如健康状态、故障实例等信息。
     - LoadBalancer：负载均衡调度。
-    - RequestMonitor：请求状态监控，如请求阶段、请求异常等。
+    - RequestMonitor：请求状态监测，如请求阶段、请求异常等。
 
 - Controller：控制器。完成集群内所有Prefill/Decode实例的业务状态管控、PD身份管理与决策、RAS能力等，是整个集群的状态管控器和决策大脑。
     - FaultManager：故障管理模块，接收上报的故障，并处理故障，如隔离、重启、自愈恢复等。
     - InsManager：实例管理器，负责PD实例身份的分配、调整等。
     - CCAEReporter：运维管理信息上报，上报PD实例、Metrics等统计信息。
-    - InsMonitor：PD实例监控，包括心跳、负载等。
+    - InsMonitor：PD实例监测，包括心跳、负载等。
 - MindIE LLM：提供单个模型服务实例（Prefiller/Decoder）服务化推理能力，提供ContinuousBatching、PagedAttention、投机推理等LLM加速特性。
 - ClusterD：MindCluster高阶组件，负责故障诊断和全局RankTable表（整个PD分离服务所需的组网和Device信息）下发等功能。
 - CCAE：算存网一体化运维可视化平台。

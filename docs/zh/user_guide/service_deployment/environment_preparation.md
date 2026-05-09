@@ -1,9 +1,12 @@
-# 总述
+# 环境准备
 
-本章节只适用于基于K8s的集群服务部署，不包含其他场景，其部署示意图如[图1 K8s集群整体部署视图](#fig698114995216)所示。
+## 总述
 
-**图 1**  K8s集群整体部署视图<a id="fig698114995216"></a>
-![](../../figures/overall_deplopyemt_view_of_k8s.png)
+本章节只适用于基于K8s的集群服务部署，不包含其他场景，其部署示意图如下图所示。
+
+**图 1**  K8s集群整体部署视图
+
+![](../../figures/overall_deployemt_view_of_k8s.png)
 
 按照Server推理服务实例在集群计算节点（即推理服务器）上的分布和推理模式，可以分为以下两种部署形态。
 
@@ -17,11 +20,9 @@
 >[!NOTE]说明
 >一体机单实例（单机蒸馏版或双机满血版）场景下，硬件故障会导致业务中断，业务恢复时长不可控，因此，一体机建议部署多实例，在单点硬件故障场景下可通过多实例之间的负载均衡继续提供业务。
 
-# 环境准备
-
 ## 软件环境
 
-集群容器化部署依赖Kubernetes和MindCluster，具体部署场景请参考[表1 依赖列表](#table9819144513712)，Kubernetes组件详细介绍请参见[Kubernetes安装工具](https://kubernetes.io/zh-cn/docs/reference/setup-tools/)；MindCluster组件详细介绍请参见《MindCluster  集群调度用户指南》的“简介 \> 组件介绍”章节。
+集群容器化部署依赖Kubernetes和MindCluster，具体部署场景请参考[表1 依赖列表](#table9819144513712)，Kubernetes组件详细介绍请参见[Kubernetes安装工具](https://kubernetes.io/zh-cn/docs/reference/setup-tools/)；MindCluster组件详细介绍请参见《MindCluster  集群调度用户指南》中的[组件介绍](https://gitcode.com/Ascend/mind-cluster/blob/master/docs/zh/scheduling/introduction.md#%E7%BB%84%E4%BB%B6%E4%BB%8B%E7%BB%8D)章节。
 
 **表 1**  依赖列表<a id="table9819144513712"></a>
 
@@ -39,7 +40,7 @@
 
 ## Kubernetes安装与配置
 
-**安装Kubernetes**
+### 安装Kubernetes
 
 **安装方式一（推荐）：**
 
@@ -84,6 +85,7 @@
     ```
 
     **图 2**  所需依赖及镜像查询结果<a id="fig27291521143514"></a>
+
     ![](../../figures/k8s_query_results.png)
 
     根据查询结果，用户需自行通过docker pull的方式依次进行安装，示例命令如下所示。
@@ -110,18 +112,64 @@
     sudo chown $(id -u):$(id -g) $HOME/.kube/config
     ```
 
-5. 执行以下命令查看当前默认启动项状态是否正常，如[图4 查看状态](#fig669924115221)所示，状态为Running即为正常。
+5. <a id="step0005"></a>执行以下命令查看当前默认启动项状态是否正常，如[图4 查看状态](#fig669924115221)所示，状态为Running即为正常。
 
     ```bash
     kubectl get pods -A
     ```
 
     **图 4**  查看状态<a id="fig669924115221"></a>
+
     ![](../../figures/check_status.png)
 
+6. （可选）如出现coredns开头的服务出现非running状态，需要在k8s集群中加入网络协议框架服务，推荐使用calico框架（如果pod状态无问题可忽略本步骤）。
+    1. 执行以下命令获取calico相关镜像（如果出现网络不通的问题，请重新设置网络代理环境变量）
+
+        ```bash
+        docker pull calico/kube-controllers:v3.23.5
+        docker pull calico/cni:v3.23.5
+        docker pull calico/node:v3.23.5
+        ```
+
+        >[!NOTE]说明
+        >Kubernetes与calico的版本存在配套关系，请自行查询配套版本并下载使用。
+
+    2. 执行以下命令下载calico的yaml文件（此步骤执行完毕后需取消网络代理设置）。
+
+        ```bash
+        curl -k -O https://docs.projectcalico.org/v3.23/manifests/calico.yaml
+        ```
+
+    3. 执行vim calico.yaml命令修改文件，找到"CALICO_IPV4POOL_IPIP"字段（在约4444行左右），在下方添加如下内容
+
+        ```bash
+        - name: IP_AUTODETECTION_METHOD
+        value: "interface=enp.*"
+        ```
+
+        >[!NOTE]说明
+        >该内容通过正则匹配的方式查找网卡，部分环境网卡名称存在差异，部署calico前推荐通过ifconfig查找所有服务器对应ip所在的网卡名称。如：预加入集群的部分环境存在将ip配置在虚拟网卡的情况，如下例子中网卡名称为virbr0，和其他服务器不一致，calico.yaml文件的配置需要涵盖所有节点的网卡名称，此时可以将该字段配置为"interface=enp.*|virbr0"
+        >
+        >```txt
+        ># ifconfig
+        >virbr0: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
+        >         inet 141.61.21.1  netmask 255.255.252.0  broadcast 141.61.23.255
+        >```
+
+        **图 5**  修改内容展示
+
+        ![](../../figures/edit_calico.png)
+
+    4. 启动calico
+
+        ```bash
+        kubectl apply -f calico.yaml
+        ```
+
+    5. 重复第[5](#step0005)步，可以观察到Pod状态恢复正常。
 <br>
 
-**重置Kubernetes设置**
+### 重置Kubernetes设置
 
 执行以下命令可以重置Kubernetes设置，回显如[图5 重置成功](#fig3621632193415)所示则表示重置成功。
 
@@ -130,6 +178,7 @@ kubeadm reset
 ```
 
 **图 5**  重置成功<a id="fig3621632193415"></a>
+
 ![](../../figures/reset_successful.png)
 
 >[!NOTE]说明
@@ -137,7 +186,7 @@ kubeadm reset
 
 <br>
 
-**Kubernetes集群增加计算节点**
+### Kubernetes集群增加计算节点
 
 整个集群仅使用一台服务器的情况下，用户无需新增计算节点，可略过下面步骤。
 
@@ -199,6 +248,7 @@ kubeadm reset
 4. 在管理节点上使用以下命令kubectl get nodes -A查看节点信息，如[图6 新增节点](#fig1471911375514)所示，localhost.localdomain即为新增节点。
 
     **图 6**  新增节点<a id="fig1471911375514"></a>
+
     ![](../../figures/new_node.png)
 
 5. 在管理节点上使用以下命令根据实际的NPU设备类型为新增节点打上accelerator=huawei-Ascend910或者accelerator=huawei-Ascend310x标签。
@@ -220,7 +270,7 @@ kubeadm reset
 
 <br>
 
-**Kubernetes日志打屏转储轮转**
+### Kubernetes日志打印转储轮转
 
 > **说明：**
 > 以下日志轮转配置需要在Kubernetes集群的**所有节点**（包括管理节点和工作节点）上进行操作。
@@ -278,18 +328,18 @@ kubeadm reset
 
 集群管理组件依赖MindCluster中的Ascend Docker Runtime、Ascend Device Plugin、Volcano和Ascend Operator组件。其中Volcano和Ascend Operator组件在管理节点安装，其他组件在计算节点上安装。
 
-1. 请参考《MindCluster  集群调度用户指南》的[安装前准备](https://gitcode.com/Ascend/mind-cluster/blob/master/docs/zh/scheduling/installation_guide/03_installation.md)章节完成创建节点标签、创建用户、创建日志目录和创建命名空间。
-2. 请参考《MindCluster  集群调度用户指南》的[Ascend Docker Runtime](https://gitcode.com/Ascend/mind-cluster/blob/master/docs/zh/scheduling/installation_guide/03_installation.md#ascend-docker-runtime)章节中的 “Containerd场景下安装Ascend Docker Runtime” 安装Ascend Docker Runtime。
-3. 请参考《MindCluster  集群调度用户指南》的[Ascend Device Plugin](https://gitcode.com/Ascend/mind-cluster/blob/master/docs/zh/scheduling/installation_guide/03_installation.md#ascend-device-plugin)章节安装Ascend Device Plugin，使用device-plugin-_xxx_-v *{version}*.yaml文件进行安装。
+1. 请参考《MindCluster  集群调度用户指南》的[安装前准备](https://gitcode.com/Ascend/mind-cluster/blob/branch_v26.0.0/docs/zh/scheduling/installation_guide/03_installation/manual_installation/01_preparing_for_installation.md)章节完成创建节点标签、创建用户、创建日志目录和创建命名空间。
+2. 请参考《MindCluster  集群调度用户指南》的[Ascend Docker Runtime](https://gitcode.com/Ascend/mind-cluster/blob/branch_v26.0.0/docs/zh/scheduling/installation_guide/03_installation/manual_installation/02_ascend_docker_runtime.md)章节中的 “Containerd场景下安装Ascend Docker Runtime” 安装Ascend Docker Runtime。
+3. 请参考《MindCluster  集群调度用户指南》的[Ascend Device Plugin](https://gitcode.com/Ascend/mind-cluster/blob/branch_v26.0.0/docs/zh/scheduling/installation_guide/03_installation/manual_installation/04_ascend_device_plugin.md)章节安装Ascend Device Plugin，使用device-plugin-_xxx_-v *{version}*.yaml文件进行安装。
 
     >[!NOTE]说明
     >当Ascend Device Plugin启动时，_xxx_.yaml配置文件中useAscendDocker参数配置为true且用户已安装Ascend Docker Runtime并生效，会自动挂载在 “/usr/local/Ascend” 下驱动相关目录。
 
-4. 请参考《MindCluster  集群调度用户指南》的[Volcano](https://gitcode.com/Ascend/mind-cluster/blob/master/docs/zh/scheduling/installation_guide/03_installation.md#volcano)章节安装Volcano。
+4. 请参考《MindCluster  集群调度用户指南》的[Volcano](https://gitcode.com/Ascend/mind-cluster/blob/branch_v26.0.0/docs/zh/scheduling/installation_guide/03_installation/manual_installation/05_volcano.md)章节安装Volcano。
 
     >[!NOTE]说明
     >- 请使用v1.7.0版本的Volcano进行安装。
-    >- 在单机场景下，参考《MindCluster  集群调度用户指南》的[Volcano](https://gitcode.com/Ascend/mind-cluster/blob/master/docs/zh/scheduling/installation_guide/03_installation.md#volcano)章节安装Volcano时，在执行“Volcano”章节中的步骤9前，需要修改Volcano解压后生成的volcano-v1.7.0目录下的volcano-v1.7.0.yaml文件，搜索"useClusterInfoManager"字段并将该值改为"false"，如下图所示，修改完成后，再执行“Volcano”章节中的步骤9。
+    >- 在单机场景下，参考《MindCluster  集群调度用户指南》的[Volcano](https://gitcode.com/Ascend/mind-cluster/blob/branch_v26.0.0/docs/zh/scheduling/installation_guide/03_installation/manual_installation/05_volcano.md)章节安装Volcano时，在执行“Volcano”章节中的步骤9前，需要修改Volcano解压后生成的volcano-v1.7.0目录下的volcano-v1.7.0.yaml文件，搜索"useClusterInfoManager"字段并将该值改为"false"，如下图所示，修改完成后，再执行“Volcano”章节中的步骤9。
     >![](../../figures/volcano.png)
 
-5. 请参考《MindCluster  集群调度用户指南》的[Ascend Operator](https://gitcode.com/Ascend/mind-cluster/blob/master/docs/zh/scheduling/installation_guide/03_installation.md#ascend-operator)章节安装Ascend Operator。
+5. 请参考《MindCluster  集群调度用户指南》的[Ascend Operator](https://gitcode.com/Ascend/mind-cluster/blob/branch_v26.0.0/docs/zh/scheduling/installation_guide/03_installation/manual_installation/08_ascend_operator.md)章节安装Ascend Operator。

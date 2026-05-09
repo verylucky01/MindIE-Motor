@@ -2,7 +2,7 @@
 
 ## 概述
 
-专家指 MoE 模型中的子网络（Expert），每个专家是相对独立的前馈网络，由门控根据输入选择部分专家参与计算；**大规模专家**指专家数量较多的 MoE 模型（如专家数达数十至上百），模型总参数量大、单次激活的专家数远小于总专家数；**大规模专家并行**指将众多专家分布到多台计算设备上，通过并行执行被选中的专家计算以完成推理或训练。大规模部署时，专家被切分并部署在多台计算设备上，因此激活某专家即触发承载该专家的设备上的计算，并在执行过程中进行必要的通信与调度。MindIE Motor 通过 P（Prefill）与 D（Decode）实例分工及集群管理组件（Coordinator/Controller）完成调度与资源管理，详见[集群管理组件](./cluster_management_component/coordinator.md)与[PD 分离服务部署](./service_deployment/pd_separation_service_deployment.md)。
+专家指 MoE 模型中的子网络（Expert），每个专家是相对独立的前馈网络，由门控根据输入选择部分专家参与计算；**大规模专家**指专家数量较多的 MoE 模型（如专家数达数十至上百），模型总参数量大、单次激活的专家数远小于总专家数；**大规模专家并行**指将众多专家分布到多台计算设备上，通过并行执行被选中的专家计算以完成推理或训练。大规模部署时，专家被切分并部署在多台计算设备上，因此激活某专家即触发承载该专家的设备上的计算，并在执行过程中进行必要的通信与调度。MindIE Motor 通过 P（Prefill）与 D（Decode）实例分工及集群管理组件（Coordinator/Controller）完成调度与资源管理，详见[集群管理组件](./cluster_management_component/coordinator.md)与[PD分离服务部署](./service_deployment/pd_separation_service_deployment.md)。
 
 建议按以下流程开展性能调优：
 
@@ -42,7 +42,9 @@
 每套集群管理组件实例（即 Coordinator/Controller 实例）管理一套PD实例，每套集群管理组件实例最大支持管理96节点（24P+6D）。
 以192节点集群为例，需划分为两套独立的24P+6D实例，集群管理组件实例也需要对应创建两套，如所示，两套集群管理组件实例可共部署在一台或主备通算节点，如果现场部署集群管理组件实例的通算节点为双机，则集群管理组件实例也可以创建对应的主从实例（主从集群管理组件 Coordinator实例和主从集群管理组件 Controller实例）。其中，通算节点用于部署集群管理组件（Coordinator/Controller），不承担模型主体推理计算。
 
-![1.png](https://raw.gitcode.com/user-images/assets/8772838/bb7fd4cf-5db5-437e-ace6-1b8bd3a35892/1.png)
+**图 1**  Atlas 800I A2 推理服务器安装方案
+
+![](../figures/A2.png)
 
  集群管理组件实例管理的PD实例规模支持按需灵活设置，如现场为64计算节点时，可以为64节点创建一套集群管理组件实例，也可以按照每16节点为一套独立的PD实例创建4套集群管理组件实例。
 
@@ -79,6 +81,10 @@
 每套集群管理组件实例（即 Coordinator/Controller 实例）管理一套独立的PD实例，每套集群管理组件实例管理一个超节点（48计算节点）。
 如现场部署了多个超节点，需划分多套独立的PD实例（每套48节点），则集群管理组件实例也需要对应创建多套，组网示例如图3-5所示，多套集群管理组件实例可共部署在一台或两台通算节点，如果现场部署集群管理组件实例的通算节点为双机，则集群管理组件实例也可以创建对应的主从实例（主从Coordinator实例和主从Controller实例）。其中，通算节点用于部署集群管理组件（Coordinator/Controller），不承担模型主体推理计算。
 
+**图 1**  Atlas 800I A2 推理服务器安装方案
+
+![](../figures/A3.png)
+
 集群管理组件实例管理的PD实例规模可按需灵活设置，如现场为48计算节点时，可以为48节点创建一套集群管理组件实例，也可以按照每16节点为一套独立的PD实例创建3套集群管理组件实例。
 
 **表3 Atlas 800I A3 超节点服务器典型配置**
@@ -98,7 +104,7 @@
 
    - 业务指标：在相同负载下使用 [AISBench](https://gitee.com/aisbench/benchmark) 或自有压测工具，对比调优前后的 TTFT（首 Token 时延）、吞吐（Output Token Throughput）、端到端时延等，确认有提升且无劣化。
    - 剖析数据：使用 **msprof** 或 MindIE 提供的 **msServiceProfiler 服务化调优工具** 采集调优后的性能数据（含算子级与调度链路），解析后通过 MindStudio Insight 等工具做可视化分析，确认瓶颈是否缓解、计算/通信占比是否更合理。
-   - 工具使用与配置详见[性能/精度测试工具](./service_oriented_optimization_tool.md#性能精度测试工具)与[服务化调优工具](./service_oriented_optimization_tool.md#服务化调优工具)。
+   - 工具使用与配置详见[性能/精度测试工具](./service_oriented_optimization_tool/performance_accuracy_test_tool.md)与[服务化调优工具](./service_oriented_optimization_tool/service_oriented_optimization_tool.md)。
 
 2. **除参数配置外还有哪些性能优化方法？**
 

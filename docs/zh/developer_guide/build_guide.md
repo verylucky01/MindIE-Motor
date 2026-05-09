@@ -53,7 +53,7 @@ MindIE镜像获取请参见[镜像安装方式](https://gitcode.com/Ascend/MindI
     env -u LD_LIBRARY_PATH bash build/build.sh -d 3rd -b 3rd
     ```
 
-    - env -u *xxx*：表示在启动指定命令时移出环境变量*xxx*。
+     env -u *xxx*：表示在启动指定命令时移出环境变量*xxx*。
 
 7. 设置环境变量。
     获取 Python site-packages 路径（建议不要强行编码 torch 路径），并配置动态库搜索路径：
