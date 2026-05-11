@@ -43,7 +43,7 @@
 |Concurrency|平均并发连接数，计算公式为：sum(E2EL) / Benchmark Duration|
 |Max Concurrency|配置并发连接数|
 |Request Throughput|请求吞吐量，计算公式为：Successful Requests / Total Requests|
-|Total Input Tokens|-|所有请求总的输入token数量|
+|Total Input Tokens|所有请求总的输入token数量|
 |Total generated tokens|所有请求总的输出token数量|
 |Input Token Throughput|本次测试的input token计算速度，计算公式为： Total Input Tokens / Benchmark Duration|
 |Output Token Throughput|本次测试的output token计算速度，计算公式为：Total generated tokens / Benchmark Duration|

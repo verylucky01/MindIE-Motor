@@ -304,7 +304,7 @@ ms_coordinator.json配置文件中各个字段解释如下所示，用户可根�
 |MINDIE_MS_COORDINATOR_CONFIG_MAX_REQ|可处理的最大请求数量。|
 |MINDIE_CHECK_INPUTFILES_PERMISSION|用户可设置是否需要检查外部挂载文件，具体包括ms_coordinator.json以及证书相关文件。默认值为空，表示需要做权限校验。<li>0：对外部挂载文件不做权限校验。</li><li>非0：对外部挂载文件做权限校验。</li>**当用户使用MINDIE_MS_COORDINATOR_CONFIG_FILE_PATH设置配置文件路径时，ms_coordinator.json为外部挂载文件。**|
 |HSECEASY_PATH|默认值为空。设置KMC解密工具的依赖库路径。开启tls校验时必须设置。|
-|**注：日志相关环境变量详情请参见[日志参考](./log_configuration.md)。**|-|-|
+|**注：日志相关环境变量详情请参见[日志参考](./log_configuration.md)。**|-|
 
 ## 启动调度器
 

@@ -574,7 +574,7 @@ ms_controller.json配置文件中各个字段解释如下所示，用户可根�
 |MINDIEMS_LOG_LEVEL|用户可动态设置Controller输出的日志等级。默认值为空，环境变量的优先级高于[ms_controller.json配置文件](#section183933919369)中log_level参数。日志级别如下所示：<li>CRITICAL</li><li>ERROR</li><li>WARN</li><li>INFO</li><li>DEBUG</li><br>**优先使用MINDIE_LOG_LEVEL设置日志等级，当前保留MINDIEMS_LOG_LEVEL是为了兼容旧版本配置方式。**<br>**若MINDIE_LOG_LEVEL设置为空则使用MINDIEMS_LOG_LEVEL。**|
 |MINDIE_CHECK_INPUTFILES_PERMISSION|用户可设置是否需要检查外部挂载文件，具体包括ms_controller.json, rank_table.json以及证书相关文件。默认值为空，表示需要做权限校验。<li>0：对外部挂载文件不做权限校验。</li><li>非0：对外部挂载文件做权限校验。</li><br>**当用户使用MINDIE_MS_CONTROLLER_CONFIG_FILE_PATH设置配置文件路径时，ms_controller.json为外部挂载文件。**|
 |MODEL_ID|部署模型的唯一标识。|
-|**注：日志相关环境变量详情请参见[日志配置](./log_configuration.md)。**|-|-|
+|**注：日志相关环境变量详情请参见[日志配置](./log_configuration.md)。**|-|
 
 <br>
 

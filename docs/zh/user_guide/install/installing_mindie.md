@@ -12,7 +12,7 @@ MindIE物理机安装详情请参见[安装MindIE](https://gitcode.com/Ascend/Mi
 
 ## 容器安装
 
-MindIE容器安装详情请参见[容器安装方式](https://gitcode.com/Ascend/MindIE-LLM/blob/dev/docs/zh/user_guide/install/source/installtion_in_containerized.md)。
+MindIE容器安装详情请参见[容器安装方式](https://gitcode.com/Ascend/MindIE-LLM/blob/dev/docs/zh/user_guide/install/source/installation_in_containerized.md)。
 
 ## 升级
 
