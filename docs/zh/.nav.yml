@@ -1,0 +1,32 @@
+nav:
+ - 主页: README.md
+
+ - 用户指南:
+    - 文档大纲: user_guide/README.md
+    - 用户手册目录: user_guide/menu_user_manual.md
+    - 简介: user_guide/introduction.md
+    - 快速入门: user_guide/quick_start.md
+    - 安装指南:
+        - 环境准备: user_guide/install/environment_preparation.md
+        - 安装说明: user_guide/install/installation_description.md
+        - 安装 MindIE: user_guide/install/installing_mindie.md
+    - 集群服务部署:
+        - 环境准备: user_guide/service_deployment/environment_preparation.md
+        - 准备 MindIE 镜像: user_guide/service_deployment/preparing_mindie_image.md
+        - 单机服务部署: user_guide/service_deployment/single_machine_service_deployment.md
+        - PD 分离服务部署: user_guide/service_deployment/pd_separation_service_deployment.md
+    - 集群管理组件:
+        - 概述: user_guide/cluster_management_component/general_comments.md
+        - 控制器: user_guide/cluster_management_component/controller.md
+        - 调度器: user_guide/cluster_management_component/coordinator.md
+        - 日志配置: user_guide/cluster_management_component/log_configuration.md
+    - 配套工具: user_guide/service_oriented_optimization_tool.md
+    - 性能调优: user_guide/performance_tuning.md
+    - 附录:
+        - RESTful 响应状态码: user_guide/appendix/restful_response_status_codes.md
+        - 启动 haveged 服务: user_guide/appendix/start_haveged_service.md
+    - API 参考: api_reference/README.md
+
+ - 开发者指南:
+    - 编译指导: developer_guide/build_guide.md
+    - 测试指南: developer_guide/test.md
