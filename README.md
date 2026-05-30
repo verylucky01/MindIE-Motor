@@ -41,7 +41,7 @@
 
 |MindIE软件版本|CANN版本兼容性|
 |:---|:---|
-|2.3.0|8.5.0|
+|3.0.0|8.5.1|
 
 ## ⚡️环境部署
 
@@ -57,7 +57,7 @@
 - [集群服务部署](./docs/zh/user_guide/service_deployment/environment_preparation.md)：介绍MindIE Motor集群服务部署方式，包括单机（非分布式）服务部署和PD分离单、多机服务部署。
 - [集群管理组件](./docs/zh/user_guide/cluster_management_component/general_comments.md)：介绍MindIE Motor集群管理组件，包括Controller和Coordinator。
 - [服务化接口](https://www.hiascend.com/document/detail/zh/mindie/230/mindiemotor/motordev/mindie_service0256.html)：介绍MindIE Motor提供的用户侧接口和集群内通信接口。
-- [配套工具](./docs/zh/user_guide/service_oriented_optimization_tool.md)：介绍MindIE Motor提供的配套工具，包括性能/精度测试工具、MindIE探针工具、服务化调优工具、CertTools、OM Adapter和Node Manager。
+- [配套工具](./docs/zh/user_guide/service_oriented_optimization_tool)：介绍MindIE Motor提供的配套工具，包括性能/精度测试工具、MindIE探针工具、服务化调优工具、OM Adapter和Node Manager。
 
 ## 📝免责声明
 

@@ -16,7 +16,7 @@
     - [说明](https://www.hiascend.com/document/detail/zh/mindie/230/mindiemotor/motordev/mindie_service0256.html)
     - [用户侧接口](https://www.hiascend.com/document/detail/zh/mindie/230/mindiemotor/motordev/mindie_service0267.html)
     - [集群内通信接口](https://www.hiascend.com/document/detail/zh/mindie/230/mindiemotor/motordev/mindie_service0269.html)
-- [配套工具](./service_oriented_optimization_tool.md)
+- [配套工具](./service_oriented_optimization_tool/)
 - [附录](./appendix/restful_response_status_codes.md)
     - [RESTful响应状态码](./appendix/restful_response_status_codes.md)
     - [启动haveged服务](./appendix/start_haveged_service.md)

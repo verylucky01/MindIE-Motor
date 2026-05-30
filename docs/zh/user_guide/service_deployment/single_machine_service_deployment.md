@@ -1,4 +1,6 @@
-# 场景介绍
+# 单机（非分布式）服务部署
+
+## 场景介绍
 
 单机服务部署为非分布式实例部署的场景，即在一个计算节点内可部署一个完整独立的Server推理服务实例。根据设备资源情况，同一个计算节点可部署多个Server服务实例，也支持在多个计算节点上部署多个服务实例。
 
@@ -20,7 +22,7 @@
 >[!NOTE]说明
 >为保障业务稳定运行，用户应严格控制自建Pod的权限，避免高权限Pod修改MindIE内部参数而导致异常。
 
-# 使用kubectl部署服务示例
+## 使用kubectl部署服务示例
 
 >[!NOTE]说明
 >
@@ -90,20 +92,20 @@
 
         将部署模式配置为单机（非分布式）服务部署模式，需配置以下参数。
 
-        ```bash
+        ```json
         "deploy_mode": "single_node"
         ```
 
    - 配置ms_coordinator.json文件，参数详情请参见[配置说明](../cluster_management_component/coordinator.md#配置说明)章节。
         - 配置单机（非分布式）服务部署模式，需配置以下参数。
 
-            ```bash
+            ```json
             "deploy_mode": "single_node"
             ```
 
         - 配置OpenAI多轮会话Cache亲和调度场景，需配置以下参数。
 
-            ```bash
+            ```json
             "scheduler_type": "default_scheduler",
             "algorithm_type": "cache_affinity",
             ```
@@ -116,13 +118,13 @@
     - 使能Prefix Cache：
         - 在ModelDeployConfig中的ModelConfig下添加以下配置：
 
-            ```bash
+            ```json
             "plugin_params": "{\"plugin_type\":\"prefix_cache\"}"
             ```
 
         - 在ScheduleConfig中添加以下信息：
 
-            ```bash
+            ```json
             "enablePrefixCache": true
             ```
 
@@ -203,7 +205,7 @@
     >
     >        在daemon.json文件中添加日志选项"log-opts"，具体内容如下所示。
     >
-    >        ```bash
+    >        ```json
     >        "log-opts":{"max-size":"500m", "max-file":"3"}
     >        ```
     >

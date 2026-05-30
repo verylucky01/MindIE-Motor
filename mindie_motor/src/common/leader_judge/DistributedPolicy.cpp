@@ -354,7 +354,7 @@ void EtcdDistributedLock::InitializeEtcdClient() {
                 .c_str(),
             etcdAddr_.c_str(), retryCount + 1, connectMaxRetry_);
         std::this_thread::sleep_for(
-            std::chrono::seconds(ETCD_CONNECT_RETRY_INTERVAL));
+            std::chrono::milliseconds(connectRetryIntervalMs_));
     }
     LOG_E(
         "[%s] [InitializeEtcdClient] Failed to connect after %d retries, "
@@ -393,7 +393,7 @@ bool EtcdDistributedLock::EnsureConnection() {
                 .c_str(),
             etcdAddr_.c_str(), retryCount + 1, connectMaxRetry_);
         std::this_thread::sleep_for(
-            std::chrono::seconds(ETCD_CONNECT_RETRY_INTERVAL));
+            std::chrono::milliseconds(connectRetryIntervalMs_));
     }
     LOG_E(
         "[%s] [EnsureConnection] Failed to reconnect after %d retries, ADDR:%s",

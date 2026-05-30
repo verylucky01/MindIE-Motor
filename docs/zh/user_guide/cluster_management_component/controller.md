@@ -1,12 +1,14 @@
+# 控制器（Controller）
 
-# 功能介绍
+## 功能介绍
 
 控制器（Controller）作为整个Server集群的身份决策大脑及状态管控中心，主要功能包括：集群节点状态管控、PD身份决策与下发等，其架构如[图1 控制器（Controller）架构图](#fig12171552133317)所示。
 
 **图 1**  控制器（Controller）架构图<a id="fig12171552133317"></a>
+
 ![](../../figures/controller_architecture.png)
 
-# 安装部署
+## 安装部署
 
 使用控制器（Controller）之前，需要完成以下环境准备。
 
@@ -14,7 +16,7 @@
 2. 将证书路径配置到[启动配置文件（ms_controller.json）](#section17710114519012)对应证书路径。
 3. 参见[使用kubectl部署多机PD分离服务示例](../service_deployment/pd_separation_service_deployment.md#使用kubectl部署多机pd分离服务示例)完成部署。
 
-# 配置说明
+## 配置说明
 
 **启动配置文件（ms_controller.json）**<a id="section17710114519012"></a>
 
@@ -349,7 +351,7 @@ ms_controller.json配置文件中各个字段解释如下所示，用户可根�
       "is_faulty": false,
       "is_initialized": true,
       "peers": [
-        xx,
+        xx
       ],
       "static_info": {
         "group_id": 0,
@@ -572,7 +574,7 @@ ms_controller.json配置文件中各个字段解释如下所示，用户可根�
 |MINDIEMS_LOG_LEVEL|用户可动态设置Controller输出的日志等级。默认值为空，环境变量的优先级高于[ms_controller.json配置文件](#section183933919369)中log_level参数。日志级别如下所示：<li>CRITICAL</li><li>ERROR</li><li>WARN</li><li>INFO</li><li>DEBUG</li><br>**优先使用MINDIE_LOG_LEVEL设置日志等级，当前保留MINDIEMS_LOG_LEVEL是为了兼容旧版本配置方式。**<br>**若MINDIE_LOG_LEVEL设置为空则使用MINDIEMS_LOG_LEVEL。**|
 |MINDIE_CHECK_INPUTFILES_PERMISSION|用户可设置是否需要检查外部挂载文件，具体包括ms_controller.json, rank_table.json以及证书相关文件。默认值为空，表示需要做权限校验。<li>0：对外部挂载文件不做权限校验。</li><li>非0：对外部挂载文件做权限校验。</li><br>**当用户使用MINDIE_MS_CONTROLLER_CONFIG_FILE_PATH设置配置文件路径时，ms_controller.json为外部挂载文件。**|
 |MODEL_ID|部署模型的唯一标识。|
-|**注：日志相关环境变量详情请参见[日志配置](./log_configuration.md)。**|-|-|
+|**注：日志相关环境变量详情请参见[日志配置](./log_configuration.md)。**|-|
 
 <br>
 
@@ -632,13 +634,13 @@ ms_controller.json配置文件中各个字段解释如下所示，用户可根�
 >    export MINDIE_LOG_LEVEL=INFO
 >    ```
 
-# Controller主备倒换
+## Controller主备倒换
 
-## 特性介绍
+### 特性介绍
 
 本特性通过ETCD分布式锁机制实现Kubernetes集群中Controller的主备倒换功能，确保系统高可用性。初始化时拉起两个Controller，通过ETCD分布式锁竞争来实现主备身份确认，当主Controller发生故障时，备用Controller能自动接管工作，实现无缝故障转移。**该特性只支持在大规模专家并行场景下使用**。
 
-## 使用样例
+### 使用样例
 
 **限制与约束**
 
@@ -972,13 +974,13 @@ Controller主备依赖ETCD分布式锁功能，涉及集群内不同POD间通信
     2. 在K8s集群的master节点执行以下命令。
 
         ```bash
-        kubectl apply -f  local-pvs.yaml
+        kubectl apply -f local-pvs.yaml
         ```
 
         返回结果如下所示表示创建成功：
 
         ```bash
-        persistentvolume/etcd data-0 created
+        persistentvolume/etcd-data-0 created
         persistentvolume/etcd-data-1 created
         persistentvolume/etcd-data-2 created
         ```
@@ -1117,13 +1119,13 @@ Controller主备依赖ETCD分布式锁功能，涉及集群内不同POD间通信
                     - --auto-compaction-retention=5m
                     - --auto-compaction-mode=revision
                     - --client-cert-auth
-                      - --cert-file=/etc/ssl/certs/etcdca/server.pem
-                      - --key-file=/etc/ssl/certs/etcdca/server.key
-                      - --trusted-ca-file=/etc/ssl/certs/etcdca/ca.pem
-                      - --peer-client-cert-auth
-                      - --peer-trusted-ca-file=/etc/ssl/certs/etcdca/ca.pem
-                      - --peer-cert-file=/etc/ssl/certs/etcdca/server.pem
-                      - --peer-key-file=/etc/ssl/certs/etcdca/server.key
+                    - --cert-file=/etc/ssl/certs/etcdca/server.pem
+                    - --key-file=/etc/ssl/certs/etcdca/server.key
+                    - --trusted-ca-file=/etc/ssl/certs/etcdca/ca.pem
+                    - --peer-client-cert-auth
+                    - --peer-trusted-ca-file=/etc/ssl/certs/etcdca/ca.pem
+                    - --peer-cert-file=/etc/ssl/certs/etcdca/server.pem
+                    - --peer-key-file=/etc/ssl/certs/etcdca/server.key
                   volumeMounts:
                     - name: etcd-data
                       mountPath: /data # 挂载持久化存储
@@ -1184,6 +1186,7 @@ Controller主备依赖ETCD分布式锁功能，涉及集群内不同POD间通信
         >```
 
 **配置ETCD的RBAC功能（可选）**
+
 ETCD基于角色的访问控制Role-based access control（RBAC）是其内置的安全机制，用于管理用户对键值数据的访问权限，并实现精细化控制。通过RBAC，管理员可以为不同的用户或角色分配特定的权限，从而确保只有授权的用户能够访问和操作关键数据。
 
 >[!NOTE]说明
@@ -1414,7 +1417,7 @@ ETCD基于角色的访问控制Role-based access control（RBAC）是其内置�
 2. 配置user_config.json配置文件。
 
     - 修改"tls_enable"为"true"，使CA认证流程生效；
-    - 配置"infer_tls_items"与"management_tls_items"相关证书，详情请参见[功能介绍](../service_oriented_optimization_tool.md#section8431)；
+    - 配置"infer_tls_items"与"management_tls_items"相关证书；
     - 修改"etcd_server_tls_enable"为"true"，并将生成好的客户端证书配置到"etcd_server_tls_items"中。
 
       ```json
@@ -1539,13 +1542,13 @@ ETCD基于角色的访问控制Role-based access control（RBAC）是其内置�
       >[!NOTE]说明
       >可通过查询对应节点日志判断主备节点，如果日志中出现"[TryRenewLease]Renewed lease"，表明当前节点抢到ETCD分布式锁，为主节点。
 
-# 重配置功能
+## 重配置功能
 
-## 特性介绍
+### 特性介绍
 
 MindIE Motor提供了节点故障后的实例级Job重配置功能，无论是硬件故障还是软件退出，都可以支持实例级重调度，并在10min内自动恢复实例。**该特性只支持在大规模专家并行场景下使用**。
 
-## 使用样例
+### 使用样例
 
 **限制与约束**
 
@@ -1631,9 +1634,9 @@ MindIE Motor提供了节点故障后的实例级Job重配置功能，无论是�
     ./bin/mindieservice_daemon
     ```
 
-# RESTful接口API
+## RESTful接口API
 
-## 启动状态查询接口
+### 启动状态查询接口
 
 **接口功能**
 
@@ -1678,7 +1681,7 @@ GET https://{ip}:{port}/v1/startup
 - 状态码200，表示服务已启动。
 - 无响应，表示服务未启动。
 
-## 健康状态查询接口
+### 健康状态查询接口
 
 **接口功能**
 
@@ -1726,7 +1729,7 @@ GET https://{ip}:{port}/v1/health
 - 状态码200，表示服务状态正常。
 - 无响应，表示服务异常。
 
-# 报错信息查询
+## 报错信息查询
 
 Controller启动后，运行过程中可能出现的报错信息主要如下所示。
 

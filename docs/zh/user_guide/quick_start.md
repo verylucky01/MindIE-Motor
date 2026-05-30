@@ -1,10 +1,12 @@
-# 启动服务
+# 快速入门
 
-## 环境准备
+## 启动服务
+
+**环境准备**
 
 请参考[安装指南](./install/environment_preparation.md)进行环境的安装与部署，并参考[配置参数说明（服务化）](https://gitcode.com/Ascend/MindIE-LLM/blob/dev/docs/zh/user_guide/user_manual/service_parameter_configuration.md)根据用户需要配置参数。
 
-## 操作步骤
+**操作步骤**
 
 - Server可以部署兼容Triton/OpenAI/TGI/vLLM第三方框架接口的服务应用。推荐用户开启HTTPS通信，并按照[单机部署](https://gitcode.com/Ascend/MindIE-LLM/blob/dev/docs/zh/user_guide/user_manual/prefill_decode_mixed_deployment.md)，配置开启HTTPS通信所需服务证书、私钥等证书文件。
 
@@ -74,17 +76,17 @@
     >- --key：客户端私钥文件路径。
     >- client.key.pem：客户端证书私钥（未加密，建议采用加密密钥）。
 
-# 服务化接口调用
+## 服务化接口调用
 
-## 使用vLLM兼容OpenAI接口
+### 使用vLLM兼容OpenAI接口
 
 本章节以v1/chat流式推理接口和v1/completions流式推理接口为例介绍接口调用，其他接口的调用方法请参见[EndPoint业务面RESTful接口](https://www.hiascend.com/document/detail/zh/mindie/230/mindiellm/llmdev/mindie_service0065.html)章节。
 
 **1. v1/chat流式推理接口**
 
-<table><tbody><tr><th>接口名
+<table><tbody><tr id="row0597176155320"><th class="firstcol" valign="top" width="13.36%" id="mcps1.1.3.1.1"><p id="p1359710615314"><a name="p1359710615314"></a><a name="p1359710615314"></a><strong id="b15977665315"><a name="b15977665315"></a><a name="b15977665315"></a>接口名</strong></p>
 </th>
-<td>v1/chat流式推理接口
+<td class="cellrowborder" valign="top" width="86.64%" headers="mcps1.1.3.1.1 "><p id="p1759713618530"><a name="p1759713618530"></a><a name="p1759713618530"></a>v1/chat流式推理接口</p>
 </td>
 </tr>
 <tr id="row1459719619535"><th class="firstcol" valign="top" width="13.36%" id="mcps1.1.3.2.1"><p id="p35979619535"><strong id="b859713619535">URL</strong></p>
@@ -191,7 +193,7 @@ data: [DONE]
 </tbody>
 </table>
 
-## 使用MindIE原生接口
+### 使用MindIE原生接口
 
 本章节以文本推理接口和流式推理接口为例介绍接口调用，其他接口的调用方法请参见[EndPoint业务面RESTful接口](https://www.hiascend.com/document/detail/zh/mindie/230/mindiellm/llmdev/mindie_service0065.html)章节。
 
@@ -335,7 +337,7 @@ data: {"prefill_time":null,"decode_time":16.80,"generated_text":"am a French pho
 </tbody>
 </table>
 
-# 精度测试
+## 精度测试
 
 目前MindIE支持AISBench工具进行精度测试，示例如下所示，其详细使用方法请参见[AISBench工具](https://gitee.com/aisbench/benchmark)。
 
@@ -360,9 +362,9 @@ data: {"prefill_time":null,"decode_time":16.80,"generated_text":"am a French pho
 
 2. 准备数据集。
 
-    以gsm8k为例，单击[gsm8k数据集](https://opencompass.oss-cn-shanghai.aliyuncs.com/datasets/data/gsm8k.zip)下载数据集，将解压后的gsm8k文件夹放置于工具根路径的ais\_bench/datasets文件夹下。
+    以gsm8k为例，单击[gsm8k数据集](https://opencompass.oss-cn-shanghai.aliyuncs.com/datasets/data/gsm8k.zip)下载数据集，将解压后的gsm8k文件夹放置于工具根路径的ais_bench/datasets文件夹下。
 
-3. 配置ais\_bench/benchmark/configs/models/vllm\_api/vllm\_api\_stream\_chat.py文件，示例如下所示。
+3. 配置ais_bench/benchmark/configs/models/vllm_api/vllm_api_stream_chat.py文件，示例如下所示。
 
     ```python
     from ais_bench.benchmark.models import VLLMCustomAPIChatStream
@@ -404,7 +406,7 @@ data: {"prefill_time":null,"decode_time":16.80,"generated_text":"am a French pho
     demo_gsm8k              401e4c   accuracy gen                   62.50
     ```
 
-# 性能测试
+## 性能测试
 
 目前MindIE支持AISBench工具进行性能测试，示例如下所示，其详细使用方法请参见[AISBench工具](https://gitee.com/aisbench/benchmark)。
 
@@ -497,7 +499,7 @@ data: {"prefill_time":null,"decode_time":16.80,"generated_text":"am a French pho
     ╘═════════════╧═════╧══════════╛
     ```
 
-    性能测试结果主要关注TTFT、TPOT、Request Throughput和Output Token Throughput输出参数，参数详情信息请参见[表2 性能测试结果指标](service_oriented_optimization_tool.md#table_ptrm002)。
+    性能测试结果主要关注TTFT、TPOT、Request Throughput和Output Token Throughput输出参数，参数详情信息请参见[表2 性能测试结果指标](./service_oriented_optimization_tool/performance_accuracy_test_tool.md#table_ptrm002)。
 
     >[!NOTE]说明
     >任务执行的过程会落盘在默认的输出路径，该输出路径在运行中的打印日志中有提示，日志内容如下所示：
@@ -521,11 +523,11 @@ data: {"prefill_time":null,"decode_time":16.80,"generated_text":"am a French pho
     >│         └── gsm8kdataset_plot.html    # 请求并发可视化报告（HTML）
     >```
 
-# 停止服务
+## 停止服务
 
 使用安装用户登录安装节点，两种停止Server服务方式如下所示。
 
-- 方式一（推荐）：若使用后台进程方式启动服务，两种停止服务方式如下所示：
+- **方式一（推荐）**：若使用后台进程方式启动服务，两种停止服务方式如下所示：
     - 使用kill命令停止进程。
 
         ```bash
@@ -565,4 +567,4 @@ data: {"prefill_time":null,"decode_time":16.80,"generated_text":"am a French pho
         pkill -9 mindie
         ```
 
-- 方式二：若直接启动进程方式启动服务，可以通过按ctrl+c停止服务。
+- **方式二：**若直接启动进程方式启动服务，可以通过按ctrl+c停止服务。

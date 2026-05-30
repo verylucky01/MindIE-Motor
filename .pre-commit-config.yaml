@@ -15,6 +15,7 @@ repos:
       - id: end-of-file-fixer
       - id: check-yaml
         args: ["--allow-multiple-documents"]  # 兼容K8S
+        exclude: mkdocs\.yml$  # !!python/name: 标签不兼容 safe_load
       - id: check-added-large-files  # 拦截>50MB文件（默认阈值）
       - id: check-merge-conflict     # 检测未解决的合并冲突（<<<<<<< HEAD）
       - id: detect-private-key       # 检测硬编码的私钥/密钥
@@ -27,9 +28,10 @@ repos:
     rev: v0.14.14
     hooks:
       - id: ruff-check
-        args: [--output-format, github, --fix]
+        args: [--output-format, github, --fix, --line-length=120]
         types: [python]
       - id: ruff-format
+        args: [--line-length=120]
         types: [python]
 
   # codespell：注释/文档拼写检查（忽略项目专有名词）
@@ -39,7 +41,7 @@ repos:
       - id: codespell
         args: [
             "-L",
-            "CANN,cann,NNAL,nnal,ASCEND,ascend,EnQue,CopyIn,ArchType,AND,ND,tbe,copyin,alog",
+            "CANN,cann,NNAL,nnal,ASCEND,ascend,EnQue,CopyIn,ArchType,AND,ND,tbe,copyin,alog, rouge, passin",
             "--skip",
             "*.py,*.cpp,*.hpp,*.c,*.h", # 仅查文档/注释，跳过代码文件
           ]
@@ -59,7 +61,7 @@ repos:
       - id: clang-format
         files: \.(c|h|cpp|hpp|cc|hh|cxx|hxx)$
         types_or: [c, c++]
-        args: ["--style={BasedOnStyle: google, IndentWidth: 4}"]
+        args: ["--style={BasedOnStyle: google, IndentWidth: 4, ColumnLimit: 120}"]
         exclude: ^build/|^tests/third_party/ 
         
   # markdownlint：Markdown 格式检查（仅CI手动执行）

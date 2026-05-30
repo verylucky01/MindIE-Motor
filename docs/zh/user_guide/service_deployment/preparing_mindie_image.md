@@ -19,11 +19,11 @@
 
 |软件类型|软件包名称|软件说明|获取链接|
 |--|--|--|--|
-|MindIE|Ascend-mindie_2.3.0_linux-aarch64_abi0.run|推理引擎软件包。|[获取链接](https://www.hiascend.com/developer/download/community/result?module=ie+pt+cann)|
-|CANN|Ascend-cann-toolkit_8.5.0_linux-aarch64.run|开发套件包。|[获取链接](https://www.hiascend.com/developer/download/community/result?module=ie+pt+cann)|
-|CANN|<li>Atlas 800I A2 推理服务器：</li><br>Ascend-cann-910*x*-ops_8.5.0_linux-aarch64.run<li>Atlas 300I Duo 推理卡+Atlas 800 推理服务器（型号 3000）：</li><br>Ascend-cann-310*x*-ops_8.5.0_linux-aarch64.run<br>**以上软件包名中的910*x*和310*x*请根据具体的硬件型号进行替换。**|二进制算子包。|[获取链接](https://www.hiascend.com/developer/download/community/result?module=ie+pt+cann)|
-|CANN|Ascend-cann-nnal_8.5.0_linux-aarch64.run|加速库软件包|[获取链接](https://www.hiascend.com/developer/download/community/result?module=ie+pt+cann)|
-|ATB Models|Ascend-mindie-atb-models_2.3.0_linux-aarch64_torch2.2.0-abi0.tar.gz|模型库安装包。|[获取链接](https://www.hiascend.com/developer/download/community/result?module=ie+pt+cann)|
+|MindIE|Ascend-mindie_3.0.0_linux-aarch64_abi0.run|推理引擎软件包。|[获取链接](https://www.hiascend.com/developer/download/community/result?module=ie+pt+cann)|
+|CANN|Ascend-cann-toolkit_8.5.1_linux-aarch64.run|开发套件包。|[获取链接](https://www.hiascend.com/developer/download/community/result?module=ie+pt+cann)|
+|CANN|<li>Atlas 800I A2 推理服务器：</li><br>Ascend-cann-910*x*-ops_8.5.1_linux-aarch64.run<li>Atlas 300I Duo 推理卡+Atlas 800 推理服务器（型号 3000）：</li><br>Ascend-cann-310*x*-ops_8.5.1_linux-aarch64.run<br>**以上软件包名中的910*x*和310*x*请根据具体的硬件型号进行替换。**|二进制算子包。|[获取链接](https://www.hiascend.com/developer/download/community/result?module=ie+pt+cann)|
+|CANN|Ascend-cann-nnal_8.5.1_linux-aarch64.run|加速库软件包|[获取链接](https://www.hiascend.com/developer/download/community/result?module=ie+pt+cann)|
+|ATB Models|Ascend-mindie-atb-models_3.0.0_linux-aarch64_torch2.2.0-abi0.tar.gz|模型库安装包。|[获取链接](https://www.hiascend.com/developer/download/community/result?module=ie+pt+cann)|
 |Ascend Extension for PyTorch|torch_npu-2.1.0.post17-cp310-cp310-manylinux_2_17_aarch64.manylinux2014_aarch64.whl|torch_npu插件whl包。|[获取链接](https://www.hiascend.com/developer/download/community/result?module=ie+pt+cann)<li>获取2.1.0版本的torch_npu，请在社区版资源下载页面左上方“配套资源”中，选择PyTorch版本为7.2.0。</li><li>在PyTorch栏单击对应版本后方的“获取源码”，跳转至PyTorch的gitcode仓库发布页，然后再页面下方获取对应版本的torch_npu。</li>|
 |Ascend Extension for PyTorch|torch-2.1.0-cp310-cp310-manylinux_2_17_aarch64.manylinux2014_aarch64.whl|PyTorch框架2.1.0版本的whl包。|[获取链接](https://download.pytorch.org/whl/cpu/torch-2.1.0-cp310-cp310-manylinux_2_17_aarch64.manylinux2014_aarch64.whl)|
 
@@ -48,7 +48,7 @@
 >[!NOTE]说明
 >制作镜像时非root用户ID应该和执行环境上安装的驱动用户ID保持一致，或安装驱动时使用--install-for-all参数为所有用户安装。
 
-1. 将从[软件包获取](#zbrjb)下载或制作的软件放到某一目录下，例如：/home/package。
+1. 将从[软件包获取](#zbrjb)下载的软件放到某一目录下，例如：/home/package。
 2. 使用以下命令拉取Ubuntu 22.04镜像。
 
     ```bash
@@ -70,11 +70,11 @@
 3. <a id="li818718573308"></a>在/home/package路径下编写Dockerfile及其他安装时需要的脚本文件，其文件目录结构必须为以下结构。
 
     ```linux
-    ├── Ascend-cann-xxxx-ops_8.5.0_linux-aarch64.run
-    ├── Ascend-cann-nnal_8.5.0_linux-aarch64.run
-    ├── Ascend-cann-toolkit_8.5.0_linux-aarch64.run
-    ├── Ascend-mindie_2.3.0_linux-aarch64_abi0.run
-    ├── Ascend-mindie-atb-models_2.3.0_linux-aarch64_torch2.1.0-abi0.tar.gz
+    ├── Ascend-cann-xxxx-ops_8.5.1_linux-aarch64.run
+    ├── Ascend-cann-nnal_8.5.1_linux-aarch64.run
+    ├── Ascend-cann-toolkit_8.5.1_linux-aarch64.run
+    ├── Ascend-mindie_3.0.0_linux-aarch64_abi0.run
+    ├── Ascend-mindie-atb-models_3.0.0_linux-aarch64_torch2.1.0-abi0.tar.gz
     ├── docker
     │   ├── docker_build.sh
     │   └── Dockerfile
@@ -96,18 +96,18 @@
         --build-arg no_proxy=127.0.0.1,localhost,local,.local,172.17.0.1 \
         --build-arg DEVICE=9xxx \
         --build-arg ARCH=aarch64 \
-        --build-arg CANN_VERSION=8.5.0 \
+        --build-arg CANN_VERSION=8.5.1 \
         --build-arg TORCH_VERSION=2.1.0 \
-        --build-arg MINDIE_VERSION=2.3.0 \
+        --build-arg MINDIE_VERSION=3.0.0 \
         --build-arg PY_VERSION=310 \
-        -t mindie:2.3.0-aarch64-800I-A2 \
+        -t mindie:3.0.0-aarch64-800I-A2 \
         --target mindie .
         ```
 
         >[!NOTE]说明
         >- DEVICE为硬件型号。
         >- PY_VERSION为Python版本号。
-        >- mindie:2.3.0-aarch64-800I-A2为自定义的镜像名称。
+        >- mindie:3.0.0-aarch64-800I-A2为自定义的镜像名称。
 
     2. 编写Dockerfile文件。
 
@@ -293,11 +293,11 @@
         ```shell
         #!/bin/bash
 
-        CANN_TOOKIT="Ascend-cann-toolkit_*_linux-*.run"
+        CANN_TOOLKIT="Ascend-cann-toolkit_*_linux-*.run"
         CANN_OPS="Ascend-cann-*-ops_*_linux-*.run"
         CANN_NNAL="Ascend-cann-nnal_*_linux-*.run"
         chmod +x *.run
-        yes | ./${CANN_TOOKIT} --install --quiet
+        yes | ./${CANN_TOOLKIT} --install --quiet
         toolkit_status=$?
         if [ ${toolkit_status} -eq 0 ]; then
             echo "install toolkit successfully"
@@ -621,7 +621,7 @@
 
     7. 编写server.js文件。
 
-        ```json
+        ```javascript
         const http = require('http');
         const fs = require('fs');
         const path = require('path');
@@ -708,7 +708,7 @@
     当镜像构建完成时，会出现类似如下打印信息：
 
     ```linux
-    [+] Building 798.2s (9/9) FINISHE                                                                                                               Ddocker:default
+    [+] Building 798.2s (9/9) FINISHED                                                                                                               Ddocker:default
      => [internal] load .dockerignore                                                                                                                          0.0s
      => => transferring context: 2B                                                                                                                            0.0s
      => [internal] load build definition from Dockerfile                                                                                                       0.0s
@@ -726,7 +726,7 @@
      => exporting to image                                                                                                                                     31.9s
      => => exporting layers                                                                                                                                    31.9s
      => => writing image sha256:ddc1229a39be3e2b9f2d0d88e809a4dc2db17ac9ec67c4c178c21fe1359eb6d7                                                               0.0s
-     => => naming to docker.io/library/mindie:2.3.0-aarch64-800I-A2                                                                                            0.0s
+     => => naming to docker.io/library/mindie:3.0.0-aarch64-800I-A2                                                                                            0.0s
     ```
 
     然后执行以下命令：
@@ -739,5 +739,5 @@
 
     ```linux
     REPOSITORY                    TAG                            IMAGE ID       CREATED              SIZE
-    mindie                        2.3.0-aarch64-800I-A2          ddc1229a39be   About a minute ago   12.3GB
+    mindie                        3.0.0-aarch64-800I-A2          ddc1229a39be   About a minute ago   12.3GB
     ```

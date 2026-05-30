@@ -41,8 +41,8 @@ include_directories(
     ${MINDIE_MS_SRC_ROOT}/coordinator/request_listener
     ${MINDIE_MS_SRC_ROOT}/coordinator/controller_listener
     ${MINDIE_MS_SRC_ROOT}/coordinator
-    ${MINDIE_MS_TEST_ROOT}/dt/common/mindie_server
-    ${MINDIE_MS_TEST_ROOT}/dt/common/request_helper
+    # MindIE server mock 与 request helper 已迁移到 tests/ms/st/common 下
+    # dt coordinator UT 不再依赖它们，仅保留 concurrent_test 等通用框架
     ${MINDIE_MS_TEST_ROOT}/dt/common/concurrent_test
     ${MINDIE_MS_TEST_ROOT}/dt/coordinator/request
     ${MINDIE_MS_TEST_ROOT}/dt/coordinator/resource
@@ -51,10 +51,9 @@ include_directories(
     ${MINDIE_MS_TEST_ROOT}/dt/coordinator
 )
 
-file(GLOB TEST_COORDINATOR_FRAMEWORK
-    ${MINDIE_MS_TEST_ROOT}/dt/common/mindie_server/*.cpp
-    ${MINDIE_MS_TEST_ROOT}/dt/common/request_helper/*.cpp
-)
+# TEST_COORDINATOR_FRAMEWORK 原来包含 MindIEServer / RequestHelper，
+# 这两个文件已随同拉起 HttpServer 类用例迁移到 tests/ms/st/common，不再编入 dt。
+set(TEST_COORDINATOR_FRAMEWORK "")
 
 set(COORDINATOR_SOURCE_DIR ${MINDIE_MS_SRC_ROOT}/coordinator)
 set(HTTP_CLIENT_CTL_DIR ${MINDIE_SERVICE_ROOT}/mindie_motor/src/http_client_ctl)

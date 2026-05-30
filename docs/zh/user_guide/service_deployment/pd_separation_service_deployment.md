@@ -1,4 +1,6 @@
-# 场景介绍
+# PD分离服务部署
+
+## 场景介绍
 
 **PD分离服务部署介绍**
 
@@ -10,12 +12,15 @@ Prefill&Decode分离服务部署（简称：PD分离服务部署），PD分离�
 - PD分离多机服务部署：Controller、Coordinator和Server组件分别运行在独立的Pod内，适用于部署在多台服务器的场景。
 
 **图 1**  PD分离工作原理<a id="fig7842711175715"></a>
+
 ![](../../figures/working_principle_pd.png)
 
 大语言模型推理的阶段可以分为Prefill与Decode阶段：
 
 - Prefill阶段：在生成式语言模型中，Prefill阶段涉及到模型对初始提示（Prompt）的处理，生成初始的隐藏状态（Hidden States）。这个阶段通常涉及对整个模型的一次前向传播，因此计算密集度较高。对于每个新的输入序列，都需要进行一次Prefill。
 - Decode阶段：在Prefill阶段之后，模型基于初始隐藏状态逐步生成后续的文本。这一阶段的特点是计算相对较少，但需要反复进行计算，直到生成足够的文本或达到某个终止条件。在生成过程中，只计算最新的token激活值，并进行attention计算，计算最终的预测token。
+
+<br>
 
 **部署方案**
 
@@ -25,7 +30,7 @@ Prefill&Decode分离服务部署（简称：PD分离服务部署），PD分离�
 
     **图 2**  单机PD分离服务部署方案
 
-    ![](../../figures/single_pd_deploymet_plan.png)
+    ![](../../figures/single_pd_deployment_plan.png)
 
 - 多机PD分离服务部署方案：
 
@@ -33,7 +38,9 @@ Prefill&Decode分离服务部署（简称：PD分离服务部署），PD分离�
 
     **图 3**  多机PD分离服务部署方案
 
-    ![](../../figures/muilt_pd_deploymet_plan.png)
+    ![](../../figures/multi_pd_deployment_plan.png)
+
+<br>
 
 **PD分离优势**
 
@@ -43,12 +50,14 @@ PD分离主要包括以下优势：
 - 提高吞吐量：分离后的Prefill和Decode可以同时处理不同的请求，这意味着在Prefill阶段处理新请求的同时，Decode阶段可以继续处理之前请求的解码任务，从而提高了整体的处理能力。
 - 降低延迟：由于Prefill和Decode分别在不同的阶段进行，可以减少等待时间，特别是当有多个请求并发到达时。
 
+<br>
+
 **限制与约束**
 
 - 单机PD分离服务部署
     - 仅Atlas 800I A2 推理服务器和Atlas 800I A3 超节点服务器支持此特性。
     - 不同P、D节点使用的NPU卡数量必须相同。
-    - LLaMA3-8B、QWwen2.5-7B、Qwen3-8B支持此特性。
+    - LLaMA3-8B、Qwen2.5-7B、Qwen3-8B支持此特性。
     - 不支持与Prefix Cache特性同时使用。
     - 不支持和稀疏量化、KV Cache int8量化配合使用。
     - 该特性暂不支持n、best_of、use_beam_search、logprobs、top_logprobs等与多序列推理相关的后处理参数。
@@ -59,11 +68,13 @@ PD分离主要包括以下优势：
     - P节点与D节点使用的NPU卡数量必须相同。
     - NPU网口互联（带宽：200Gbps）。
     - 不支持和Multi LoRA、并行解码、SplitFuse、Prefix Cache、Function Call、多机推理和长序列特性同时使用。
-    - LLaMA3系列、QWwen2系列、Qwen3系列和DeepSeek系列模型支持此特性。
+    - LLaMA3系列、Qwen2系列、Qwen3系列和DeepSeek系列模型支持此特性。
     - 不支持和稀疏量化、KV Cache int8量化配合使用。
     - 该特性暂不支持n、best_of、use_beam_search、logprobs、top_logprobs等与多序列推理相关的后处理参数。
 
 - 当前不支持“停止字符串”方式停止推理文本（即不支持stop，include_stop_str_in_output参数），参数详情请参见[推理接口](https://www.hiascend.com/document/detail/zh/mindie/230/mindiellm/llmdev/mindie_service0319.html)。
+
+<br>
 
 **硬件环境**
 
@@ -81,216 +92,15 @@ PD分离部署支持的硬件环境如下所示。
 >- 集群必须具备参数面互联：即服务器NPU卡对应的端口处在同一个VLAN，可以通过RoCE互通。
 >- 为保障业务稳定运行，用户应严格控制自建Pod的权限，避免高权限Pod修改MindIE内部参数而导致异常。
 
-# 准备镜像
+## 准备镜像
 
 **MindIE与ATB Models配套使用场景**<a id="section5645645542"></a>
 
 详情请参见[准备MindIE镜像](./preparing_mindie_image.md)制作MindIE镜像。
 
-**MindIE与MindSpore配套使用场景**<a id="section4564545455"></a>
+## 安装部署
 
-1. <a id="li199181911175214"></a>详情请参见《MindIE LLM开发指南》中的“推理与服务化 > 离线推理 > MindSpore Models服务化使用”章节，制作支持MindSpore后端的MindIE容器。
-2. 将[1](#li199181911175214)制作的容器通过以下命令保存为镜像。
-
-    ```bash
-    docker commit container_id image_id:tag
-    ```
-
-# 配置自动生成证书
-
-若用户开启Server的TLS认证功能（HTTPS或gRPC）时，通信客户端需要校验服务端证书的IP，由于PodIP的动态性，需要在Pod启动时生成具有PodIP别名的服务证书，以实现Server中PD节点间的通信，以及集群管理组件对Server的证书认证和校验。MindIE提供证书生成能力，具体操作步骤如下所示。
-
->[!NOTE]说明
->建议用户在运行环境中的各个计算节点准备和配置证书，提升服务安全性。
-
-**操作步骤**
-
-此方法只适用于使用自签名CA证书进行证书签发的场景。
-
-需要按照以下方法准备Server、Controller和Coordinator三套证书。
-
-1. 准备自签名CA证书和加密私钥。
-
-   1. 执行以下命令生成配置文件。
-
-        ```bash
-        cat > ca.conf <<-EOF
-        ```
-
-        配置文件ca.conf示例如下，其中req_distinguished_name中的字段需要自行配置：
-
-        ```txt
-        [ req ]
-        distinguished_name    = req_distinguished_name
-        prompt                = no
-
-        [ req_distinguished_name ]
-        C                     = CN
-        ST                    = Sichuan
-        L                     = Chengdu
-        O                     = Huawei
-        OU                    = Ascend
-        CN                    = MindIE
-
-        [ v3_ca ]
-        subjectKeyIdentifier = hash
-        authorityKeyIdentifier = keyid:always,issuer
-        basicConstraints = critical, CA:true
-        keyUsage = critical, digitalSignature, cRLSign, keyCertSign
-        EOF
-        ```
-
-   2. 执行以下命令创建格式为PKCS\#1的PKI私钥ca.key.pem。
-
-        ```bash
-        openssl genrsa -aes256 -out ca.key.pem 4096
-        ```
-
-   3. <a id="li2262159142419"></a>根据回显输入私钥口令，然后按回车键。
-
-        ```bash
-        Enter pass phrase for ca.key.pem:
-        Verifying - Enter pass phrase for ca.key.pem:
-        ```
-
-        出于安全考虑，以及后续导入证书的要求，用户输入的私钥口令的复杂度必须符合以下要求：
-
-        - 口令长度至少8个字符；
-        - 口令必须包含如下至少两种字符的组合：
-            - 至少一个小写字母；
-            - 至少一个大写字母；
-            - 至少一个数字；
-            - 至少一个特殊字符。
-
-   4. 执行以下命令赋予ca.key.pem私钥文件可读权限。
-
-        ```bash
-        chmod 400 ca.key.pem
-        ```
-
-   5. 执行以下命令检查是否存在ca.key.pem私钥文件，并查看私钥内容。
-
-        ```bash
-        openssl rsa -in ca.key.pem
-        ```
-
-        根据回显输入[1.3](#li2262159142419)设置的私钥口令，然后按回车键，当打印私钥内容时表示ca.key.pem私钥文件生成成功。
-
-   6. 执行以下命令创建CSR文件，根据回显输入[1.3](#li2262159142419)设置的私钥口令，然后按回车键。
-
-        ```bash
-        openssl req -out ca.csr -key ca.key.pem -new -config ca.conf -batch
-        ```
-
-   7. 执行以下命令赋予ca.csr文件可读可写权限。
-
-        ```bash
-        chmod 600 ca.csr
-        ```
-
-   8. 执行以下命令检查是否存在ca.csr文件，当打印ca.csr文件内容表示ca.csr文件生成成功。
-
-        ```bash
-        openssl req -in ca.csr -noout -text -config /etc/ssl/openssl.cnf
-        ```
-
-   9. 执行以下命令生成CA证书ca.pem。
-
-        ```bash
-        openssl x509 -req -in ca.csr -out ca.pem -sha256 -days 7300 -extfile ca.conf -extensions v3_ca -signkey ca.key.pem
-        ```
-
-   10. 执行以下命令检查是否存在ca.pem文件，当有回显内容时表示ca.pem生成成功。
-
-        ```bash
-        openssl x509 -in ca.pem -noout -text
-        ```
-
-   11. 执行以下命令赋予ca.pem文件可读权限。
-
-        ```bash
-        chmod 400 ca.pem
-        ```
-
-2. 导入自签名CA证书和加密私钥。
-
-   使用以下命令进入MindIE Motor安装目录。
-
-    ```bash
-    cd /{mindie-motor安装目录}/bin/
-    ```
-
-3. 准备生成证书的配置文件。
-    - 生成用户证书的配置文件（gen\cert.json）：
-
-        ```json
-        {
-            "ca_cert": "./security/ca/ca.pem",
-            "ca_key": "./security/ca/ca.key.pem",
-            "ca_key_pwd": "./security/ca/ca_passwd.txt",
-            "cert_config": "./cert_info.json",
-            "output_path": "./gen_cert_output",
-            "kmc_ksf_master": "./tools/pmt/master/ksfa",
-            "kmc_ksf_standby": "./tools/pmt/standby/ksfb"
-        }
-        ```
-
-    - 配置"cert_config"参数中的cert_info.json配置文件的待生成证书信息：
-
-        ```json
-        {
-            "subject": "subject_name",
-            "expired_time": 3650,
-            "serial_number": 123,
-            "req_distinguished_name": {
-                "C": "***",
-                "ST": "***",
-                "L": "***",
-                "O": "***",
-                "OU": "***",
-                "CN": "***"
-            },
-            "alt_names": {
-                "IP": [],
-                "DNS": []
-            }
-        }
-        ```
-
-4. 在[脚本介绍](#section1373016122377)的mindie_server.yaml、mindie_ms_controller.yaml和mindie_ms_coordinator.yaml配置文件中挂载上述自签名CA证书文件和配置文件到容器内/mnt/security目录，并配置为只读权限。
-5. 在[脚本介绍](#section1373016122377)的容器启动脚本boot.sh中适配添加证书生成命令，以生成Server的证书为例，在“if [ $exit_code -eq 2 ]; then”分支内添加以下生成证书的命令。
-
-    ```bash
-    cp /mnt/security/ca.pem $MIES_INSTALL_PATH/security/ca
-    cp /mnt/security/ca.key.pem $MIES_INSTALL_PATH/security/ca
-    cp /mnt/security/ca_passwd.txt $MIES_INSTALL_PATH/security/ca
-    cp /mnt/security/gen_cert.json $MIES_INSTALL_PATH
-    cp /mnt/security/cert_info.json $MIES_INSTALL_PATH
-    cp -r /mnt/security/tools $MIES_INSTALL_PATH/
-    chmod 500 ./bin/gen_cert
-    mkdir gen_cert_output
-    python3 ./scripts/config_mindie_server_tls_cert.py  ./  gen_cert ./gen_cert.json  --ip=$MIES_CONTAINER_IP,{host_ip}
-    chmod 400 ./gen_cert_output/*
-    // 拷贝生成的证书到特定的路径
-    cp ./gen_cert_output/cert.pem /home/{用户名称}/Ascend/mindie/latest/mindie-service/security/certs/server.pem
-    cp ./gen_cert_output/cert.key.pem /home/{用户名称}/Ascend/mindie/latest/mindie-service/security/keys/server.key.pem
-    cp ./gen_cert_output/cert_passwd.txt /home/{用户名称}/Ascend/mindie/latest/mindie-service/security/pass/mindie_server_key_pwd.txt
-    rm -rf ./gen_cert_output/*
-    // 下面使用其他证书配置(gen_cert_xxx.json, cert_info_xxx.json)重复上述步骤继续导入其他证书
-    // cp /mnt/security/gen_cert_xxx.json $MIES_INSTALL_PATH
-    // cp /mnt/security/cert_info_xxx.json $MIES_INSTALL_PATH
-    // python3 ./scripts/config_mindie_server_tls_cert.py  ./  gen_cert ./gen_cert_xxx.json  --ip=$MIES_CONTAINER_IP,{host_ip}
-    ```
-
-    {host_ip}：仅Coordinator需要配置，配置为提供推理API的物理机IP。
-
-    >[!NOTE]说明
-    >- Server、集群管理组件控制器（Controller）和调度器（Coordinator）三套证书准备完成后，请参考《MindIE LLM开发指南》中的“核心概念与配置 > 配置参数说明（服务化）”章节、[控制器（Controller）配置说明](../cluster_management_component/controller.md#配置说明)和[调度器（Coordinator）配置说明](../cluster_management_component/coordinator.md#配置说明)将每个证书拷贝至指定的路径下。
-    >- 启动Server Pod调用生成证书接口如出现“failed to read random number from system.”报错，可能是由于环境熵不足，需要在计算节点安装haveged组件补熵。详情请参考[启动haveged服务](../appendix/start_haveged_service.md)，将熵补至4096。
-
-# 安装部署
-
-## 使用kubectl部署单机PD分离服务示例
+### 使用kubectl部署单机PD分离服务示例
 
 **限制与约束**
 
@@ -313,12 +123,14 @@ PD分离部署支持的硬件环境如下所示。
 >- 当请求发送速度高于处理速度时，Coordinator会缓存未处理的请求，导致内存占用上升，最后可能因达到内存上限而被终止。在该场景下，需要适当增大coordinator_init.yaml文件中"requests"和"limits"字段下的"memory"参数的值。
 >   - "requests"字段下的"memory"参数表示Coordinator运行所需最小内存。
 >   - "limits"字段下的"memory"参数表示Coordinator可用内存的上限。
-**为了保证Coordinator可靠的获得这些内存，"requests"和"limits"字段下的"memory"参数的值尽可能相等，内存规格档位建议如下：**
+>
+>   - **为了保证Coordinator可靠地获得这些内存，"requests"和"limits"字段下的"memory"参数的值尽可能相等，内存规格档位建议如下：**
+>
 >   - 最大1万条并发请求数配置为"12Gi"。
 >   - 最大2万条并发请求数配置为"24Gi"。
 >   - 最大4万条并发请求数配置为"48Gi"。
 >   - 最大9万条并发请求数配置为"108Gi"。
-> **Coordinator占用的最大内存可以通过公式计算：内存规格 = body_limit * max_requests * 120%**
+>   - **Coordinator占用的最大内存可以通过公式计算：内存规格 = body_limit * max_requests * 120%**
 >   - body_limit：单条请求消息体的字节数上限，单位为MB，可在ms_coordinator.json配置文件中配置与查看，具体参数解释详情参见[ms_coordinator.json启动配置文件参数说明](../cluster_management_component/coordinator.md#section1759442933513)。
 >   - max_requests：最大并发请求数，单位为个，可在ms_coordinator.json配置文件中配置与查看，具体参数解释详情参见[ms_coordinator.json启动配置文件参数说明](../cluster_management_component/coordinator.md#section1759442933513)。
 
@@ -433,7 +245,7 @@ PD分离部署支持的硬件环境如下所示。
     - true（默认值）：系统将根据用户配置的config.json文件，自动生成多个配置文件（config1.json、config2.json、...、config{server_num}.json）。每个配置文件对应一个Server进程，系统将为配置文件中的端口参数：port、managementPort、metricsPort和interCommPort分配互不冲突的端口号，确保各进程独立运行。
     - false：用户需提供与Server数量匹配的配置文件（config1.json、config2.json、...、config{server_num}.json）。在该模式下，用户可自由配置各端口参数。系统具备端口冲突检测机制，若配置文件中存在端口冲突，系统将自动分配其他可用端口号，确保程序正常启动。
 
-5. 配置http_client_ctl.json配置文件（文件所在目录： *{mindie-motor安装目录}*/src/config），该配置文件为集群启动、存活、就绪探针HTTP客户端工具的配置文件，具体参数解释请参见[表4 http_client_ctl.json配置说明](../service_oriented_optimization_tool.md#table13687127115213)。
+5. 配置http_client_ctl.json配置文件（文件所在目录： *{mindie-motor安装目录}*/src/config），该配置文件为集群启动、存活、就绪探针HTTP客户端工具的配置文件，具体参数解释请参见[表4 http_client_ctl.json配置说明](../service_oriented_optimization_tool/mindie_probe_tool.md#table13687127115213)。
 
     **tls_enable**参数为控制是否使用HTTPS的开关，若集群内MindIE组件使用了HTTPS接口，需设置**tls_enable**为"true"，并导入证书到容器内，配置相应的证书路径。如使用HTTP接口，则设置**tls_enable**为"false"，无需准备证书文件。
 
@@ -462,9 +274,7 @@ PD分离部署支持的硬件环境如下所示。
         - `huawei.com/Ascend910`：配置所有P/D实例占用的NPU卡数总和，与Server的所有config配置文件中worldSize参数配置的卡数总和保持一致。
         - `sp-block`：SuperPoD块大小，指代虚拟超节点的NPU数量。该参数仅在使用Atlas 800I A3 超节点服务器时配置（即mindie_service_single_container_base_A3.yaml文件），其值与`huawei.com/Ascend910`参数的值保持一致。
         - `image`：配置镜像名。
-            - MindIE与ATB Models配套使用场景：镜像名请参见[准备镜像](#section5645645542)。
-            - MindIE与MindSpore配套使用场景：镜像名请参见[准备镜像](#section4564545455)。
-
+          MindIE与ATB Models配套使用场景：镜像名请参见[准备镜像](#section5645645542)。
         - `startupProbe`：启动探针，每180秒检测一次启动状态，如果启动探针连续失败的次数达到30次则认为未启动成功，Pod将会自动重启。请用户根据实际场景设置合理的启动时间。
         - `readinessProbe`：就绪探针，每180秒检测一次就绪状态。如果探针失败，Pod将停止接收流量，直到再次通过检查。请用户根据实际场景设置合理的触发时间。
         - `livenessProbe`：存活探针，每180秒检测一次存活状态。用于探测容器的健康，如果任意进程无应答则执行重启等操作。请用户根据实际场景设置合理的触发时间。
@@ -518,7 +328,7 @@ PD分离部署支持的硬件环境如下所示。
     |HCCL_RDMA_RETRY_CNT|公共变量|用于配置RDMA网卡的重传次数，需要配置为整数，取值范围为[1,7]，默认值为7。|
     |HCCL_RDMA_TIMEOUT|公共变量|用于配置RDMA网卡重传超时时间的系数timeout。<br>RDMA网卡重传超时时间最小值的计算公式为：4.096 μs * 2 ^ timeout，其中timeout为该环境变量配置值，且实际重传超时时间与用户网络状况有关。<br>该环境变量配置为整数，取值范围为[5,20]，默认值为18。|
     |HCCL_EXEC_TIMEOUT|公共变量|通过该环境变量可控制设备间执行时同步等待的时间，在该配置时间内各设备进程等待其他设备执行通信同步。此处用于设置首token超时时间。<br>单位为s，取值范围为：[0, 2147483647]，默认值为60，当配置为0时代表永不超时。|
-    |**注：日志相关环境变量详情请参见。**|
+    |**注：日志相关环境变量详情请参见[日志配置](../cluster_management_component/log_configuration.md)。**|-|-|
 
 8. 拉起单机PD分离服务。<a id="li1651115619332"></a>
 
@@ -902,7 +712,7 @@ PD分离部署支持的硬件环境如下所示。
       >- mindie为[1](#li121732348534)创建的命名空间，请根据实际的命名空间进行替换。
       >- delete.sh卸载脚本需要在examples/kubernetes_deploy_scripts目录下执行，否则无法停止服务并报错。
 
-## 使用kubectl部署多机PD分离服务示例
+### 使用kubectl部署多机PD分离服务示例
 
 **限制与约束**
 
@@ -924,12 +734,12 @@ PD分离部署支持的硬件环境如下所示。
 >- 当请求发送速度高于处理速度时，Coordinator会缓存未处理的请求，导致内存占用上升，最后可能因达到内存上限而被终止。在该场景下，需要适当增大coordinator_init.yaml文件中"requests"和"limits"字段下的"memory"参数的值。
 >   - "requests"字段下的"memory"参数表示Coordinator运行所需最小内存。
 >   - "limits"字段下的"memory"参数表示Coordinator可用内存的上限。
-**为了保证Coordinator可靠的获得这些内存，"requests"和"limits"字段下的"memory"参数的值尽可能相等，内存规格档位建议如下：**
+>   - **为了保证Coordinator可靠的获得这些内存，"requests"和"limits"字段下的"memory"参数的值尽可能相等，内存规格档位建议如下：**
 >   - 最大1万条并发请求数配置为"12Gi"。
 >   - 最大2万条并发请求数配置为"24Gi"。
 >   - 最大4万条并发请求数配置为"48Gi"。
 >   - 最大9万条并发请求数配置为"108Gi"。
-> **Coordinator占用的最大内存可以通过公式计算：内存规格 = body_limit * max_requests * 120%**
+>   - **Coordinator占用的最大内存可以通过公式计算：内存规格 = body_limit * max_requests * 120%**
 >   - body_limit：单条请求消息体的字节数上限，单位为MB，可在ms_coordinator.json配置文件中配置与查看，具体参数解释详情参见xxx。
 >   - max_requests：最大并发请求数，单位为个，可在ms_coordinator.json配置文件中配置与查看，具体参数解释详情参见xxx。
 
@@ -1048,7 +858,7 @@ PD分离部署支持的硬件环境如下所示。
     |inferMode|配置为dmi。|
     |tp|整网张量并行数，取值为worldSize参数值；该参数为补充参数，请自行在ModelConfig字段下配置。|
 
-5. 配置http_client_ctl.json配置文件，该配置文件为集群启动、存活、就绪探针HTTP客户端工具的配置文件，具体参数解释请参见[表4 http_client_ctl.json配置说明](../service_oriented_optimization_tool.md#table13687127115213)。
+5. 配置http_client_ctl.json配置文件，该配置文件为集群启动、存活、就绪探针HTTP客户端工具的配置文件，具体参数解释请参见[表4 http_client_ctl.json配置说明](../service_oriented_optimization_tool/mindie_probe_tool.md#table13687127115213)。
 
     "tls_enable"参数为控制是否使用HTTPS的开关，若集群内MindIE组件使用了HTTPS接口，需设置"tls_enable"为"true"，并导入证书到容器内，配置相应的证书路径。如使用HTTP接口，则设置"tls_enable"为"false"，无需准备证书文件。
 
@@ -1071,9 +881,7 @@ PD分离部署支持的硬件环境如下所示。
 
         - `huawei.com/Ascend910`：配置一个P/D实例占用的NPU卡数，与MindIE LLM的config.json配置文件中worldSize参数配置的卡数保持一致。
         - image：配置镜像名。
-            - MindIE与ATB Models配套使用场景：镜像名请参见[准备镜像](#section5645645542)。
-            - MindIE与MindSpore配套使用场景：镜像名请参见[准备镜像](#section4564545455)。
-
+            MindIE与ATB Models配套使用场景：镜像名请参见[准备镜像](#section5645645542)。
         - startupProbe：启动探针，默认启动时间为500秒，如果在该时间内服务未启动成功，Pod将会自动重启。请用户根据实际场景设置合理的启动时间。
         - affinity：反亲和部署配置，默认注释不启用，去掉注释后开启。开启后，每个Server Pod将会反亲和部署到不同的计算节点，多个Pod不会部署到同一节点。
         - nodeSelector：节点选择，配置期望调度的节点，通过节点参数实现。
@@ -1104,7 +912,6 @@ PD分离部署支持的硬件环境如下所示。
     - mindie_ms_coordinator.yaml和mindie_ms_controller.yaml文件主要关注image镜像名的修改及日志设置。
 
         - MindIE与ATB Models配套使用场景：镜像名请参见[准备镜像](#section5645645542)。
-        - MindIE与MindSpore配套使用场景：镜像名请参见[准备镜像](#section4564545455)。
         - MINDIE_LOG_TO_FILE：统一设置MindIE各组件日志是否写入文件。
 
             默认值为1，日志写入文件。取值范围为：[false, true]，且支持[0, 1]。
@@ -1125,9 +932,7 @@ PD分离部署支持的硬件环境如下所示。
         - replicas：配置D的实例数，如果配置为4D，即配置为4。
         - `huawei.com/Ascend910`：配置一个P/D实例占用的NPU卡数，2卡即配置为2。
         - image：配置镜像名。
-            - MindIE与ATB Models配套使用场景：镜像名请参见[准备镜像](#section5645645542)。
-            - MindIE与MindSpore配套使用场景：镜像名请参见[准备镜像](#section4564545455)。
-
+            MindIE与ATB Models配套使用场景：镜像名请参见[准备镜像](#section5645645542)。
         - startupProbe：启动探针，默认启动时间为500秒，如果在该时间内服务未启动成功，Pod将会自动重启。请用户根据实际场景设置合理的启动时间。
         - nodeSelector：节点选择，配置期望调度的节点，通过节点参数实现。
             - hardware_type：异构部署需要配置，同构部署无需配置；使能Controller决策异构推理身份，该参数配置的值与mindie_server.yaml文件中hardware_type参数的值不能一样。
@@ -1175,7 +980,7 @@ PD分离部署支持的硬件环境如下所示。
     |HSECEASY_PATH|公共变量|KMC解密工具的依赖库路径.|
     |MINDIE_MS_CONTROLLER_CONFIG_FILE_PATH|公共变量|Controller组件配置文件路径。|
     |MINDIE_MS_COORDINATOR_CONFIG_FILE_PATH|公共变量|Coordinator组件配置文件路径。|
-    |**注：日志相关环境变量详情请参见。**|-|-|
+    |**注：日志相关环境变量详情请参见[日志配置](../cluster_management_component/log_configuration.md)。**|-|-|
 
 8. <a id="stepljpdjq"></a>拉起PD集群。
 
@@ -1194,7 +999,7 @@ PD分离部署支持的硬件环境如下所示。
     bash deploy.sh
     ```
 
-    执行命令后，会同步等待global\_ranktable.json生成完成，如长时间处于阻塞状态，请ctrl+c中断后查看集群Pod状态，进行下一步的调试定位。
+    执行命令后，会同步等待global_ranktable.json生成完成，如长时间处于阻塞状态，请ctrl+c中断后查看集群Pod状态，进行下一步的调试定位。
 
     global_ranktable.json样例如下所示，样例中参数解释如[表4 global_ranktable.json文件参数解释](#table13685565698213)所示。
 
@@ -1279,7 +1084,7 @@ PD分离部署支持的硬件环境如下所示。
     >- 如果部署失败，则需要参见[11](#li05951725124112)卸载集群后重新部署。
     >- 集群默认刷新挂载到容器内的configmap的频率是60s，如遇到容器内打印“status of ranktable is not completed”日志信息的时间偏久，可在每个待调度的计算节点修改kubelet同步configmap的周期，即修改/var/lib/kubelet/config.yaml中的syncFrequency参数，将周期减少到5s，注意此修改可能影响集群性能。
     >
-    >     ```bash
+    >     ```yaml
     >     syncFrequency: 5s
     >     ```
     >
@@ -1287,7 +1092,7 @@ PD分离部署支持的硬件环境如下所示。
     >
     >    ```bash
     >    swapoff -a
-    >    systemctl restart  kubelet.service
+    >    systemctl restart kubelet.service
     >    systemctl status kubelet
     >    ```
     >
@@ -1352,7 +1157,7 @@ PD分离部署支持的硬件环境如下所示。
         ```
 
         >[!NOTE]说明
-        >若使配置了异构集群推理，执行以下命令：
+        >若已配置了异构集群推理，执行以下命令：
         >
         >```bash
         >bash log.sh heter
@@ -1370,7 +1175,7 @@ PD分离部署支持的硬件环境如下所示。
         kubectl exec -it mindie-server-7b795f8df9-vl9hv -n mindie -- bash
         ```
 
-    - 如需确认的P，D对应的Pod，待Controller组件启动（如上面mindie-ms-controller-7845dcd697-h4gw7处于READY 1/1状态）后，则执行以下命令：
+    - 如需确认P和D对应的Pod，待Controller组件启动（如上面mindie-ms-controller-7845dcd697-h4gw7处于READY 1/1状态）后，则执行以下命令：
 
         ```bash
         kubectl logs mindie-ms-controller-7845dcd697-h4gw7 -n mindie | grep UpdateServerInfo

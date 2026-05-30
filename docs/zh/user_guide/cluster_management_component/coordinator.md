@@ -1,4 +1,6 @@
-# 功能介绍
+# 调度器（Coordinator）
+
+## 功能介绍
 
 调度器（Coordinator）作为集群的数据面入口，主要提供负载均衡的调度算法和Cache亲和的调度算法。调度器（Coordinator）作为用户的推理请求入口，基于当前集群的节点现状和配置的调度算法，实现最优节点的选择、请求的监管、转发等，提升集群场景的节点资源利用率，其架构图如[图1 调度器（Coordinator）架构图](#fig589521417362)所示。
 
@@ -6,7 +8,7 @@
 
 ![](../../figures/coordinator_architecture.png)
 
-# 安装部署
+## 安装部署
 
 使用调度器（Coordinator）之前，需要完成以下环境准备。
 
@@ -14,7 +16,7 @@
 2. 将证书路径配置到[ms_coordinator.json启动配置文件](#section122161257338)对应证书路径。
 3. 参见[使用kubectl部署多机PD分离服务示例](../service_deployment/pd_separation_service_deployment.md#使用kubectl部署多机pd分离服务示例)完成部署。
 
-# 配置说明
+## 配置说明
 
 **ms_coordinator.json启动配置文件**<a id="section122161257338"></a>
 
@@ -157,7 +159,10 @@ ms_coordinator.json启动配置文件样例如下所示，参数解释请参见[
 }
 ```
 
+<br>
+
 **ms_coordinator.json启动配置文件参数解释**<a id="section1759442933513"></a>
+
 ms_coordinator.json配置文件中各个字段解释如下所示，用户可根据具体场景进行配置。
 
 **表 1**  ms_coordinator.json启动配置文件参数说明
@@ -299,9 +304,9 @@ ms_coordinator.json配置文件中各个字段解释如下所示，用户可根�
 |MINDIE_MS_COORDINATOR_CONFIG_MAX_REQ|可处理的最大请求数量。|
 |MINDIE_CHECK_INPUTFILES_PERMISSION|用户可设置是否需要检查外部挂载文件，具体包括ms_coordinator.json以及证书相关文件。默认值为空，表示需要做权限校验。<li>0：对外部挂载文件不做权限校验。</li><li>非0：对外部挂载文件做权限校验。</li>**当用户使用MINDIE_MS_COORDINATOR_CONFIG_FILE_PATH设置配置文件路径时，ms_coordinator.json为外部挂载文件。**|
 |HSECEASY_PATH|默认值为空。设置KMC解密工具的依赖库路径。开启tls校验时必须设置。|
-|**注：日志相关环境变量详情请参见[日志参考](./log_configuration.md)。**|-|-|
+|**注：日志相关环境变量详情请参见[日志参考](./log_configuration.md)。**|-|
 
-# 启动调度器
+## 启动调度器
 
 调度器的执行程序为ms_coordinator，其存放路径为： *{MindIE-motor安装目录}*/bin（例如：/usr/local/lib/python3.11/site-packages/mindie-motor/bin），启动ms_coordinator时需要读取[ms_coordinator.json启动配置文件](#section122161257338)中的配置信息，且运行ms_coordinator时需要依赖 *{MindIE安装目录}*/latest/mindie-service/lib/目录下的so文件，包括`libboundscheck.so、libcrypto.so.3、libhse_cryption.so、libssl.so.3和libmie_digs.so`文件。
 
@@ -352,7 +357,7 @@ ms_coordinator有两种启动方式，且命令必须在 *{MindIE安装目录}*/
     - _{manage_ip}_：如果配置，则将取代ms_coordinator.json启动配置文件中的manage_ip参数。
     - _{manage_port}_：如果配置，则将取代ms_coordinator.json启动配置文件中的manage_port参数。
 
-# 停止调度器
+## 停止调度器
 
 两种停止调度器的方式如下所示。
 
@@ -381,15 +386,15 @@ ms_coordinator有两种启动方式，且命令必须在 *{MindIE安装目录}*/
 
 - 方式二：若直接启动进程方式启动服务，可以通过按ctrl+c停止服务。
 
-# Coordinator准备倒换
+## Coordinator主备倒换
 
-## 特性介绍
+### 特性介绍
 
 本特性通过ETCD分布式锁机制实现Kubernetes集群中Coordinator的主备倒换功能，确保系统高可用性。开启使用Coordinator主备倒换特性开关时，初始化时拉起两个Coordinator，通过ETCD分布式锁竞争来实现主备身份确认，当主Coordinator发生故障时，备用Coordinator能在一定时间间隔后自动接管工作。**该特性只支持在大规模专家并行场景下使用**。
 >[!NOTE]说明
->开启Coordinator主备倒换并拉起服务时，系统在初始化阶段会触发一条告警（[0xFC001004 Coordinator Service Exception Alarm](../service_oriented_optimization_tool.md#001004)）。此告警将随服务就绪而自动消失，属于正常现象，无需处理。
+>开启Coordinator主备倒换并拉起服务时，系统在初始化阶段会触发一条告警（[0xFC001004 Coordinator Service Exception Alarm](../service_oriented_optimization_tool/mindie_service_tools.md#001004)）。此告警将随服务就绪而自动消失，属于正常现象，无需处理。
 
-## 使用样例
+### 使用样例
 
 **限制与约束**
 
@@ -728,7 +733,7 @@ Coordinator主备依赖ETCD分布式锁功能，涉及集群内不同POD间通�
         返回结果如下所示表示创建成功：
 
         ```bash
-        persistentvolume/etcd data-0 created
+        persistentvolume/etcd-data-0 created
         persistentvolume/etcd-data-1 created
         persistentvolume/etcd-data-2 created
         ```
@@ -919,18 +924,19 @@ Coordinator主备依赖ETCD分布式锁功能，涉及集群内不同POD间通�
 
         回显如下所示：
 
-      ```bash
-      NAMESPACE NAME READY STATUS   RESTARTS AGE IP            NODE           NOMINATED NODE   READINESS    GATES
-      default         etcd-0 1/1     Running   0         44h xxx.xxx.xxx.xxx   ubuntu          <none>       <none>
-      default         etcd-1 1/1     Running   0         44h xxx.xxx.xxx.xxx   worker-153      <none>       <none>
-      default         etcd-2  1/1    Running   0         44h xxx.xxx.xxx.xxx   worker-80-39    <none>       <none>
-      ```
+        ```bash
+        NAMESPACE NAME READY STATUS   RESTARTS AGE IP            NODE           NOMINATED NODE   READINESS    GATES
+        default         etcd-0 1/1     Running   0         44h xxx.xxx.xxx.xxx   ubuntu          <none>       <none>
+        default         etcd-1 1/1     Running   0         44h xxx.xxx.xxx.xxx   worker-153      <none>       <none>
+        default         etcd-2  1/1    Running   0         44h xxx.xxx.xxx.xxx   worker-80-39    <none>       <none>
+        ```
 
-        >[!NOTE]说明
-        >如果要修改ETCD集群中的yaml文件，重新创建ETCD资源，则需要先执行删除，命令如下：
-        >```
-        >kubectl delete -f etcd.yaml && kubectl delete pvc --all && kubectl delete pv etcd-data-0 etcd-data-1 etcd-data-2
-        >```
+          >[!NOTE]说明
+          >如果要修改ETCD集群中的yaml文件，重新创建ETCD资源，则需要先执行删除，命令如下：
+          >
+          >```bash
+          >kubectl delete -f etcd.yaml && kubectl delete pvc --all && kubectl delete pv etcd-data-0 etcd-data-1 etcd-data-2
+          >```
 
 <br>
 
@@ -1182,7 +1188,6 @@ Coordinator主备依赖ETCD分布式锁功能，涉及集群内不同POD间通�
 2. 配置user_config.json配置文件。
 
     - 修改"tls_enable"为"true"，使CA认证流程生效；
-    - 配置"infer_tls_items"与"management_tls_items"相关证书，详情请参见[功能介绍](../service_oriented_optimization_tool.md#功能介绍)；
     - 修改"etcd_server_tls_enable"为"true"，并将生成好的客户端证书配置到"etcd_server_tls_items"中。
 
         ```json
@@ -1317,7 +1322,7 @@ Coordinator主备依赖ETCD分布式锁功能，涉及集群内不同POD间通�
     200
     ```
 
-# 报错信息查询
+## 报错信息查询
 
 Coordinator启动后，运行过程中可能出现的报错信息主要如下所示。
 
